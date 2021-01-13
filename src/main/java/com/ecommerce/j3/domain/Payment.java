@@ -6,28 +6,26 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Entity @Getter @Setter
-@Table(name="review")
-public class Review {
+public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long reviewId;
-    @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
+    private Long paymentId;
     @ManyToOne
     @JoinColumn(name = "account_id")
     private Account account;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "parent_id")
-    private Review parent;
-    private short rate;
-    private String title;
+    @OneToOne
+    @JoinColumn(name = "order_id")
+    private Order order;
+    private String code;
+    private Integer type;
+    private Integer status;
     @CreationTimestamp
     private LocalDateTime createdAt;
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
     @Column(columnDefinition = "TEXT")
     private String content;
 }
