@@ -25,7 +25,7 @@ public class ProductService {
         return products;
     }
 
-    public Optional<Product> findOneById(Long productId){
+    public Optional<Product> findOne(Long productId){
         return productsRepository.findById(productId);
     }
 

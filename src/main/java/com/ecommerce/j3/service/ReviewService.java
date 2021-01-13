@@ -1,10 +1,12 @@
 package com.ecommerce.j3.service;
 
+import com.ecommerce.j3.domain.Product;
 import com.ecommerce.j3.domain.Review;
 import com.ecommerce.j3.repository.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -24,7 +26,15 @@ public class ReviewService {
         return review;
     }
 
-    public Optional<Review> findOneById(Long reviewId){
+    public Optional<Review> findOne(Long reviewId){
         return reviewRepository.findById(reviewId);
+    }
+
+    public List<Review> findAll(){
+        return reviewRepository.findAll();
+    }
+
+    public void remove(Review review){
+        reviewRepository.delete(review);
     }
 }

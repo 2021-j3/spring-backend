@@ -17,12 +17,15 @@ public class Review {
     @Column(name = "review_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "account_id")
-    private Long accountId;
-    @Column(name = "product_id")
-    private Long productId;
-    @Column(name = "parent_id")
-    private Long parentId;
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
+    @ManyToOne
+    @JoinColumn(name = "account_id")
+    private Account account;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_id")
+    private Review parent;
     private short rate;
     private String title;
     @Column(name = "created_at")

@@ -27,8 +27,10 @@ public class Product {
     private float price;
     private float discount;
     private short quantity;
+    @Column(name = "created_at")
     @CreationTimestamp
     private Timestamp createdAt;
+    @Column(name = "updated_at")
     @UpdateTimestamp
     private Timestamp updatedAt;
     private Timestamp startsAt;

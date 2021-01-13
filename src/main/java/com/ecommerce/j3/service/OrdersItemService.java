@@ -25,7 +25,7 @@ public class OrdersItemService {
         return ordersItems;
     }
 
-    public Optional<OrdersItem> findOneById(Long ordersItemId){
+    public Optional<OrdersItem> findOne(Long ordersItemId){
         return ordersItemsRepository.findById(ordersItemId);
     }
 

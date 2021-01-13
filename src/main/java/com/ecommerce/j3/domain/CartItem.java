@@ -8,29 +8,31 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.sql.Timestamp;
 
-@Entity(name="orders_item")
+@Entity(name = "cart_item")
 @Getter
 @Setter
-public class OrdersItem {
+public class CartItem {
     @Id
-    @Column(name = "orders_item_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "cart_item_id")
     private Long id;
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
     @ManyToOne
-    @JoinColumn(name = "orders_id")
-    private Orders orders;
+    @JoinColumn(name = "account_id")
+    private Account account;
     private String sku;
     private float price;
     private float discount;
     private short quantity;
+    private byte active;
     @Column(name = "created_at")
     @CreationTimestamp
     private Timestamp createdAt;
     @Column(name = "updated_at")
     @UpdateTimestamp
     private Timestamp updatedAt;
-    private String text;
+    @Column(columnDefinition = "TEXT")
+    private String content;
 }

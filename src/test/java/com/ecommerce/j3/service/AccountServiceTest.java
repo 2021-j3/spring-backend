@@ -1,16 +1,12 @@
 package com.ecommerce.j3.service;
 
 import com.ecommerce.j3.domain.Account;
-import com.ecommerce.j3.domain.GenderType;
-import com.ecommerce.j3.domain.Review;
 import com.ecommerce.j3.repository.AccountRepository;
-import com.ecommerce.j3.repository.ReviewRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
 
 
@@ -75,7 +71,7 @@ class AccountServiceTest {
         account.setPhoneNumber("000-000-000");
         accountService.save(account);
 
-        Account accountFromDB = accountService.findOneById(account.getId()).get();
+        Account accountFromDB = accountService.findOne(account.getId()).get();
         Assertions
                 .assertThat(account.getEmail())
                 .isEqualTo(accountFromDB.getEmail());

@@ -26,7 +26,7 @@ public class AccountService {
         return account;
     }
 
-    public Optional<Account> findOneById(Long accountId){
+    public Optional<Account> findOne(Long accountId){
         return accountRepository.findById(accountId);
     }
 }

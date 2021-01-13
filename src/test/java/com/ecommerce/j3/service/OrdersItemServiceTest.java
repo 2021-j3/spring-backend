@@ -62,7 +62,7 @@ class OrdersItemServiceTest {
         orders.setShipping(231.214f);
         orders.setUserDiscount(123.13f);
         orders.setGrandTotal(213.31f);
-        orders.setAccount(accountService.findOneById(accountId).get());
+        orders.setAccount(accountService.findOne(accountId).get());
         // when
         ordersService.save(orders);
         ordersId = orders.getId();
@@ -75,7 +75,7 @@ class OrdersItemServiceTest {
         product.setPrice(123.4f);
         product.setDiscount(13.3f);
         product.setQuantity((short)1);
-        product.setAccount(accountService.findOneById(accountId).get());
+        product.setAccount(accountService.findOne(accountId).get());
         // when
         productService.save(product);
         productId = product.getId();
@@ -89,8 +89,8 @@ class OrdersItemServiceTest {
         ordersItem.setPrice(123.4f);
         ordersItem.setDiscount(13.3f);
         ordersItem.setQuantity((short)1);
-        ordersItem.setOrders(ordersService.findOneById(ordersId).get());
-        ordersItem.setProduct(productService.findOneById(productId).get());
+        ordersItem.setOrders(ordersService.findOne(ordersId).get());
+        ordersItem.setProduct(productService.findOne(productId).get());
         // when
         ordersItemService.save(ordersItem);
 
@@ -109,8 +109,8 @@ class OrdersItemServiceTest {
         ordersItem.setPrice(123.4f);
         ordersItem.setDiscount(13.3f);
         ordersItem.setQuantity((short)1);
-        ordersItem.setOrders(ordersService.findOneById(ordersId).get());
-        ordersItem.setProduct(productService.findOneById(productId).get());
+        ordersItem.setOrders(ordersService.findOne(ordersId).get());
+        ordersItem.setProduct(productService.findOne(productId).get());
         ordersItemService.save(ordersItem);
         // when
         ordersItem.setSku("new");
@@ -131,8 +131,8 @@ class OrdersItemServiceTest {
         ordersItem.setPrice(123.4f);
         ordersItem.setDiscount(13.3f);
         ordersItem.setQuantity((short)1);
-        ordersItem.setOrders(ordersService.findOneById(ordersId).get());
-        ordersItem.setProduct(productService.findOneById(productId).get());
+        ordersItem.setOrders(ordersService.findOne(ordersId).get());
+        ordersItem.setProduct(productService.findOne(productId).get());
         ordersItemService.save(ordersItem);
 
         //then
@@ -150,8 +150,8 @@ class OrdersItemServiceTest {
         ordersItem.setPrice(123.4f);
         ordersItem.setDiscount(13.3f);
         ordersItem.setQuantity((short)1);
-        ordersItem.setOrders(ordersService.findOneById(ordersId).get());
-        ordersItem.setProduct(productService.findOneById(productId).get());
+        ordersItem.setOrders(ordersService.findOne(ordersId).get());
+        ordersItem.setProduct(productService.findOne(productId).get());
         ordersItemService.save(ordersItem);
         // when
         int cnt_that = ordersItemService.findAll().size();

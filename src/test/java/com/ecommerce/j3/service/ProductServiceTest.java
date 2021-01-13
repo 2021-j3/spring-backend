@@ -11,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
-
 @Transactional
 @SpringBootTest
 class ProductServiceTest {
@@ -47,7 +45,7 @@ class ProductServiceTest {
         product.setPrice(123.4f);
         product.setDiscount(13.3f);
         product.setQuantity((short)1);
-        product.setAccount(accountService.findOneById(accountId).get());
+        product.setAccount(accountService.findOne(accountId).get());
         // when
         productService.save(product);
 
@@ -68,7 +66,7 @@ class ProductServiceTest {
         product.setPrice(123.4f);
         product.setDiscount(13.3f);
         product.setQuantity((short)1);
-        product.setAccount(accountService.findOneById(accountId).get());
+        product.setAccount(accountService.findOne(accountId).get());
         productService.save(product);
         // when
         product.setTitle("new_title");
@@ -91,7 +89,7 @@ class ProductServiceTest {
         product.setPrice(123.4f);
         product.setDiscount(13.3f);
         product.setQuantity((short)1);
-        product.setAccount(accountService.findOneById(accountId).get());
+        product.setAccount(accountService.findOne(accountId).get());
         productService.save(product);
 
         //then
@@ -111,7 +109,7 @@ class ProductServiceTest {
         product.setPrice(123.4f);
         product.setDiscount(13.3f);
         product.setQuantity((short)1);
-        product.setAccount(accountService.findOneById(accountId).get());
+        product.setAccount(accountService.findOne(accountId).get());
         productService.save(product);
         // when
         int cnt_that = productService.findAll().size();
