@@ -12,7 +12,7 @@ import java.sql.Timestamp;
 @Entity(name = "orders")
 @Getter
 @Setter
-public class Orders {
+public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderId;

@@ -3,10 +3,8 @@ package com.ecommerce.j3.service;
 import com.ecommerce.j3.domain.Account;
 import com.ecommerce.j3.domain.Category;
 import com.ecommerce.j3.domain.Product;
-import com.ecommerce.j3.domain.ProductCategory;
 import com.ecommerce.j3.repository.AccountRepository;
 import com.ecommerce.j3.repository.CategoryRepository;
-import com.ecommerce.j3.repository.ProductCategoryRepository;
 import com.ecommerce.j3.repository.ProductRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,25 +17,29 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 
 @Transactional
 @SpringBootTest
 class ProductServiceTest {
-    @Autowired AccountService accountService;
-    @Autowired AccountRepository accountRepository;
-    @Autowired ProductService productService;
-    @Autowired ProductRepository productRepository;
-    @Autowired CategoryService categoryService;
-    @Autowired CategoryRepository categoryRepository;
-    @Autowired ProductCategoryService productCategoryService;
-    @Autowired ProductCategoryRepository productCategoryRepository;
+    @Autowired
+    AccountService accountService;
+    @Autowired
+    AccountRepository accountRepository;
+    @Autowired
+    ProductService productService;
+    @Autowired
+    ProductRepository productRepository;
+    @Autowired
+    CategoryService categoryService;
+    @Autowired
+    CategoryRepository categoryRepository;
 
-     Long accountId;
+    Long accountId;
+    Category catApple;
+    Category catTablet;
 
     @BeforeEach
-    void beforeEach(){
+    void beforeEach() {
         RandomString randomString = new RandomString();
         // given
         Account account = new Account();
@@ -47,10 +49,25 @@ class ProductServiceTest {
         account.setPhoneNumber(randomString.nextString());
         accountService.save(account);
         accountId = account.getAccountId();
+
+        Category catApple = new Category();
+        catApple.setTitle("애플");
+        catApple.setSlug("fasdf");
+        catApple.setContent("content");
+        categoryService.save(catApple);
+        this.catApple = catApple;
+
+        // given
+        Category catTablet = new Category();
+        catTablet.setTitle("태블릿");
+        catTablet.setSlug("fasdf");
+        catTablet.setContent("content");
+        categoryService.save(catTablet);
+        this.catTablet = catTablet;
     }
 
     @Test
-    void save(){
+    void save() {
         // given
         Product product = new Product();
         product.setTitle("title");
@@ -58,7 +75,7 @@ class ProductServiceTest {
         product.setSku("dfsa");
         product.setPrice(BigDecimal.valueOf(123.4f));
         product.setDiscountRate(13.3f);
-        product.setQuantity((short)1);
+        product.setQuantity((short) 1);
         product.setAccount(accountService.findOne(accountId).get());
         // when
         productService.save(product);
@@ -79,7 +96,7 @@ class ProductServiceTest {
         product.setSku("dfsa");
         product.setPrice(BigDecimal.valueOf(123.4f));
         product.setDiscountRate(13.3f);
-        product.setQuantity((short)1);
+        product.setQuantity((short) 1);
         product.setAccount(accountService.findOne(accountId).get());
         productService.save(product);
         // when
@@ -102,7 +119,7 @@ class ProductServiceTest {
         product.setSku("dfsa");
         product.setPrice(BigDecimal.valueOf(123.4f));
         product.setDiscountRate(13.3f);
-        product.setQuantity((short)1);
+        product.setQuantity((short) 1);
         product.setAccount(accountService.findOne(accountId).get());
         productService.save(product);
 
@@ -122,7 +139,7 @@ class ProductServiceTest {
         product.setSku("dfsa");
         product.setPrice(BigDecimal.valueOf(123.4f));
         product.setDiscountRate(13.3f);
-        product.setQuantity((short)1);
+        product.setQuantity((short) 1);
         product.setAccount(accountService.findOne(accountId).get());
         productService.save(product);
         // when
@@ -137,52 +154,28 @@ class ProductServiceTest {
     }
 
     @Test
-    void category(){
-        ObjectMapper mapper = new ObjectMapper();
-
+    void category() throws JsonProcessingException {
         // given
-        Category category4 = new Category();
-        category4.setTitle("갤탭");
-        category4.setSlug("fasdf");
-        category4.setContent("content");
-        categoryService.save(category4);
-
-        try {
-            System.out.println("CATEGORY\n\n: " + mapper.writeValueAsString(category4));
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-
-
         Product product = new Product();
-        product.setTitle("title");
+        product.setTitle("아이패드");
         product.setSlug("/dfasd");
         product.setSku("dfsa");
         product.setPrice(BigDecimal.valueOf(123.4f));
         product.setDiscountRate(13.3f);
-        product.setQuantity((short)1);
+        product.setQuantity((short) 1);
         product.setAccount(accountService.findOne(accountId).get());
+        product.getCategories().add(catApple);
+        product.getCategories().add(catTablet);
 
-        try {
-            System.out.println("PRODUCT\n\n :" + mapper.writeValueAsString(product));
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            System.out.println("PRODUCT with category\n\n : " + mapper.writeValueAsString(product));
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-
+        // when
         productService.save(product);
 
-        ProductCategory pc = new ProductCategory();
-        pc.setProduct(product);
-        pc.setCategory(category4);
-        productCategoryRepository.save(pc);
-        // when
-        int cnt_that = productService.findAll().size();
-        productService.remove(product);
+        Product productFromDB = productService.findOne(product.getProductId()).get();
+
+        Assertions.assertThat(productFromDB.getCategories().size()).isEqualTo(2);
+
+        ObjectMapper mapper = new ObjectMapper();
+        System.out.println("\n=====TEST OUTPUT====");
+        System.out.println(mapper.writeValueAsString(productFromDB));
     }
 }

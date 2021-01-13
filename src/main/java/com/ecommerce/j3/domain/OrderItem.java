@@ -20,7 +20,7 @@ public class OrderItem {
     private Product product;
     @ManyToOne
     @JoinColumn(name = "order_id")
-    private Orders orders;
+    private Order order;
     private String sku;
     private float price;
     private float discountRate;

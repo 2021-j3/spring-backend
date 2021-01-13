@@ -85,9 +85,9 @@ CREATE TABLE `shop`.`cart_item`
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
 
-DROP TABLE IF EXISTS `shop`.`orders`;
+DROP TABLE IF EXISTS `shop`.`order`;
 
-CREATE TABLE `shop`.`orders`
+CREATE TABLE `shop`.`order`
 (
     `order_id`         BIGINT       NOT NULL AUTO_INCREMENT,
     `account_id`       BIGINT       NULL     DEFAULT NULL,
@@ -144,7 +144,7 @@ CREATE TABLE `shop`.`order_item`
         FOREIGN KEY (`product_id`) REFERENCES `shop`.`product` (`product_id`),
 
     CONSTRAINT `fk_order_item_orders`
-        FOREIGN KEY (`order_id`) REFERENCES `shop`.`orders` (`order_id`)
+        FOREIGN KEY (`order_id`) REFERENCES `shop`.`order` (`order_id`)
 
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
@@ -170,7 +170,7 @@ CREATE TABLE `shop`.`payment`
         FOREIGN KEY (`account_id`) REFERENCES `shop`.`account` (`account_id`),
 
     CONSTRAINT `fk_payment_orders`
-        FOREIGN KEY (`order_id`) REFERENCES `shop`.`orders` (`order_id`)
+        FOREIGN KEY (`order_id`) REFERENCES `shop`.`order` (`order_id`)
 
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
@@ -223,11 +223,10 @@ DROP TABLE IF EXISTS `shop`.`product_category`;
 
 CREATE TABLE `shop`.`product_category`
 (
-    `product_category_id` BIGINT NOT NULL AUTO_INCREMENT,
-    `product_id`          BIGINT NOT NULL,
-    `category_id`         BIGINT NOT NULL,
+    `product_id`  BIGINT NOT NULL,
+    `category_id` BIGINT NOT NULL,
 
-    PRIMARY KEY (`product_category_id`),
+    PRIMARY KEY (`product_id`, `category_id`),
 
     CONSTRAINT `fk_pc_product`
         FOREIGN KEY (`product_id`) REFERENCES `shop`.`product` (`product_id`),

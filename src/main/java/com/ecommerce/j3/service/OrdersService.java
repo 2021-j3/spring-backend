@@ -15,27 +15,27 @@ public class OrdersService {
     @Autowired
     public OrdersService(OrdersRepository ordersRepository){this.ordersRepository = ordersRepository;}
 
-    public Orders save(Orders orders){
-        ordersRepository.save(orders);
-        return orders;
+    public Order save(Order order){
+        ordersRepository.save(order);
+        return order;
     }
 
-    public Orders update(Orders orders){
-        ordersRepository.save(orders);
-        return orders;
+    public Order update(Order order){
+        ordersRepository.save(order);
+        return order;
     }
 
-    public Optional<Orders> findOne(Long orderId){
+    public Optional<Order> findOne(Long orderId){
         return ordersRepository.findById(orderId);
     }
 
-    public List<Orders> findByAccount(Account account){return ordersRepository.findByAccount(account);}
+    public List<Order> findByAccount(Account account){return ordersRepository.findByAccount(account);}
 
-    public List<Orders> findAll(){
+    public List<Order> findAll(){
         return ordersRepository.findAll();
     }
 
-    public void remove(Orders orders){
-        ordersRepository.delete(orders);
+    public void remove(Order order){
+        ordersRepository.delete(order);
     }
 }

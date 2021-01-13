@@ -1,7 +1,7 @@
 package com.ecommerce.j3.service;
 
 import com.ecommerce.j3.domain.Account;
-import com.ecommerce.j3.domain.Orders;
+import com.ecommerce.j3.domain.Order;
 import com.ecommerce.j3.domain.OrderItem;
 import com.ecommerce.j3.domain.Product;
 import com.ecommerce.j3.repository.AccountRepository;
@@ -46,21 +46,21 @@ class OrderItemServiceTest {
         accountId = account.getAccountId();
 
         // given
-        Orders orders = new Orders();
-        orders.setSessionId("2132");
-        orders.setToken("4124");
-        orders.setStatus((short) 1);
-        orders.setItemPriceTotal(BigDecimal.valueOf(124));
-        orders.setItemDiscount(1.23f);
-        orders.setTax(0.213f);
-        orders.setShipping(BigDecimal.valueOf(231.214f));
-        orders.setUserDiscount(123.13f);
-        orders.setGrandTotal(213.31f);
-        orders.setAccount(accountService.findOne(accountId).get());
-        orders.setZipCode(84984);
+        Order order = new Order();
+        order.setSessionId("2132");
+        order.setToken("4124");
+        order.setStatus((short) 1);
+        order.setItemPriceTotal(BigDecimal.valueOf(124));
+        order.setItemDiscount(1.23f);
+        order.setTax(0.213f);
+        order.setShipping(BigDecimal.valueOf(231.214f));
+        order.setUserDiscount(123.13f);
+        order.setGrandTotal(213.31f);
+        order.setAccount(accountService.findOne(accountId).get());
+        order.setZipCode(84984);
         // when
-        ordersService.save(orders);
-        ordersId = orders.getOrderId();
+        ordersService.save(order);
+        ordersId = order.getOrderId();
 
         // given
         Product product = new Product();
@@ -84,7 +84,7 @@ class OrderItemServiceTest {
         orderItem.setPrice(123.4f);
         orderItem.setDiscountRate(13.3f);
         orderItem.setQuantity((short)1);
-        orderItem.setOrders(ordersService.findOne(ordersId).get());
+        orderItem.setOrder(ordersService.findOne(ordersId).get());
         orderItem.setProduct(productService.findOne(productId).get());
         // when
         orderItemService.save(orderItem);
@@ -104,7 +104,7 @@ class OrderItemServiceTest {
         orderItem.setPrice(123.4f);
         orderItem.setDiscountRate(13.3f);
         orderItem.setQuantity((short)1);
-        orderItem.setOrders(ordersService.findOne(ordersId).get());
+        orderItem.setOrder(ordersService.findOne(ordersId).get());
         orderItem.setProduct(productService.findOne(productId).get());
         orderItemService.save(orderItem);
         // when
@@ -126,7 +126,7 @@ class OrderItemServiceTest {
         orderItem.setPrice(123.4f);
         orderItem.setDiscountRate(13.3f);
         orderItem.setQuantity((short)1);
-        orderItem.setOrders(ordersService.findOne(ordersId).get());
+        orderItem.setOrder(ordersService.findOne(ordersId).get());
         orderItem.setProduct(productService.findOne(productId).get());
         orderItemService.save(orderItem);
 
@@ -145,7 +145,7 @@ class OrderItemServiceTest {
         orderItem.setPrice(123.4f);
         orderItem.setDiscountRate(13.3f);
         orderItem.setQuantity((short)1);
-        orderItem.setOrders(ordersService.findOne(ordersId).get());
+        orderItem.setOrder(ordersService.findOne(ordersId).get());
         orderItem.setProduct(productService.findOne(productId).get());
         orderItemService.save(orderItem);
         // when
