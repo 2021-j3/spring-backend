@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
 
 
@@ -25,7 +26,7 @@ class AccountServiceTest {
     void save() {
         // given
         Account account = new Account();
-        account.setNickname("nick");
+        account.setNickname("ACCOUNT TEST");
         account.setPasswordHash("passHash");
         account.setEmail("example1@mail.com");
         account.setPhoneNumber("000-000-000");
@@ -33,7 +34,7 @@ class AccountServiceTest {
         accountService.save(account);
 
         //then
-        Account accountFromDB = accountRepository.getOne(account.getId());
+        Account accountFromDB = accountRepository.getOne(account.getAccountId());
         Assertions
                 .assertThat(account.getEmail())
                 .isEqualTo(accountFromDB.getEmail());
@@ -55,7 +56,7 @@ class AccountServiceTest {
         accountService.update(account);
 
         // then
-        Account accountFromDB = accountRepository.getOne(account.getId());
+        Account accountFromDB = accountRepository.getOne(account.getAccountId());
         Assertions
                 .assertThat(account.getEmail())
                 .isEqualTo(accountFromDB.getEmail());
@@ -71,7 +72,7 @@ class AccountServiceTest {
         account.setPhoneNumber("000-000-000");
         accountService.save(account);
 
-        Account accountFromDB = accountService.findOne(account.getId()).get();
+        Account accountFromDB = accountService.findOne(account.getAccountId()).get();
         Assertions
                 .assertThat(account.getEmail())
                 .isEqualTo(accountFromDB.getEmail());

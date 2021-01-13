@@ -11,8 +11,7 @@ import javax.persistence.*;
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "address_id")
-    private Long id;
+    private Long addressId;
     @ManyToOne
     @JoinColumn(name = "account_id")
     private Account account;
@@ -21,4 +20,5 @@ public class Address {
     private String city;
     private String province;
     private String country;
+    private Integer zipCode;
 }

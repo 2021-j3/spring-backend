@@ -27,7 +27,7 @@ class TagServiceTest {
         tagService.save(tag);
 
         //then
-        Tag tagFromDB = tagRepository.getOne(tag.getId());
+        Tag tagFromDB = tagRepository.getOne(tag.getTagId());
         Assertions
                 .assertThat(tag.getTitle())
                 .isEqualTo(tagFromDB.getTitle());
@@ -48,7 +48,7 @@ class TagServiceTest {
         tagService.update(tag);
 
         // then
-        Tag tagFromDB = tagRepository.getOne(tag.getId());
+        Tag tagFromDB = tagRepository.getOne(tag.getTagId());
         Assertions
                 .assertThat(new_title)
                 .isEqualTo(tagFromDB.getTitle());
@@ -63,7 +63,7 @@ class TagServiceTest {
         tag.setContent("content");
         tagService.save(tag);
 
-        Tag tagFromDB = tagService.findOne(tag.getId()).get();
+        Tag tagFromDB = tagService.findOne(tag.getTagId()).get();
         Assertions
                 .assertThat(tag.getTitle())
                 .isEqualTo(tagFromDB.getTitle());

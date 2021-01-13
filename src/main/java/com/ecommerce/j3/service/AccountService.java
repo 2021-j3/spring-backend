@@ -1,6 +1,7 @@
 package com.ecommerce.j3.service;
 
 import com.ecommerce.j3.domain.Account;
+import com.ecommerce.j3.domain.CartItem;
 import com.ecommerce.j3.domain.Review;
 import com.ecommerce.j3.repository.AccountRepository;
 import com.ecommerce.j3.repository.ReviewRepository;
@@ -28,5 +29,9 @@ public class AccountService {
 
     public Optional<Account> findOne(Long accountId){
         return accountRepository.findById(accountId);
+    }
+
+    public void remove(Account account){
+        accountRepository.delete(account);
     }
 }

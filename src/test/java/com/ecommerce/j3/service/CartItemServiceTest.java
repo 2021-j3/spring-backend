@@ -5,7 +5,6 @@ import com.ecommerce.j3.domain.CartItem;
 import com.ecommerce.j3.domain.Product;
 import com.ecommerce.j3.repository.AccountRepository;
 import com.ecommerce.j3.repository.CartItemRepository;
-import com.ecommerce.j3.repository.OrdersRepository;
 import com.ecommerce.j3.repository.ProductRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Transactional
@@ -25,10 +25,6 @@ class CartItemServiceTest {
     CartItemService cartItemService;
     @Autowired
     CartItemRepository cartItemRepository;
-    @Autowired
-    OrdersService ordersService;
-    @Autowired
-    OrdersRepository ordersRepository;
     @Autowired
     ProductService productService;
     @Autowired
@@ -42,25 +38,25 @@ class CartItemServiceTest {
     void beforeEach(){
         // given
         Account account = new Account();
-        account.setNickname("nick");
+        account.setNickname("CART ITEM TEST");
         account.setPasswordHash("passHash");
         account.setEmail("example1@mail.com");
         account.setPhoneNumber("000-000-000");
         accountService.save(account);
-        accountId = account.getId();
+        accountId = account.getAccountId();
 
         // given
         Product product = new Product();
         product.setTitle("title");
         product.setSlug("/dfasd");
         product.setSku("dfsa");
-        product.setPrice(123.4f);
-        product.setDiscount(13.3f);
+        product.setPrice(BigDecimal.valueOf(123.4f));
+        product.setDiscountRate(13.3f);
         product.setQuantity((short)1);
         product.setAccount(accountService.findOne(accountId).get());
         // when
         productService.save(product);
-        productId = product.getId();
+        productId = product.getProductId();
     }
 
     @Test
@@ -69,16 +65,17 @@ class CartItemServiceTest {
         CartItem cartItem = new CartItem();
         cartItem.setSku("dfsa");
         cartItem.setPrice(123.4f);
-        cartItem.setDiscount(13.3f);
+        cartItem.setDiscountRate(13.3f);
         cartItem.setQuantity((short)1);
-        cartItem.setActive((byte)1);
+//        cartItem.setActive((byte)1);
+
         cartItem.setAccount(accountService.findOne(accountId).get());
         cartItem.setProduct(productService.findOne(productId).get());
         // when
         cartItemService.save(cartItem);
 
         //then
-        CartItem cartItemFromDB = cartItemRepository.getOne(cartItem.getId());
+        CartItem cartItemFromDB = cartItemRepository.getOne(cartItem.getCartItemId());
         Assertions
                 .assertThat(cartItem.getSku())
                 .isEqualTo(cartItemFromDB.getSku());
@@ -90,9 +87,10 @@ class CartItemServiceTest {
         CartItem cartItem = new CartItem();
         cartItem.setSku("dfsa");
         cartItem.setPrice(123.4f);
-        cartItem.setDiscount(13.3f);
+        cartItem.setDiscountRate(13.3f);
         cartItem.setQuantity((short)1);
-        cartItem.setActive((byte)1);
+//        cartItem.setActive((byte)1);
+
         cartItem.setAccount(accountService.findOne(accountId).get());
         cartItem.setProduct(productService.findOne(productId).get());
         cartItemService.save(cartItem);
@@ -101,7 +99,7 @@ class CartItemServiceTest {
         cartItemService.update(cartItem);
 
         //then
-        CartItem cartItemFromDB = cartItemRepository.getOne(cartItem.getId());
+        CartItem cartItemFromDB = cartItemRepository.getOne(cartItem.getCartItemId());
         Assertions
                 .assertThat(cartItem.getSku())
                 .isEqualTo(cartItemFromDB.getSku());
@@ -113,15 +111,16 @@ class CartItemServiceTest {
         CartItem cartItem = new CartItem();
         cartItem.setSku("dfsa");
         cartItem.setPrice(123.4f);
-        cartItem.setDiscount(13.3f);
+        cartItem.setDiscountRate(13.3f);
         cartItem.setQuantity((short)1);
-        cartItem.setActive((byte)1);
+//        cartItem.setActive((byte)1);
+
         cartItem.setAccount(accountService.findOne(accountId).get());
         cartItem.setProduct(productService.findOne(productId).get());
         cartItemService.save(cartItem);
 
         //then
-        CartItem cartItemFromDB = cartItemRepository.getOne(cartItem.getId());
+        CartItem cartItemFromDB = cartItemRepository.getOne(cartItem.getCartItemId());
         Assertions
                 .assertThat(cartItem.getSku())
                 .isEqualTo(cartItemFromDB.getSku());
@@ -133,9 +132,10 @@ class CartItemServiceTest {
         CartItem cartItem = new CartItem();
         cartItem.setSku("dfsa");
         cartItem.setPrice(123.4f);
-        cartItem.setDiscount(13.3f);
+        cartItem.setDiscountRate(13.3f);
         cartItem.setQuantity((short)1);
-        cartItem.setActive((byte)1);
+//        cartItem.setActive((byte)1);
+
         cartItem.setAccount(accountService.findOne(accountId).get());
         cartItem.setProduct(productService.findOne(productId).get());
         cartItemService.save(cartItem);

@@ -16,10 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 class AddressServiceTest {
     @Autowired AccountService accountService;
     @Autowired AccountRepository accountRepository;
-    @Autowired
-    AddressService addressService;
-    @Autowired
-    AddressRepository addressRepository;
+    @Autowired AddressService addressService;
+    @Autowired AddressRepository addressRepository;
 
      Long accountId;
 
@@ -27,12 +25,12 @@ class AddressServiceTest {
     void beforeEach(){
         // given
         Account account = new Account();
-        account.setNickname("nick");
+        account.setNickname("ADDRESS TEST");
         account.setPasswordHash("passHash");
         account.setEmail("example1@mail.com");
         account.setPhoneNumber("000-000-000");
         accountService.save(account);
-        accountId = account.getId();
+        accountId = account.getAccountId();
     }
 
     @Test
@@ -41,11 +39,12 @@ class AddressServiceTest {
         Address address = new Address();
         address.setRoad_address("address");
         address.setAccount(accountService.findOne(accountId).get());
+        address.setZipCode(84984);
         // when
         addressService.save(address);
 
         //then
-        Address addressFromDB = addressRepository.getOne(address.getId());
+        Address addressFromDB = addressRepository.getOne(address.getAddressId());
         Assertions
                 .assertThat(address.getRoad_address())
                 .isEqualTo(addressFromDB.getRoad_address());
@@ -57,13 +56,14 @@ class AddressServiceTest {
         Address address = new Address();
         address.setRoad_address("address");
         address.setAccount(accountService.findOne(accountId).get());
+        address.setZipCode(84984);
         addressService.save(address);
         // when
         address.setRoad_address("new_address");
         addressService.update(address);
 
         //then
-        Address addressFromDB = addressRepository.getOne(address.getId());
+        Address addressFromDB = addressRepository.getOne(address.getAddressId());
         Assertions
                 .assertThat(address.getRoad_address())
                 .isEqualTo(addressFromDB.getRoad_address());
@@ -75,10 +75,11 @@ class AddressServiceTest {
         Address address = new Address();
         address.setRoad_address("address");
         address.setAccount(accountService.findOne(accountId).get());
+        address.setZipCode(84984);
         addressService.save(address);
 
         //then
-        Address addressFromDB = addressRepository.getOne(address.getId());
+        Address addressFromDB = addressRepository.getOne(address.getAddressId());
         Assertions
                 .assertThat(address.getRoad_address())
                 .isEqualTo(addressFromDB.getRoad_address());
@@ -90,6 +91,7 @@ class AddressServiceTest {
         Address address = new Address();
         address.setRoad_address("address");
         address.setAccount(accountService.findOne(accountId).get());
+        address.setZipCode(84984);
         addressService.save(address);
         // when
         int cnt_that = addressService.findAll().size();

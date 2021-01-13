@@ -14,8 +14,7 @@ import java.sql.Timestamp;
 public class CartItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "cart_item_id")
-    private Long id;
+    private Long cartItemId;
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
@@ -24,9 +23,9 @@ public class CartItem {
     private Account account;
     private String sku;
     private float price;
-    private float discount;
+    private float discountRate;
     private short quantity;
-    private byte active;
+//    private byte active;
     @Column(name = "created_at")
     @CreationTimestamp
     private Timestamp createdAt;

@@ -29,12 +29,12 @@ class OrdersServiceTest {
     void beforeEach(){
         // given
         Account account = new Account();
-        account.setNickname("nick");
+        account.setNickname("ORDERS");
         account.setPasswordHash("passHash");
         account.setEmail("example1@mail.com");
         account.setPhoneNumber("000-000-000");
         accountService.save(account);
-        accountId = account.getId();
+        accountId = account.getAccountId();
     }
 
     @Test
@@ -47,15 +47,16 @@ class OrdersServiceTest {
         orders.setItemPriceTotal(BigDecimal.valueOf(124));
         orders.setItemDiscount(1.23f);
         orders.setTax(0.213f);
-        orders.setShipping(231.214f);
+        orders.setShipping(BigDecimal.valueOf(231.214f));
         orders.setUserDiscount(123.13f);
         orders.setGrandTotal(213.31f);
         orders.setAccount(accountService.findOne(accountId).get());
+        orders.setZipCode(84984);
         // when
         ordersService.save(orders);
 
         //then
-        Orders ordersFromDB = ordersRepository.getOne(orders.getId());
+        Orders ordersFromDB = ordersRepository.getOne(orders.getOrderId());
         Assertions
                 .assertThat(orders.getGrandTotal())
                 .isEqualTo(ordersFromDB.getGrandTotal());
@@ -71,17 +72,18 @@ class OrdersServiceTest {
         orders.setItemPriceTotal(BigDecimal.valueOf(124));
         orders.setItemDiscount(1.23f);
         orders.setTax(0.213f);
-        orders.setShipping(231.214f);
+        orders.setShipping(BigDecimal.valueOf(231.214f));
         orders.setUserDiscount(123.13f);
         orders.setGrandTotal(213.31f);
         orders.setAccount(accountService.findOne(accountId).get());
+        orders.setZipCode(84984);
         ordersService.save(orders);
         // when
         orders.setGrandTotal(31234f);
         ordersService.update(orders);
 
         //then
-        Orders ordersFromDB = ordersRepository.getOne(orders.getId());
+        Orders ordersFromDB = ordersRepository.getOne(orders.getOrderId());
         Assertions
                 .assertThat(orders.getGrandTotal())
                 .isEqualTo(ordersFromDB.getGrandTotal());
@@ -97,14 +99,15 @@ class OrdersServiceTest {
         orders.setItemPriceTotal(BigDecimal.valueOf(124));
         orders.setItemDiscount(1.23f);
         orders.setTax(0.213f);
-        orders.setShipping(231.214f);
+        orders.setShipping(BigDecimal.valueOf(231.214f));
         orders.setUserDiscount(123.13f);
         orders.setGrandTotal(213.31f);
         orders.setAccount(accountService.findOne(accountId).get());
+        orders.setZipCode(84984);
         ordersService.save(orders);
 
         //then
-        Orders ordersFromDB = ordersService.findOne(orders.getId()).get();
+        Orders ordersFromDB = ordersService.findOne(orders.getOrderId()).get();
         Assertions
                 .assertThat(orders.getGrandTotal())
                 .isEqualTo(ordersFromDB.getGrandTotal());
@@ -120,10 +123,11 @@ class OrdersServiceTest {
         orders.setItemPriceTotal(BigDecimal.valueOf(124));
         orders.setItemDiscount(1.23f);
         orders.setTax(0.213f);
-        orders.setShipping(231.214f);
+        orders.setShipping(BigDecimal.valueOf(231.214f));
         orders.setUserDiscount(123.13f);
         orders.setGrandTotal(213.31f);
         orders.setAccount(accountService.findOne(accountId).get());
+        orders.setZipCode(84984);
         ordersService.save(orders);
 
 
@@ -147,10 +151,11 @@ class OrdersServiceTest {
         orders.setItemPriceTotal(BigDecimal.valueOf(124));
         orders.setItemDiscount(1.23f);
         orders.setTax(0.213f);
-        orders.setShipping(231.214f);
+        orders.setShipping(BigDecimal.valueOf(231.214f));
         orders.setUserDiscount(123.13f);
         orders.setGrandTotal(213.31f);
         orders.setAccount(accountService.findOne(accountId).get());
+        orders.setZipCode(84984);
         ordersService.save(orders);
         // when
         int cnt_that = ordersService.findAll().size();
