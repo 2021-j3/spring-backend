@@ -8,6 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -37,13 +38,13 @@ public class Product {
     @Column(columnDefinition = "TEXT")
     private String content;
 
-    @ManyToMany
-    @JoinTable(
-            name = "product_category"
+//    @ManyToMany
+//    @JoinTable(
+//            name = "product_category"
 //            ,joinColumns = @JoinColumn(name = "product_id"),
 //            inverseJoinColumns = @JoinColumn(name = "category_id")
-    )
-    private List<Category> categoryList;
+//    )
+//    private List<Category> categoryList = new ArrayList<>();
 //    @ManyToMany
 //    @JoinTable(
 //            name = "product_tag",

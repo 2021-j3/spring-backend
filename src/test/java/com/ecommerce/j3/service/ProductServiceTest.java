@@ -3,8 +3,10 @@ package com.ecommerce.j3.service;
 import com.ecommerce.j3.domain.Account;
 import com.ecommerce.j3.domain.Category;
 import com.ecommerce.j3.domain.Product;
+import com.ecommerce.j3.domain.ProductCategory;
 import com.ecommerce.j3.repository.AccountRepository;
 import com.ecommerce.j3.repository.CategoryRepository;
+import com.ecommerce.j3.repository.ProductCategoryRepository;
 import com.ecommerce.j3.repository.ProductRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -25,15 +27,12 @@ import java.util.List;
 class ProductServiceTest {
     @Autowired AccountService accountService;
     @Autowired AccountRepository accountRepository;
-    @Autowired
-    ProductService productService;
-    @Autowired
-    ProductRepository productRepository;
-
-    @Autowired
-            CategoryService categoryService;
-    @Autowired
-    CategoryRepository categoryRepository;
+    @Autowired ProductService productService;
+    @Autowired ProductRepository productRepository;
+    @Autowired CategoryService categoryService;
+    @Autowired CategoryRepository categoryRepository;
+    @Autowired ProductCategoryService productCategoryService;
+    @Autowired ProductCategoryRepository productCategoryRepository;
 
      Long accountId;
 
@@ -149,7 +148,7 @@ class ProductServiceTest {
         categoryService.save(category4);
 
         try {
-            System.out.println("category4: " + mapper.writeValueAsString(category4));
+            System.out.println("CATEGORY\n\n: " + mapper.writeValueAsString(category4));
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
@@ -165,32 +164,25 @@ class ProductServiceTest {
         product.setAccount(accountService.findOne(accountId).get());
 
         try {
-            System.out.println("product :" + mapper.writeValueAsString(product));
+            System.out.println("PRODUCT\n\n :" + mapper.writeValueAsString(product));
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
 
-        //when
-        List<Category> catList = new ArrayList<Category>();
-        catList.add(category4);
-        product.setCategoryList(catList);
-
         try {
-            System.out.println("product with category: " + mapper.writeValueAsString(product));
+            System.out.println("PRODUCT with category\n\n : " + mapper.writeValueAsString(product));
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
 
         productService.save(product);
+
+        ProductCategory pc = new ProductCategory();
+        pc.setProduct(product);
+        pc.setCategory(category4);
+        productCategoryRepository.save(pc);
         // when
         int cnt_that = productService.findAll().size();
         productService.remove(product);
-
-        Product productFromDB = productService.findOne(product.getProductId()).get();
-        List<Category> catList2 = productFromDB.getCategoryList();
-        for (Category cat:
-             catList2) {
-            System.out.println(cat.getTitle());
-        }
     }
 }

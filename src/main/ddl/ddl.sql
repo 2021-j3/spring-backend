@@ -227,10 +227,11 @@ DROP TABLE IF EXISTS `shop`.`product_category`;
 
 CREATE TABLE `shop`.`product_category`
 (
-    `product_id`  BIGINT NOT NULL,
-    `category_id` BIGINT NOT NULL,
+    `product_category_id` BIGINT NOT NULL AUTO_INCREMENT,
+    `product_id`          BIGINT NOT NULL,
+    `category_id`         BIGINT NOT NULL,
 
-    PRIMARY KEY (`product_id`, `category_id`),
+    PRIMARY KEY (`product_category_id`),
 
     CONSTRAINT `fk_pc_product`
         FOREIGN KEY (`product_id`) REFERENCES `shop`.`product` (`product_id`),
