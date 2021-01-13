@@ -181,7 +181,7 @@ DROP TABLE IF EXISTS `shop`.`review`;
 CREATE TABLE `shop`.`review`
 (
     `review_id`    BIGINT       NOT NULL AUTO_INCREMENT,
-    `parent_id`    BIGINT                DEFAULT NULL,
+    `parent_id`    BIGINT       NULL references review (review_id),
     `product_id`   BIGINT       NOT NULL,
     `account_id`   BIGINT       NOT NULL,
     `rate`         FLOAT        NOT NULL DEFAULT 0,
@@ -197,11 +197,7 @@ CREATE TABLE `shop`.`review`
         FOREIGN KEY (`account_id`) REFERENCES `shop`.`account` (`account_id`),
 
     CONSTRAINT `fk_review_product`
-        FOREIGN KEY (`product_id`) REFERENCES `shop`.`product` (`product_id`),
-
-    CONSTRAINT `fk_review_parent`
-        FOREIGN KEY (`parent_id`) REFERENCES `shop`.`review` (`review_id`)
-
+        FOREIGN KEY (`product_id`) REFERENCES `shop`.`product` (`product_id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
@@ -211,7 +207,7 @@ DROP TABLE IF EXISTS `shop`.`category`;
 CREATE TABLE `shop`.`category`
 (
     `category_id` BIGINT       NOT NULL AUTO_INCREMENT,
-    `parent_id`   BIGINT references category (category_id),
+    `parent_id`   BIGINT       NULL references category (category_id),
     `title`       VARCHAR(75)  NOT NULL,
     `meta_title`  VARCHAR(100) NULL DEFAULT NULL,
     `slug`        VARCHAR(100) NOT NULL,
@@ -227,10 +223,11 @@ DROP TABLE IF EXISTS `shop`.`product_category`;
 
 CREATE TABLE `shop`.`product_category`
 (
-    `product_id`  BIGINT NOT NULL,
-    `category_id` BIGINT NOT NULL,
+    `product_category_id` BIGINT NOT NULL AUTO_INCREMENT,
+    `product_id`          BIGINT NOT NULL,
+    `category_id`         BIGINT NOT NULL,
 
-    PRIMARY KEY (`product_id`, `category_id`),
+    PRIMARY KEY (`product_category_id`),
 
     CONSTRAINT `fk_pc_product`
         FOREIGN KEY (`product_id`) REFERENCES `shop`.`product` (`product_id`),

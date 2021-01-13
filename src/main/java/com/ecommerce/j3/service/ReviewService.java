@@ -30,7 +30,7 @@ public class ReviewService {
     public Optional<Review> findOne(Long reviewId){
         return reviewRepository.findById(reviewId);
     }
-    public Optional<Review> findOneByParent(Review review) {return  reviewRepository.findOneByParent(review);}
+    public Optional<Review> findOneByParent(Review review) { return  reviewRepository.findOneByParent(review);}
 
     public List<Review> findAll(){
         return reviewRepository.findAll();

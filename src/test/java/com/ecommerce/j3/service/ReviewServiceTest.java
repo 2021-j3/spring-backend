@@ -4,6 +4,7 @@ import com.ecommerce.j3.domain.Account;
 import com.ecommerce.j3.domain.Product;
 import com.ecommerce.j3.domain.Review;
 import com.ecommerce.j3.repository.*;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,7 +37,7 @@ class ReviewServiceTest {
     void beforeEach(){
         // given
         Account account = new Account();
-        account.setNickname("REVIEW");
+        account.setNickname("REVIEW_of_user");
         account.setPasswordHash("passHash");
         account.setEmail("example2@mail.com");
         account.setPhoneNumber("000-000-001");
@@ -46,7 +47,7 @@ class ReviewServiceTest {
 
         // given
         Account seller = new Account();
-        seller.setNickname("seller");
+        seller.setNickname("REVIEW_of_seller");
         seller.setPasswordHash("passHash");
         seller.setEmail("example3@mail.com");
         seller.setPhoneNumber("000-000-002");
@@ -155,33 +156,47 @@ class ReviewServiceTest {
 
     @Test
     void Parent(){
-        Review review1 = new Review();
-        review1.setProduct(productService.findOne(productId).get());
-        review1.setAccount(accountService.findOne(accountId).get());
-        review1.setRate((short) 0);
-        review1.setTitle("title");
-        review1.setPublishedAt((byte) 0);
-        review1.setContent("content");
-        reviewService.save(review1);
+        Review reviewByUser = new Review();
+        reviewByUser.setProduct(productService.findOne(productId).get());
+        reviewByUser.setAccount(accountService.findOne(accountId).get());
+        reviewByUser.setRate((short) 0);
+        reviewByUser.setTitle("title");
+        reviewByUser.setPublishedAt((byte) 0);
+        reviewByUser.setContent("content");
+        reviewService.save(reviewByUser);
 
 
-        Review review2 = new Review();
-        review2.setProduct(productService.findOne(productId).get());
-        review2.setAccount(accountService.findOne(sellerId).get());
-        review2.setRate((short) 0);
-        review2.setTitle("title");
-        review2.setPublishedAt((byte) 0);
-        review2.setContent("content");
-        review2.setParent(review2);
-        reviewService.save(review2);
+        Review reviewBySeller = new Review();
+        reviewBySeller.setProduct(productService.findOne(productId).get());
+        reviewBySeller.setAccount(accountService.findOne(sellerId).get());
+        reviewBySeller.setRate((short) 0);
+        reviewBySeller.setTitle("title");
+        reviewBySeller.setPublishedAt((byte) 0);
+        reviewBySeller.setContent("content");
+        // user가 쓴 리뷰를 parent로 갖음
+        reviewBySeller.setParent(reviewByUser);
+        reviewService.save(reviewBySeller);
 
-        ObjectMapper mapper = new ObjectMapper();
-        Review reviewFromDB = reviewService.findOne(review2.getReviewId()).get();
+        // user가 쓴 리뷰
+        Review reviewFromDB = reviewService.findOne(reviewByUser.getReviewId()).get();
+        // user가 쓴 리뷰를 parent로 갖는 리뷰
+        Review reviewFromDB2 = reviewService.findOneByParent(reviewByUser).get();
 
-        Review reviewFromDB2 = reviewService.findOneByParent(reviewFromDB).get();
+        System.out.println("\n===============CUSTOM TEST OUTPUT START===============");
 
         System.out.println(reviewFromDB.getAccount().getNickname());
 
         System.out.println(reviewFromDB2.getAccount().getNickname());
+
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            System.out.println(mapper.writeValueAsString(reviewFromDB));
+
+            System.out.println(mapper.writeValueAsString(reviewFromDB2));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("===============CUSTOM TEST OUTPUT END===============\n");
     }
 }
