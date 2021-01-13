@@ -10,8 +10,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Entity(name="order_item")
-@Getter
-@Setter
+@Getter @Setter
 public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

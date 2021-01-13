@@ -10,8 +10,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Entity(name = "cart_item")
-@Getter
-@Setter
+@Getter @Setter
 public class CartItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

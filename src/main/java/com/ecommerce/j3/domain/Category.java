@@ -12,7 +12,7 @@ public class Category {
     @Column(name = "category_id")
     private Long categoryId;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "parent_id", referencedColumnName = "category_id")
+    @JoinColumn(name = "parent_id")
     private Category parent;
     private String title;
     private String meta_title;

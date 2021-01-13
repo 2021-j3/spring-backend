@@ -11,8 +11,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Entity(name = "orders")
-@Getter
-@Setter
+@Getter @Setter
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
