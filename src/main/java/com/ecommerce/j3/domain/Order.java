@@ -8,6 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity(name = "orders")
 @Getter
@@ -39,9 +40,9 @@ public class Order {
     @JoinColumn(name = "account_id")
     private Account account;
     @CreationTimestamp
-    private Timestamp createdAt;
+    private LocalDateTime createdAt;
     @UpdateTimestamp
-    private Timestamp updatedAt;
+    private LocalDateTime updatedAt;
     @Column(columnDefinition = "TEXT")
     private String content;
 }
