@@ -8,6 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -32,11 +33,11 @@ public class Product {
     private float discountRate;
     private short quantity;
     @CreationTimestamp
-    private Timestamp createdAt;
+    private LocalDateTime createdAt;
     @UpdateTimestamp
-    private Timestamp updatedAt;
-    private Timestamp startsAt;
-    private Timestamp endsAt;
+    private LocalDateTime updatedAt;
+    private LocalDateTime startsAt;
+    private LocalDateTime endsAt;
     @Column(columnDefinition = "TEXT")
     private String content;
 

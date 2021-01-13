@@ -7,6 +7,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity(name = "cart_item")
 @Getter
@@ -26,12 +27,10 @@ public class CartItem {
     private float discountRate;
     private short quantity;
 //    private byte active;
-    @Column(name = "created_at")
     @CreationTimestamp
-    private Timestamp createdAt;
-    @Column(name = "updated_at")
+    private LocalDateTime createdAt;
     @UpdateTimestamp
-    private Timestamp updatedAt;
+    private LocalDateTime updatedAt;
     @Column(columnDefinition = "TEXT")
     private String content;
 }

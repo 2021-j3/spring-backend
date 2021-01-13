@@ -7,6 +7,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -28,9 +29,9 @@ public class Review {
     private short rate;
     private String title;
     @CreationTimestamp
-    private Timestamp createdAt;
-    private byte publishedAt;
-    private Timestamp publicAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime publishedAt;
+    private String publicAt;
     @Column(columnDefinition = "TEXT")
     private String content;
 }
