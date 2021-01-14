@@ -6,7 +6,7 @@ import com.ecommerce.j3.domain.OrderItem;
 import com.ecommerce.j3.domain.Product;
 import com.ecommerce.j3.repository.AccountRepository;
 import com.ecommerce.j3.repository.OrderItemRepository;
-import com.ecommerce.j3.repository.OrdersRepository;
+import com.ecommerce.j3.repository.OrderRepository;
 import com.ecommerce.j3.repository.ProductRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,8 +24,10 @@ class OrderItemServiceTest {
     @Autowired AccountRepository accountRepository;
     @Autowired OrderItemService orderItemService;
     @Autowired OrderItemRepository orderItemRepository;
-    @Autowired OrdersService ordersService;
-    @Autowired OrdersRepository ordersRepository;
+    @Autowired
+    OrderService orderService;
+    @Autowired
+    OrderRepository orderRepository;
     @Autowired ProductService productService;
     @Autowired ProductRepository productRepository;
 
@@ -59,7 +61,7 @@ class OrderItemServiceTest {
         order.setAccount(accountService.findOne(accountId).get());
         order.setZipCode(84984);
         // when
-        ordersService.save(order);
+        orderService.save(order);
         ordersId = order.getOrderId();
 
         // given
@@ -84,7 +86,7 @@ class OrderItemServiceTest {
         orderItem.setPrice(123.4f);
         orderItem.setDiscountRate(13.3f);
         orderItem.setQuantity((short)1);
-        orderItem.setOrder(ordersService.findOne(ordersId).get());
+        orderItem.setOrder(orderService.findOne(ordersId).get());
         orderItem.setProduct(productService.findOne(productId).get());
         // when
         orderItemService.save(orderItem);
@@ -104,7 +106,7 @@ class OrderItemServiceTest {
         orderItem.setPrice(123.4f);
         orderItem.setDiscountRate(13.3f);
         orderItem.setQuantity((short)1);
-        orderItem.setOrder(ordersService.findOne(ordersId).get());
+        orderItem.setOrder(orderService.findOne(ordersId).get());
         orderItem.setProduct(productService.findOne(productId).get());
         orderItemService.save(orderItem);
         // when
@@ -126,7 +128,7 @@ class OrderItemServiceTest {
         orderItem.setPrice(123.4f);
         orderItem.setDiscountRate(13.3f);
         orderItem.setQuantity((short)1);
-        orderItem.setOrder(ordersService.findOne(ordersId).get());
+        orderItem.setOrder(orderService.findOne(ordersId).get());
         orderItem.setProduct(productService.findOne(productId).get());
         orderItemService.save(orderItem);
 
@@ -145,7 +147,7 @@ class OrderItemServiceTest {
         orderItem.setPrice(123.4f);
         orderItem.setDiscountRate(13.3f);
         orderItem.setQuantity((short)1);
-        orderItem.setOrder(ordersService.findOne(ordersId).get());
+        orderItem.setOrder(orderService.findOne(ordersId).get());
         orderItem.setProduct(productService.findOne(productId).get());
         orderItemService.save(orderItem);
         // when

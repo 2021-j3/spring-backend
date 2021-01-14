@@ -3,7 +3,7 @@ package com.ecommerce.j3.service;
 import com.ecommerce.j3.domain.Account;
 import com.ecommerce.j3.domain.Order;
 import com.ecommerce.j3.repository.AccountRepository;
-import com.ecommerce.j3.repository.OrdersRepository;
+import com.ecommerce.j3.repository.OrderRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,9 +19,9 @@ class OrderServiceTest {
     @Autowired AccountService accountService;
     @Autowired AccountRepository accountRepository;
     @Autowired
-    OrdersService ordersService;
+    OrderService orderService;
     @Autowired
-    OrdersRepository ordersRepository;
+    OrderRepository orderRepository;
 
      Long accountId;
 
@@ -53,10 +53,10 @@ class OrderServiceTest {
         order.setAccount(accountService.findOne(accountId).get());
         order.setZipCode(84984);
         // when
-        ordersService.save(order);
+        orderService.save(order);
 
         //then
-        Order orderFromDB = ordersRepository.getOne(order.getOrderId());
+        Order orderFromDB = orderRepository.getOne(order.getOrderId());
         Assertions
                 .assertThat(order.getGrandTotal())
                 .isEqualTo(orderFromDB.getGrandTotal());
@@ -77,13 +77,13 @@ class OrderServiceTest {
         order.setGrandTotal(213.31f);
         order.setAccount(accountService.findOne(accountId).get());
         order.setZipCode(84984);
-        ordersService.save(order);
+        orderService.save(order);
         // when
         order.setGrandTotal(31234f);
-        ordersService.update(order);
+        orderService.update(order);
 
         //then
-        Order orderFromDB = ordersRepository.getOne(order.getOrderId());
+        Order orderFromDB = orderRepository.getOne(order.getOrderId());
         Assertions
                 .assertThat(order.getGrandTotal())
                 .isEqualTo(orderFromDB.getGrandTotal());
@@ -104,10 +104,10 @@ class OrderServiceTest {
         order.setGrandTotal(213.31f);
         order.setAccount(accountService.findOne(accountId).get());
         order.setZipCode(84984);
-        ordersService.save(order);
+        orderService.save(order);
 
         //then
-        Order orderFromDB = ordersService.findOne(order.getOrderId()).get();
+        Order orderFromDB = orderService.findOne(order.getOrderId()).get();
         Assertions
                 .assertThat(order.getGrandTotal())
                 .isEqualTo(orderFromDB.getGrandTotal());
@@ -128,13 +128,13 @@ class OrderServiceTest {
         order.setGrandTotal(213.31f);
         order.setAccount(accountService.findOne(accountId).get());
         order.setZipCode(84984);
-        ordersService.save(order);
+        orderService.save(order);
 
 
         // when
 
         //then
-        int cnt_now = ordersService.findByAccount(accountService.findOne(accountId).get()).size();
+        int cnt_now = orderService.findByAccount(accountService.findOne(accountId).get()).size();
         Assertions
                 .assertThat(1)
                 .isEqualTo(cnt_now);
@@ -156,13 +156,13 @@ class OrderServiceTest {
         order.setGrandTotal(213.31f);
         order.setAccount(accountService.findOne(accountId).get());
         order.setZipCode(84984);
-        ordersService.save(order);
+        orderService.save(order);
         // when
-        int cnt_that = ordersService.findAll().size();
-        ordersService.remove(order);
+        int cnt_that = orderService.findAll().size();
+        orderService.remove(order);
 
         //then
-        int cnt_now = ordersService.findAll().size();
+        int cnt_now = orderService.findAll().size();
         Assertions
                 .assertThat(cnt_that - 1)
                 .isEqualTo(cnt_now);

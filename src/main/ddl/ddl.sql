@@ -27,8 +27,6 @@ CREATE TABLE `shop`.`account`
 
 DROP TABLE IF EXISTS `shop`.`product`;
 
-DROP TABLE IF EXISTS `shop`.`product`;
-
 CREATE TABLE `shop`.`product`
 (
     `product_id`    BIGINT      NOT NULL AUTO_INCREMENT,
@@ -85,9 +83,9 @@ CREATE TABLE `shop`.`cart_item`
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
 
-DROP TABLE IF EXISTS `shop`.`order`;
+DROP TABLE IF EXISTS `shop`.`orders`;
 
-CREATE TABLE `shop`.`order`
+CREATE TABLE `shop`.`orders`
 (
     `order_id`         BIGINT       NOT NULL AUTO_INCREMENT,
     `account_id`       BIGINT       NULL     DEFAULT NULL,
@@ -144,7 +142,7 @@ CREATE TABLE `shop`.`order_item`
         FOREIGN KEY (`product_id`) REFERENCES `shop`.`product` (`product_id`),
 
     CONSTRAINT `fk_order_item_orders`
-        FOREIGN KEY (`order_id`) REFERENCES `shop`.`order` (`order_id`)
+        FOREIGN KEY (`order_id`) REFERENCES `shop`.`orders` (`order_id`)
 
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
@@ -170,7 +168,7 @@ CREATE TABLE `shop`.`payment`
         FOREIGN KEY (`account_id`) REFERENCES `shop`.`account` (`account_id`),
 
     CONSTRAINT `fk_payment_orders`
-        FOREIGN KEY (`order_id`) REFERENCES `shop`.`order` (`order_id`)
+        FOREIGN KEY (`order_id`) REFERENCES `shop`.`orders` (`order_id`)
 
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
@@ -180,16 +178,14 @@ DROP TABLE IF EXISTS `shop`.`review`;
 
 CREATE TABLE `shop`.`review`
 (
-    `review_id`    BIGINT       NOT NULL AUTO_INCREMENT,
-    `parent_id`    BIGINT       NULL references review (review_id),
-    `product_id`   BIGINT       NOT NULL,
-    `account_id`   BIGINT       NOT NULL,
-    `rate`         FLOAT        NOT NULL DEFAULT 0,
-    `title`        VARCHAR(100) NOT NULL,
-    `created_at`   DATETIME     NOT NULL,
-    `published_at` DATETIME     NOT NULL DEFAULT 0,
-    `public_at`    DATETIME     NULL     DEFAULT NULL,
-    `content`      TEXT         NULL     DEFAULT NULL,
+    `review_id`  BIGINT       NOT NULL AUTO_INCREMENT,
+    `parent_id`  BIGINT       NULL references review (review_id),
+    `product_id` BIGINT       NOT NULL,
+    `account_id` BIGINT       NOT NULL,
+    `rate`       FLOAT        NOT NULL DEFAULT 0,
+    `title`      VARCHAR(100) NOT NULL,
+    `created_at` DATETIME     NOT NULL,
+    `content`    TEXT         NULL     DEFAULT NULL,
 
     PRIMARY KEY (`review_id`),
 
@@ -275,12 +271,16 @@ DROP TABLE IF EXISTS `shop`.`watch`;
 
 CREATE TABLE `shop`.`watch`
 (
-    `account_id`   BIGINT   NOT NULL AUTO_INCREMENT,
+    `watch_id`     BIGINT   NOT NULL AUTO_INCREMENT,
+    `account_id`   BIGINT   NOT NULL,
     `product_id`   BIGINT   NOT NULL,
     `recent_watch` DATETIME NOT NULL,
-    `watch_count`  int      NOT NULL,
+    `watch_count`  INT DEFAULT 1,
 
-    PRIMARY KEY (`account_id`),
+    PRIMARY KEY (`watch_id`),
+
+    CONSTRAINT `fk_watch_account`
+        FOREIGN KEY (`account_id`) REFERENCES `shop`.`account` (`account_id`),
 
     CONSTRAINT `fk_watch_product`
         FOREIGN KEY (`product_id`) REFERENCES `shop`.`product` (`product_id`)
@@ -315,9 +315,12 @@ DROP TABLE IF EXISTS `shop`.`suggestion`;
 
 CREATE TABLE `shop`.`suggestion`
 (
-    `account_id` BIGINT NOT NULL AUTO_INCREMENT,
-    `product_id` BIGINT NULL DEFAULT NULL,
-    `content`    TEXT   NULL DEFAULT NULL,
+    `suggestion_id` BIGINT NOT NULL AUTO_INCREMENT,
+    `account_id`    BIGINT NOT NULL,
+    `product_id`    BIGINT DEFAULT NULL,
+    `content`       TEXT   DEFAULT NULL,
+
+    PRIMARY KEY (`suggestion_id`),
 
     CONSTRAINT `fk_sg_account`
         FOREIGN KEY (`account_id`) REFERENCES `shop`.`account` (`account_id`),

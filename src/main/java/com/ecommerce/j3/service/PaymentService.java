@@ -1,8 +1,8 @@
 package com.ecommerce.j3.service;
 
 import com.ecommerce.j3.domain.Account;
-import com.ecommerce.j3.domain.Watch;
-import com.ecommerce.j3.repository.WatchRepository;
+import com.ecommerce.j3.domain.Payment;
+import com.ecommerce.j3.repository.PaymentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,39 +10,33 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class WatchService {
-    private WatchRepository watchRepository;
+public class PaymentService {
+    private PaymentRepository paymentRepository;
 
     @Autowired
-    public WatchService(WatchRepository watchRepository){this.watchRepository = watchRepository;}
+    public PaymentService(PaymentRepository paymentRepository){this.paymentRepository = paymentRepository;}
 
-    public Watch save(Watch watch){
-        watchRepository.save(watch);
-        return watch;
+    public Payment save(Payment payment){
+        paymentRepository.save(payment);
+        return payment;
     }
 
-    public Watch update(Watch watch){
-        watchRepository.save(watch);
-        return watch;
+    public Payment update(Payment payment){
+        paymentRepository.save(payment);
+        return payment;
     }
 
-    public int increase(Watch watch){
-        watch.setWatchCount(watch.getWatchCount() + 1);
-        update(watch);
-        return watch.getWatchCount();
+    public Optional<Payment> findOne(Long paymentId){
+        return paymentRepository.findById(paymentId);
     }
 
-    public Optional<Watch> findOne(Long watchId){
-        return watchRepository.findById(watchId);
+    public List<Payment> findByAccount(Account account){return paymentRepository.findByAccount(account);}
+
+    public List<Payment> findAll(){
+        return paymentRepository.findAll();
     }
 
-    public List<Watch> findByAccount(Account account){return watchRepository.findByAccount(account);}
-
-    public List<Watch> findAll(){
-        return watchRepository.findAll();
-    }
-
-    public void remove(Watch watch){
-        watchRepository.delete(watch);
+    public void remove(Payment payment){
+        paymentRepository.delete(payment);
     }
 }

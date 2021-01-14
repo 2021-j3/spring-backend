@@ -77,7 +77,6 @@ class ReviewServiceTest {
         review.setAccount(accountService.findOne(accountId).get());
         review.setRate((short) 0);
         review.setTitle("title");
-        review.setPublishedAt((byte) 0);
         review.setContent("content");
         // when
         reviewService.save(review);
@@ -97,7 +96,6 @@ class ReviewServiceTest {
         review.setAccount(accountService.findOne(accountId).get());
         review.setRate((short) 0);
         review.setTitle("title");
-        review.setPublishedAt((byte) 0);
         review.setContent("content");
         reviewService.save(review);
 
@@ -121,7 +119,6 @@ class ReviewServiceTest {
         review.setAccount(accountService.findOne(accountId).get());
         review.setRate((short) 0);
         review.setTitle("title");
-        review.setPublishedAt((byte) 0);
         review.setContent("content");
         reviewService.save(review);
 
@@ -140,7 +137,6 @@ class ReviewServiceTest {
         review.setAccount(accountService.findOne(accountId).get());
         review.setRate((short) 0);
         review.setTitle("title");
-        review.setPublishedAt((byte) 0);
         review.setContent("content");
         reviewService.save(review);
         // when
@@ -161,7 +157,6 @@ class ReviewServiceTest {
         reviewByUser.setAccount(accountService.findOne(accountId).get());
         reviewByUser.setRate((short) 0);
         reviewByUser.setTitle("title");
-        reviewByUser.setPublishedAt((byte) 0);
         reviewByUser.setContent("content");
         reviewService.save(reviewByUser);
 
@@ -171,7 +166,6 @@ class ReviewServiceTest {
         reviewBySeller.setAccount(accountService.findOne(sellerId).get());
         reviewBySeller.setRate((short) 0);
         reviewBySeller.setTitle("title");
-        reviewBySeller.setPublishedAt((byte) 0);
         reviewBySeller.setContent("content");
         // user가 쓴 리뷰를 parent로 갖음
         reviewBySeller.setParent(reviewByUser);

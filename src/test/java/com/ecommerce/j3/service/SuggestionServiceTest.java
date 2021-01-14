@@ -1,11 +1,11 @@
 package com.ecommerce.j3.service;
 
 import com.ecommerce.j3.domain.Account;
-import com.ecommerce.j3.domain.Watch;
 import com.ecommerce.j3.domain.Product;
+import com.ecommerce.j3.domain.Suggestion;
 import com.ecommerce.j3.repository.AccountRepository;
-import com.ecommerce.j3.repository.WatchRepository;
 import com.ecommerce.j3.repository.ProductRepository;
+import com.ecommerce.j3.repository.SuggestionRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,16 +18,17 @@ import java.util.List;
 
 @Transactional
 @SpringBootTest
-class WatchServiceTest {
+class SuggestionServiceTest {
     @Autowired AccountService accountService;
     @Autowired AccountRepository accountRepository;
-    @Autowired WatchService watchService;
-    @Autowired WatchRepository watchRepository;
+    @Autowired SuggestionService suggestionService;
+    @Autowired SuggestionRepository suggestionRepository;
     @Autowired ProductService productService;
     @Autowired ProductRepository productRepository;
 
     Long accountId;
-    Long productId;
+    Long productId1;
+    Long productId2;
 
     @BeforeEach
     void beforeEach(){
@@ -42,80 +43,94 @@ class WatchServiceTest {
 
         // given
         Product product = new Product();
-        product.setTitle("title");
-        product.setSlug("/dfasd");
-        product.setSku("dfsa");
+        product.setTitle("product1");
+        product.setSlug("/slug1");
+        product.setSku("sku1");
         product.setPrice(BigDecimal.valueOf(123.4f));
         product.setDiscountRate(13.3f);
         product.setQuantity((short)1);
         product.setAccount(accountService.findOne(accountId).get());
         // when
         productService.save(product);
-        productId = product.getProductId();
+        productId1 = product.getProductId();
+
+        // given
+        Product product2 = new Product();
+        product2.setTitle("product2");
+        product2.setSlug("/slug2");
+        product2.setSku("sku2");
+        product2.setPrice(BigDecimal.valueOf(123.4f));
+        product2.setDiscountRate(13.3f);
+        product2.setQuantity((short)1);
+        product2.setAccount(accountService.findOne(accountId).get());
+        // when
+        productService.save(product2);
+        productId2 = product2.getProductId();
     }
 
     @Test
     void save(){
         // given
-        Watch watch = new Watch();
-        watch.setAccount(accountService.findOne(accountId).get());
-        watch.setProduct(productService.findOne(productId).get());
+        Suggestion suggestion = new Suggestion();
+        suggestion.setAccount(accountService.findOne(accountId).get());
+        suggestion.setProduct(productService.findOne(productId1).get());
         // when
-        watchService.save(watch);
+        suggestionService.save(suggestion);
 
         //then
-        Watch watchFromDB = watchRepository.getOne(watch.getWatchId());
+        Suggestion suggestionFromDB = suggestionRepository.getOne(suggestion.getSuggestionId());
         Assertions
-                .assertThat(watch.getAccount())
-                .isEqualTo(watchFromDB.getAccount());
+                .assertThat(suggestion.getAccount())
+                .isEqualTo(suggestionFromDB.getAccount());
     }
 
     @Test
     void update() {
         // given
-        Watch watch = new Watch();
-        watch.setAccount(accountService.findOne(accountId).get());
-        watch.setProduct(productService.findOne(productId).get());
-        watchService.save(watch);
+        Suggestion suggestion = new Suggestion();
+        suggestion.setAccount(accountService.findOne(accountId).get());
+        suggestion.setProduct(productService.findOne(productId1).get());
+        suggestionService.save(suggestion);
         // when
-        watchService.increase(watch);
+        suggestion.setProduct(productService.findOne(productId2).get());
+        suggestionService.update(suggestion);
 
         //then
-        Watch watchFromDB = watchRepository.getOne(watch.getWatchId());
+        Suggestion suggestionFromDB = suggestionRepository.getOne(suggestion.getSuggestionId());
         Assertions
-                .assertThat(watch.getWatchCount())
-                .isEqualTo(watchFromDB.getWatchCount());
+                .assertThat(suggestion.getProduct())
+                .isEqualTo(suggestionFromDB.getProduct());
     }
 
     @Test
     void findOneById() {
         // given
-        Watch watch = new Watch();
-        watch.setAccount(accountService.findOne(accountId).get());
-        watch.setProduct(productService.findOne(productId).get());
-        watchService.save(watch);
+        Suggestion suggestion = new Suggestion();
+        suggestion.setAccount(accountService.findOne(accountId).get());
+        suggestion.setProduct(productService.findOne(productId1).get());
+        suggestionService.save(suggestion);
 
         //then
-        Watch watchFromDB = watchRepository.getOne(watch.getWatchId());
+        Suggestion suggestionFromDB = suggestionRepository.getOne(suggestion.getSuggestionId());
         Assertions
-                .assertThat(watch.getAccount())
-                .isEqualTo(watchFromDB.getAccount());
+                .assertThat(suggestion.getAccount())
+                .isEqualTo(suggestionFromDB.getAccount());
     }
 
     @Test
     void remove() {
         // given
-        Watch watch = new Watch();
-        watch.setAccount(accountService.findOne(accountId).get());
-        watch.setProduct(productService.findOne(productId).get());
-        watchService.save(watch);
+        Suggestion suggestion = new Suggestion();
+        suggestion.setAccount(accountService.findOne(accountId).get());
+        suggestion.setProduct(productService.findOne(productId1).get());
+        suggestionService.save(suggestion);
         // when
-        List<Watch> watchList = watchService.findAll();
-        int cnt_that = watchList.size();
-        watchService.remove(watch);
+        List<Suggestion> suggestionList = suggestionService.findAll();
+        int cnt_that = suggestionList.size();
+        suggestionService.remove(suggestion);
 
         //then
-        int cnt_now = watchService.findAll().size();
+        int cnt_now = suggestionService.findAll().size();
         Assertions
                 .assertThat(cnt_that - 1)
                 .isEqualTo(cnt_now);

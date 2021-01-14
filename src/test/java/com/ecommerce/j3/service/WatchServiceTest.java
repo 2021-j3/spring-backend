@@ -1,10 +1,10 @@
 package com.ecommerce.j3.service;
 
 import com.ecommerce.j3.domain.Account;
-import com.ecommerce.j3.domain.CartItem;
+import com.ecommerce.j3.domain.Watch;
 import com.ecommerce.j3.domain.Product;
 import com.ecommerce.j3.repository.AccountRepository;
-import com.ecommerce.j3.repository.CartItemRepository;
+import com.ecommerce.j3.repository.WatchRepository;
 import com.ecommerce.j3.repository.ProductRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,18 +18,13 @@ import java.util.List;
 
 @Transactional
 @SpringBootTest
-class CartItemServiceTest {
+class WatchServiceTest {
     @Autowired AccountService accountService;
     @Autowired AccountRepository accountRepository;
-    @Autowired
-    CartItemService cartItemService;
-    @Autowired
-    CartItemRepository cartItemRepository;
-    @Autowired
-    ProductService productService;
-    @Autowired
-    ProductRepository productRepository;
-
+    @Autowired WatchService watchService;
+    @Autowired WatchRepository watchRepository;
+    @Autowired ProductService productService;
+    @Autowired ProductRepository productRepository;
 
     Long accountId;
     Long productId;
@@ -62,90 +57,65 @@ class CartItemServiceTest {
     @Test
     void save(){
         // given
-        CartItem cartItem = new CartItem();
-        cartItem.setSku("dfsa");
-        cartItem.setPrice(123.4f);
-        cartItem.setDiscountRate(13.3f);
-        cartItem.setQuantity((short)1);
-//        cartItem.setActive((byte)1);
-
-        cartItem.setAccount(accountService.findOne(accountId).get());
-        cartItem.setProduct(productService.findOne(productId).get());
+        Watch watch = new Watch();
+        watch.setAccount(accountService.findOne(accountId).get());
+        watch.setProduct(productService.findOne(productId).get());
         // when
-        cartItemService.save(cartItem);
+        watchService.save(watch);
 
         //then
-        CartItem cartItemFromDB = cartItemRepository.getOne(cartItem.getCartItemId());
+        Watch watchFromDB = watchRepository.getOne(watch.getWatchId());
         Assertions
-                .assertThat(cartItem.getSku())
-                .isEqualTo(cartItemFromDB.getSku());
+                .assertThat(watch.getAccount())
+                .isEqualTo(watchFromDB.getAccount());
     }
 
     @Test
     void update() {
         // given
-        CartItem cartItem = new CartItem();
-        cartItem.setSku("dfsa");
-        cartItem.setPrice(123.4f);
-        cartItem.setDiscountRate(13.3f);
-        cartItem.setQuantity((short)1);
-//        cartItem.setActive((byte)1);
-
-        cartItem.setAccount(accountService.findOne(accountId).get());
-        cartItem.setProduct(productService.findOne(productId).get());
-        cartItemService.save(cartItem);
+        Watch watch = new Watch();
+        watch.setAccount(accountService.findOne(accountId).get());
+        watch.setProduct(productService.findOne(productId).get());
+        watchService.save(watch);
         // when
-        cartItem.setSku("new");
-        cartItemService.update(cartItem);
+        watchService.increase(watch);
 
         //then
-        CartItem cartItemFromDB = cartItemRepository.getOne(cartItem.getCartItemId());
+        Watch watchFromDB = watchRepository.getOne(watch.getWatchId());
         Assertions
-                .assertThat(cartItem.getSku())
-                .isEqualTo(cartItemFromDB.getSku());
+                .assertThat(watch.getWatchCount())
+                .isEqualTo(watchFromDB.getWatchCount());
     }
 
     @Test
     void findOneById() {
         // given
-        CartItem cartItem = new CartItem();
-        cartItem.setSku("dfsa");
-        cartItem.setPrice(123.4f);
-        cartItem.setDiscountRate(13.3f);
-        cartItem.setQuantity((short)1);
-//        cartItem.setActive((byte)1);
-
-        cartItem.setAccount(accountService.findOne(accountId).get());
-        cartItem.setProduct(productService.findOne(productId).get());
-        cartItemService.save(cartItem);
+        Watch watch = new Watch();
+        watch.setAccount(accountService.findOne(accountId).get());
+        watch.setProduct(productService.findOne(productId).get());
+        watchService.save(watch);
 
         //then
-        CartItem cartItemFromDB = cartItemRepository.getOne(cartItem.getCartItemId());
+        Watch watchFromDB = watchRepository.getOne(watch.getWatchId());
         Assertions
-                .assertThat(cartItem.getSku())
-                .isEqualTo(cartItemFromDB.getSku());
+                .assertThat(watch.getAccount())
+                .isEqualTo(watchFromDB.getAccount());
     }
 
     @Test
     void remove() {
         // given
-        CartItem cartItem = new CartItem();
-        cartItem.setSku("dfsa");
-        cartItem.setPrice(123.4f);
-        cartItem.setDiscountRate(13.3f);
-        cartItem.setQuantity((short)1);
-//        cartItem.setActive((byte)1);
-
-        cartItem.setAccount(accountService.findOne(accountId).get());
-        cartItem.setProduct(productService.findOne(productId).get());
-        cartItemService.save(cartItem);
+        Watch watch = new Watch();
+        watch.setAccount(accountService.findOne(accountId).get());
+        watch.setProduct(productService.findOne(productId).get());
+        watchService.save(watch);
         // when
-        List<CartItem> cartItemList = cartItemService.findAll();
-        int cnt_that = cartItemList.size();
-        cartItemService.remove(cartItem);
+        List<Watch> watchList = watchService.findAll();
+        int cnt_that = watchList.size();
+        watchService.remove(watch);
 
         //then
-        int cnt_now = cartItemService.findAll().size();
+        int cnt_now = watchService.findAll().size();
         Assertions
                 .assertThat(cnt_that - 1)
                 .isEqualTo(cnt_now);
