@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Hello</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+</head>
+<body>
+<p th:text="${greet}"></p>
+<p th:text="'나는 ' + ${name}"></p>
+<p id="t"></p>
+<script>document.getElementById("t").innerHTML = "this is by Javascript";
+</script>
+
+
+</body>
+</html>
