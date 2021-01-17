@@ -6,7 +6,7 @@ CREATE TABLE `shop`.`account`
 (
     `account_id`    BIGINT      NOT NULL AUTO_INCREMENT,
     `nickname`      VARCHAR(50) NOT NULL,
-    `password_hash` VARCHAR(50) NOT NULL,
+    `password_hash` VARCHAR(120) NOT NULL,
     `first_name`    VARCHAR(45)            DEFAULT NULL,
     `last_name`     VARCHAR(45)            DEFAULT NULL,
     `gender`        ENUM ('MALE','FEMALE') DEFAULT NULL,
