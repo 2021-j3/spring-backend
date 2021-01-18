@@ -22,7 +22,7 @@
         <option th:each="type : ${T(com.ecommerce.j3.domain.GenderType).values()}"
                 th:value="${type}" th:text="${type}"></option>
     </select></div>
-    <div>*핸드폰 번호<input type="text" th:field="*{phoneNumber}" name="phoneNumber"/></div>
+    <div>핸드폰 번호<input type="text" th:field="*{phoneNumber}" name="phoneNumber"/></div>
     <div>생일<input type="date" th:field="*{birthday}" name="birthday"></div>
     <button type="submit">가입</button>
 </form>
