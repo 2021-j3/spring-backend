@@ -14,7 +14,7 @@ public class PhoneNumberValidator implements ConstraintValidator<PhoneNumber, St
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
         // 전화번호 규칙 https://regex101.com/r/HRgn9l/1
-        return value != null && value.matches("01[01](-\\d{3,4}){2}")
+        return value.equals("") || value.matches("01[01](-\\d{3,4}){2}")
                 && (value.length() > 8) && (value.length() < 14);
     }
 }
