@@ -34,7 +34,7 @@ public class AccountDTO {
     @Enumerated(EnumType.STRING)
     private GenderType gender;
     @DateTimeFormat(pattern="yyyy-MM-dd")
-    private LocalDateTime birthday;
+    private LocalDate birthday;
     @PhoneNumber(message="핸드폰번호 형식이 아닙니다")
     private String phoneNumber;
 }
