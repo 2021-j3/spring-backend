@@ -1,24 +1,20 @@
 package com.ecommerce.j3.domain.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
-@Entity
-@Getter @Setter
-@NoArgsConstructor @AllArgsConstructor
+@Entity @Getter @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Tag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long tagId;
-
     private String title;
-    private String metaTitle;
+    private String meta_title;
     private String slug;
-
     @Column(columnDefinition = "TEXT")
     private String content;
 }

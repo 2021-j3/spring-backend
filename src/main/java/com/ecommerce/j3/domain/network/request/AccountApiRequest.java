@@ -1,23 +1,23 @@
-package com.ecommerce.j3.domain.entity;
+package com.ecommerce.j3.domain.network.request;
 
+import com.ecommerce.j3.domain.entity.AccountType;
+import com.ecommerce.j3.domain.entity.GenderType;
 import lombok.*;
-import lombok.experimental.Accessors;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Entity
-@Getter @Setter
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Accessors(chain = true)
-public class Account {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class AccountApiRequest {
     private Long accountId;
 
     private String nickname;
@@ -44,7 +44,5 @@ public class Account {
     @Column(columnDefinition = "ENUM('USER','SELLER','ADMIN')")
     @Enumerated(EnumType.STRING)
     private AccountType accountType;
-//    @OneToMany
-//    @JoinColumn(name="account_id")
-//    private List<Watch> watchList;
+
 }

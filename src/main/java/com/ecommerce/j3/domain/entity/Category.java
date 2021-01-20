@@ -1,32 +1,22 @@
 package com.ecommerce.j3.domain.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
-@Entity
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Entity @Getter @Setter
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "category_id")
     private Long categoryId;
-
-    @ToString.Exclude()
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
     private Category parent;
-
     private String title;
-
-    private String metaTitle;
-
+    private String meta_title;
     private String slug;
-
     @Column(columnDefinition = "TEXT")
     private String content;
 }

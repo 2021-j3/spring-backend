@@ -1,51 +1,36 @@
 package com.ecommerce.j3.domain.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@Entity
-@Data
+@Entity(name = "cart_item")
+@Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class CartItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cartItemId;
-
-    // private Long accountId;
-    // CartItem : Account ===> N : 1
-    @ToString.Exclude()
-    @ManyToOne
-    @JoinColumn(name = "account_id")
-    private Account account;
-
-    // private Long productId;
-    // CartItem : Product ===> N : 1
-    @ToString.Exclude()
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
-
+    @ManyToOne
+    @JoinColumn(name = "account_id")
+    private Account account;
     private String sku;
-
-    private BigDecimal price;
-
-    private Float discountRate;
-
-    private Integer quantity;
-
-//    private Integer active;
-
+    private float price;
+    private float discountRate;
+    private short quantity;
+//    private byte active;
+    @CreationTimestamp
     private LocalDateTime createdAt;
-
+    @UpdateTimestamp
     private LocalDateTime updatedAt;
-
+    @Column(columnDefinition = "TEXT")
     private String content;
-
 }

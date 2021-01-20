@@ -1,37 +1,26 @@
 package com.ecommerce.j3.domain.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity
-@Data
+@Entity @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Watch {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long watchId;
-
-    // private Long accountId;
-    // Watch : Account ===> N : 1
-    @ToString.Exclude()
     @ManyToOne
     @JoinColumn(name = "account_id")
     private Account account;
-
-    // private Long productId;
-    // Watch : Product ===> N : 1
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
-
+    @UpdateTimestamp
     private LocalDateTime recentWatch;
-
-    private Integer watchCount;
-
+    private Integer watchCount = 1;
 }
