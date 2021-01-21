@@ -1,6 +1,6 @@
 package com.ecommerce.j3.controller;
 
-import com.ecommerce.j3.domain.GenderType;
+import com.ecommerce.j3.domain.AccountDTO;
 import com.ecommerce.j3.service.AccountService;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
-import java.time.LocalDateTime;
 
 @Controller
 @NoArgsConstructor
