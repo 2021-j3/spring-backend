@@ -1,45 +1,43 @@
 package com.ecommerce.j3.domain.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
+import lombok.experimental.Accessors;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity
-@Data
+@Entity @Getter @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Accessors(chain = true)
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reviewId;
 
-    @ToString.Exclude()
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
 
-    @ToString.Exclude()
     @ManyToOne
     @JoinColumn(name = "account_id")
     private Account account;
 
-    @ToString.Exclude()
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
     private Review parent;
 
-    private Float rate;
+    private Integer rate = 1;
 
     private String title;
 
-    @CreationTimestamp
-    private LocalDateTime createdAt;
+    // private ReviewType type;
+    // private bool public;
 
     @Column(columnDefinition = "TEXT")
     private String content;
+
+    @CreationTimestamp
+    private LocalDateTime createdAt;
 }

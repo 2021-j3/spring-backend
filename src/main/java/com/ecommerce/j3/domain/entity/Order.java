@@ -1,60 +1,51 @@
 package com.ecommerce.j3.domain.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
+import lombok.experimental.Accessors;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@Entity
-@Data
+@Entity(name="orders") @Getter @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "orders")
+@Accessors(chain = true)
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderId;
 
-    // private Long accountId;
-    // Order : Account ===> N : 1
-    @ToString.Exclude()
-    @ManyToOne
-    @JoinColumn(name = "account_id")
-    private Account account;
-
     private String sessionId;
 
     private String token;
 
-    private Integer status;
+    @Column(columnDefinition = "enum('READY', 'ORDER', 'CANCEL')")
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status;
 
-    private BigDecimal itemPriceTotal;
+    private Integer itemPriceTotal;
 
     private Integer itemDiscount;
 
-    private Float tax;
+    private Integer tax;
 
-    private BigDecimal shipping;
+    private Integer shipping;
 
-    private Float userDiscount;
+    private Integer userDiscount;
 
-    private Float grandTotal;
+    private Integer grandTotal;
 
     private String firstName;
 
     private String lastName;
 
-    private String email;
-
     private String phoneNumber;
 
-    private String roadAddress;
+    private String email;
+
+    private String roadAddress;;
 
     private String address;
 
@@ -66,12 +57,16 @@ public class Order {
 
     private Integer zipCode;
 
+    @Column(columnDefinition = "TEXT")
+    private String content;
+
+    @ManyToOne
+    @JoinColumn(name = "account_id")
+    private Account account;
+
     @CreationTimestamp
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
-
-    @Column(columnDefinition = "TEXT")
-    private String content;
 }
