@@ -18,7 +18,6 @@ import java.time.LocalDateTime;
 public class AccountApiResponse {
     private Long accountId;
 
-    private String nickname;
     private String email;
 
     // 암호화 처리

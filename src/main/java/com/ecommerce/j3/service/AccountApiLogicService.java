@@ -46,7 +46,6 @@ public class AccountApiLogicService implements CrudInterface<AccountApiRequest, 
                 accountId(accountApiRequest.getAccountId()).
                 email(accountApiRequest.getEmail()).
                 passwordHash(accountApiRequest.getPasswordHash()).
-                nickname(accountApiRequest.getNickname()).
                 firstName(accountApiRequest.getFirstName()).
                 lastName(accountApiRequest.getLastName()).
                 gender(accountApiRequest.getGender()).
@@ -84,20 +83,32 @@ public class AccountApiLogicService implements CrudInterface<AccountApiRequest, 
 
         return optional.map(account -> {
             // 3. update
-            account
-                    .setEmail(accountApiRequest.getEmail())
-                    .setPasswordHash(accountApiRequest.getPasswordHash())
-                    .setNickname(accountApiRequest.getNickname())
-                    .setFirstName(accountApiRequest.getFirstName())
-                    .setLastName(accountApiRequest.getLastName())
-                    .setGender(accountApiRequest.getGender())
-                    .setBirthday(accountApiRequest.getBirthday())
-                    .setPhoneNumber(accountApiRequest.getPhoneNumber())
-//                    .setRegisteredAt(accountApiRequest.getRegisteredAt())
-//                    .setLastLogin(accountApiRequest.getLastLogin())
-                    .setAccountType(accountApiRequest.getAccountType())
+            Account account2 = Account.builder().
+                    accountId(account.getAccountId()).
+                    email(accountApiRequest.getEmail()).
+                    passwordHash(accountApiRequest.getPasswordHash()).
+                    firstName(accountApiRequest.getFirstName()).
+                    lastName(accountApiRequest.getLastName()).
+                    gender(accountApiRequest.getGender()).
+                    birthday(accountApiRequest.getBirthday()).
+                    phoneNumber(accountApiRequest.getPhoneNumber()).
+                    registeredAt(accountApiRequest.getRegisteredAt()).
+                    lastLogin(accountApiRequest.getLastLogin()).
+                    accountType(accountApiRequest.getAccountType()).
+                    build();
+//            account
+//                    .setEmail(accountApiRequest.getEmail())
+//                    .setPasswordHash(accountApiRequest.getPasswordHash())
+//                    .setFirstName(accountApiRequest.getFirstName())
+//                    .setLastName(accountApiRequest.getLastName())
+//                    .setGender(accountApiRequest.getGender())
+//                    .setBirthday(accountApiRequest.getBirthday())
+//                    .setPhoneNumber(accountApiRequest.getPhoneNumber())
+////                    .setRegisteredAt(accountApiRequest.getRegisteredAt())
+////                    .setLastLogin(accountApiRequest.getLastLogin())
+//                    .setAccountType(accountApiRequest.getAccountType())
             ;
-            return account;
+            return account2;
         })
                 .map(account -> accountRepository.save(account))
                 .map(updateAccount -> response(updateAccount))
@@ -122,7 +133,6 @@ public class AccountApiLogicService implements CrudInterface<AccountApiRequest, 
                 accountId(account.getAccountId()).
                 email(account.getEmail()).
                 passwordHash(account.getPasswordHash()).
-                nickname(account.getNickname()).
                 firstName(account.getFirstName()).
                 lastName(account.getLastName()).
                 gender(account.getGender()).

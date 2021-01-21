@@ -1,42 +1,65 @@
 package com.ecommerce.j3.domain.entity;
 
 import lombok.*;
+import lombok.experimental.Accessors;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.sql.Blob;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity @Getter @Setter
+@Entity @Getter @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Accessors(chain = true)
 public class Product {
     @Id
-    @Column(name = "product_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productId;
+
+    @NonNull
     @ManyToOne
     @JoinColumn(name = "seller_id")
-    private Account account;
+    private Account seller;
+
+    @NonNull
     private String title;
-    private String meta_title;
+
+    @NonNull
+    private String metaTitle;
+
+    @NonNull
     private String slug;
+
     private String sku;
-    private BigDecimal price;
-    private float discountRate;
-    private short quantity;
-    @CreationTimestamp
-    private LocalDateTime createdAt;
-    @UpdateTimestamp
-    private LocalDateTime updatedAt;
-    private LocalDateTime startsAt;
-    private LocalDateTime endsAt;
+
+    private Integer price;
+
+    private Integer discountRate;
+
+    private Integer quantity;
+
+    private String thumbnailPath;
+
+    private String imagePath;
+
     @Column(columnDefinition = "TEXT")
     private String content;
+
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
+
+    private LocalDateTime startsAt;
+
+    private LocalDateTime endsAt;
+
 
     @ManyToMany
     @JoinTable(
@@ -45,6 +68,7 @@ public class Product {
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
     private Set<Category> categories = new HashSet<>();
+
     @ManyToMany
     @JoinTable(
             name = "product_tag",

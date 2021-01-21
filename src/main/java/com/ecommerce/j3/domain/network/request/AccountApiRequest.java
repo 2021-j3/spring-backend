@@ -20,7 +20,6 @@ import java.time.LocalDateTime;
 public class AccountApiRequest {
     private Long accountId;
 
-    private String nickname;
     private String email;
     private String passwordHash;
     private String firstName;
