@@ -1,6 +1,7 @@
 package com.ecommerce.j3.service;
 
-import com.ecommerce.j3.domain.*;
+import com.ecommerce.j3.domain.entity.Account;
+import com.ecommerce.j3.domain.entity.Order;
 import com.ecommerce.j3.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

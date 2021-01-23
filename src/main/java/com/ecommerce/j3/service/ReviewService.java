@@ -1,7 +1,7 @@
 package com.ecommerce.j3.service;
 
-import com.ecommerce.j3.domain.Product;
-import com.ecommerce.j3.domain.Review;
+import com.ecommerce.j3.domain.entity.Product;
+import com.ecommerce.j3.domain.entity.Review;
 import com.ecommerce.j3.repository.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,7 +30,7 @@ public class ReviewService {
     public Optional<Review> findOne(Long reviewId){
         return reviewRepository.findById(reviewId);
     }
-    public Optional<Review> findOneByParent(Review review) { return  reviewRepository.findOneByParent(review);}
+    public List<Review> findOneByParent(Review review) { return  reviewRepository.findOneByParent(review);}
 
     public List<Review> findAll(){
         return reviewRepository.findAll();

@@ -1,12 +1,11 @@
 package com.ecommerce.j3.service;
 
-import com.ecommerce.j3.domain.AccountDTO;
-import com.ecommerce.j3.domain.Account;
-import com.ecommerce.j3.domain.AccountMapper;
-import com.ecommerce.j3.domain.AccountType;
+import com.ecommerce.j3.domain.entity.AccountDTO;
+import com.ecommerce.j3.domain.entity.Account;
+import com.ecommerce.j3.domain.entity.AccountMapper;
+import com.ecommerce.j3.domain.entity.AccountType;
 import com.ecommerce.j3.repository.AccountRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -46,10 +45,10 @@ public class AccountService implements UserDetailsService {
     }
 
     public AccountDTO save(AccountDTO accountInfo){
-        Account account = accountMapper.toEntity(accountInfo); // dto -> entity
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); // Bean 에 등록된 인코더불러오기
-        account.setPasswordHash(passwordEncoder.encode(accountInfo.getPassword())); // 해시처리
-        account.setAccountType(AccountType.USER); // 웹 페이지에서 처음 생성 시 무조건 user
+        accountInfo.setPassword(passwordEncoder.encode(accountInfo.getPassword())); // 해시처리
+        accountInfo.setAccountType(AccountType.USER); // 웹 페이지에서 처음 생성 시 무조건 user
+        Account account = accountMapper.toEntity(accountInfo); // dto -> entity
         accountRepository.save(account);
         return accountInfo;
     }

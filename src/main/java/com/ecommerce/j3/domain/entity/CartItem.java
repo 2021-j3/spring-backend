@@ -21,10 +21,6 @@ public class CartItem {
     @JoinColumn(name = "product_id")
     private Product product;
 
-    @ManyToOne
-    @JoinColumn(name = "account_id")
-    private Account account;
-
     private String sku;
 
     private Integer price;

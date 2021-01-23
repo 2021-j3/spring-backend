@@ -19,7 +19,7 @@
     <div>성<input type="text" th:field="*{lastName}" name="lastName"/></div>
     <div>이름<input type="text" th:field="*{firstName}" name="firstName"/></div>
     <div>성별<select th:field="*{gender}" name="gender">
-        <option th:each="type : ${T(com.ecommerce.j3.domain.GenderType).values()}"
+        <option th:each="type : ${T(com.ecommerce.j3.domain.entity.GenderType).values()}"
                 th:value="${type}" th:text="${type}"></option>
     </select></div>
     <div>핸드폰 번호<input type="text" th:field="*{phoneNumber}" name="phoneNumber"/></div>

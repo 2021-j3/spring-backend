@@ -1,6 +1,6 @@
 package com.ecommerce.j3.controller;
 
-import com.ecommerce.j3.domain.AccountDTO;
+import com.ecommerce.j3.domain.entity.AccountDTO;
 import com.ecommerce.j3.service.AccountService;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
