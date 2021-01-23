@@ -1,39 +1,38 @@
 package com.ecommerce.j3.service;
 
-import com.ecommerce.j3.domain.entity.Product;
+import com.ecommerce.j3.domain.Product;
 import com.ecommerce.j3.repository.ProductRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.nio.ReadOnlyBufferException;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+//@Transactional(readOnly = true)
+@Transactional
+@RequiredArgsConstructor
 public class ProductService {
-    private ProductRepository productsRepository;
+    private final ProductRepository productsRepository;
 
-    @Autowired
-    public ProductService(ProductRepository productsRepository){this.productsRepository = productsRepository;}
 
-    public Product save(Product products){
+    public void saveProduct(Product products){
         productsRepository.save(products);
-        return products;
     }
 
-    public Product update(Product products){
-        productsRepository.save(products);
-        return products;
+    public Product findOne(Long productId){
+        return productsRepository.findOne(productId);
     }
-
-    public Optional<Product> findOne(Long productId){
-        return productsRepository.findById(productId);
-    }
-
-    public List<Product> findAll(){
+    public List<Product> findProducts(){
         return productsRepository.findAll();
     }
 
+
+/*
     public void remove(Product products){
         productsRepository.delete(products);
-    }
+    }*/
 }
