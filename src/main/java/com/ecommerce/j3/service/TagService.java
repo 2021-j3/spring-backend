@@ -1,6 +1,6 @@
 package com.ecommerce.j3.service;
 
-import com.ecommerce.j3.domain.entity.Tag;
+import com.ecommerce.j3.domain.Tag;
 import com.ecommerce.j3.repository.TagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

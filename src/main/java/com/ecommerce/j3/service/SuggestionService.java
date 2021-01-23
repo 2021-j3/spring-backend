@@ -1,7 +1,7 @@
 package com.ecommerce.j3.service;
 
-import com.ecommerce.j3.domain.entity.Account;
-import com.ecommerce.j3.domain.entity.Suggestion;
+import com.ecommerce.j3.domain.Account;
+import com.ecommerce.j3.domain.Suggestion;
 import com.ecommerce.j3.repository.SuggestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

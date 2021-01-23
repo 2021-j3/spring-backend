@@ -1,7 +1,7 @@
 package com.ecommerce.j3.repository;
 
-import com.ecommerce.j3.domain.entity.Account;
-import com.ecommerce.j3.domain.entity.Payment;
+import com.ecommerce.j3.domain.Account;
+import com.ecommerce.j3.domain.Payment;
 
 import java.util.List;
 

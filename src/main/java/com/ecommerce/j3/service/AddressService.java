@@ -1,39 +1,28 @@
 package com.ecommerce.j3.service;
 
-import com.ecommerce.j3.domain.entity.Address;
+import com.ecommerce.j3.domain.Address;
 import com.ecommerce.j3.repository.AddressRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
+@RequiredArgsConstructor
 public class AddressService {
-    private AddressRepository addresssRepository;
+    private final AddressRepository addressRepository;
 
-    @Autowired
-    public AddressService(AddressRepository addresssRepository){this.addresssRepository = addresssRepository;}
 
-    public Address save(Address addresss){
-        addresssRepository.save(addresss);
-        return addresss;
+    public Address save(Address address){
+        addressRepository.save(address);
+        return address;
     }
 
-    public Address update(Address addresss){
-        addresssRepository.save(addresss);
-        return addresss;
-    }
 
-    public Optional<Address> findOne(Long addressId){
-        return addresssRepository.findById(addressId);
-    }
 
-    public List<Address> findAll(){
-        return addresssRepository.findAll();
-    }
 
-    public void remove(Address addresss){
-        addresssRepository.delete(addresss);
-    }
 }

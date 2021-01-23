@@ -1,6 +1,6 @@
 package com.ecommerce.j3.service;
 
-import com.ecommerce.j3.domain.entity.CartItem;
+import com.ecommerce.j3.domain.CartItem;
 import com.ecommerce.j3.repository.CartItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
