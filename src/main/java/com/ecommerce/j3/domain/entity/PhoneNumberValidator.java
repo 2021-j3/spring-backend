@@ -1,4 +1,4 @@
-package com.ecommerce.j3.domain;
+package com.ecommerce.j3.domain.entity;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

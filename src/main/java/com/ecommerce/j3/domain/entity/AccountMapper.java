@@ -1,4 +1,4 @@
-package com.ecommerce.j3.domain;
+package com.ecommerce.j3.domain.entity;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

@@ -16,19 +16,20 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reviewId;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_id")
+    private Review parent;
+
     @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
+    @JoinColumn(name = "order_item_id")
+    private OrderItem orderItem;
 
     @ManyToOne
     @JoinColumn(name = "account_id")
     private Account account;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "parent_id")
-    private Review parent;
 
-    private Integer rate = 1;
+    private Integer rate; // set 1
 
     private String title;
 

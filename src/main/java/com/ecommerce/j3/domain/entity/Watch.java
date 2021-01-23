@@ -26,5 +26,5 @@ public class Watch {
 
     @UpdateTimestamp
     private LocalDateTime recentWatch;
-    private Integer watchCount = 1;
+    private Integer watchCount;
 }

@@ -67,7 +67,7 @@ public class Product {
             ,joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
-    private Set<Category> categories = new HashSet<>();
+    private Set<Category> categories;
 
     @ManyToMany
     @JoinTable(
@@ -75,5 +75,5 @@ public class Product {
             joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
-    private Set<Tag> tags = new HashSet<>();
+    private Set<Tag> tags;
 }

@@ -8,7 +8,7 @@ CREATE TABLE `shop`.`account`
 (
     `account_id`    BIGINT      NOT NULL AUTO_INCREMENT,
     `email`         VARCHAR(50) NOT NULL UNIQUE,
-    `password_hash` VARCHAR(50) NOT NULL,
+    `password_hash` VARCHAR(120) NOT NULL,
     `first_name`    VARCHAR(50) NOT NULL,
     `last_name`     VARCHAR(50) NOT NULL,
     `birthday`      DATE        DEFAULT NULL,
@@ -57,34 +57,66 @@ CREATE TABLE `shop`.`product`
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+CREATE TABLE `shop`.`cart`
+(
+    `cart_id`          BIGINT       NOT NULL AUTO_INCREMENT,
+    `account_id`       BIGINT                DEFAULT NULL,
+    `session_id`       VARCHAR(100) NOT NULL,
+    `token`            VARCHAR(100) NOT NULL,
+    `status`           ENUM('READY','cart','CANCEL') NOT NULL,
+    `item_price_total` INT          NOT NULL DEFAULT 0,
+    `item_discount`    INT          NOT NULL DEFAULT 0,
+    `tax`              INT          NOT NULL DEFAULT 0,
+    `shipping`         INT          NOT NULL DEFAULT 0,
+    `user_discount`    INT          NOT NULL DEFAULT 0,
+    `grand_total`      INT          NOT NULL DEFAULT 0,
+    `first_name`       VARCHAR(45)  NOT NULL,
+    `last_name`        VARCHAR(45)  NOT NULL,
+    `email`            VARCHAR(50) NULL,
+    `phone_number`     VARCHAR(25)  NOT NULL,
+    `road_address`     VARCHAR(50)  NOT NULL,
+    `address`          VARCHAR(50)  NOT NULL,
+    `city`             VARCHAR(50)  NOT NULL,
+    `province`         VARCHAR(50)  NOT NULL,
+    `country`          VARCHAR(50)  NOT NULL,
+    `zip_code`         INT          NOT NULL,
+    `content`          TEXT                  DEFAULT NULL,
+    `created_at`       DATETIME     NOT NULL,
+    `updated_at`       DATETIME              DEFAULT NULL,
+
+    PRIMARY KEY (`cart_id`),
+
+    CONSTRAINT `fk_carts_account`
+        FOREIGN KEY (`account_id`) REFERENCES `shop`.`account` (`account_id`)
+
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+
 DROP TABLE IF EXISTS `shop`.`cart_item`;
 
 CREATE TABLE `shop`.`cart_item`
 (
     `cart_item_id`  BIGINT      NOT NULL AUTO_INCREMENT,
-    `account_id`    BIGINT      NOT NULL,
+    `cart_id`       BIGINT      NOT NULL,
     `product_id`    BIGINT      NOT NULL,
     `sku`           VARCHAR(50) NOT NULL,
     `price`         INT         NOT NULL DEFAULT 0,
     `discount_rate` INT         NOT NULL DEFAULT 0,
     `quantity`      INT         NOT NULL DEFAULT 0,
     `active`        INT         NOT NULL DEFAULT 0,
-    #               카트에 담겼냐 안 담겼냐
-        `content` TEXT DEFAULT NULL,
+    `content`       TEXT                 DEFAULT NULL,
     `created_at`    DATETIME    NOT NULL,
     `updated_at`    DATETIME             DEFAULT NULL,
 
 
     PRIMARY KEY (`cart_item_id`),
 
-    CONSTRAINT `fk_cart_item_account`
-        FOREIGN KEY (`account_id`) REFERENCES `shop`.`account` (`account_id`),
+    CONSTRAINT `fk_cart_item_cart`
+        FOREIGN KEY (`cart_id`) REFERENCES `shop`.`cart` (`cart_id`),
 
     CONSTRAINT `fk_cart_item_product`
         FOREIGN KEY (`product_id`) REFERENCES `shop`.`product` (`product_id`)
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
 CREATE TABLE `shop`.`orders`
 (
     `order_id`         BIGINT       NOT NULL AUTO_INCREMENT,
@@ -172,27 +204,25 @@ CREATE TABLE `shop`.`payment`
 
 DROP TABLE IF EXISTS `shop`.`review`;
 
-CREATE TABLE `shop`.`review`
-(
-    `review_id`  BIGINT   NOT NULL AUTO_INCREMENT,
-    `parent_id`  BIGINT NULL REFERENCES review (review_id),
-    `product_id` BIGINT   NOT NULL,
-    `account_id` BIGINT   NOT NULL,
-    `rate`       INT      NOT NULL DEFAULT 1,
-    #            별점
-        `title` VARCHAR (100) NOT NULL,
-    `content`    TEXT              DEFAULT NULL,
-    `created_at` DATETIME NOT NULL,
-    #            생성 # `type` ENUM('REVIEW','QUESTION','ANSWER') NOT NULL,
-    #            `public` ENUM('PUBLIC','PRIVATE') DEFAULT 'PUBLIC',
+CREATE TABLE `shop`.`review`(
+                                `review_id`    BIGINT                             NOT NULL AUTO_INCREMENT,
+                                `parent_id`    BIGINT                             NULL REFERENCES review (review_id),
+                                `order_item_id`   BIGINT                           NOT NULL,
+                                `account_id`   BIGINT                             NOT NULL,
+                                `rate`         INT                                NOT NULL DEFAULT 1, # 별점
+                                    `title`        VARCHAR(100)                       NOT NULL,
+                                `content`      TEXT                               DEFAULT NULL,
+                                `created_at`   DATETIME                           NOT NULL,     # 생성
+                                    #  `type`         ENUM('REVIEW','QUESTION','ANSWER') NOT NULL,
+                                #  `public`       ENUM('PUBLIC','PRIVATE')           DEFAULT 'PUBLIC',
 
-    PRIMARY KEY (`review_id`),
+                                PRIMARY KEY (`review_id`),
 
-    CONSTRAINT `fk_review_account`
-        FOREIGN KEY (`account_id`) REFERENCES `shop`.`account` (`account_id`),
+                                CONSTRAINT `fk_review_account`
+                                    FOREIGN KEY (`account_id`) REFERENCES `shop`.`account` (`account_id`),
 
-    CONSTRAINT `fk_review_product`
-        FOREIGN KEY (`product_id`) REFERENCES `shop`.`product` (`product_id`)
+                                CONSTRAINT `fk_review_product`
+                                    FOREIGN KEY (`order_item_id`) REFERENCES `shop`.`order_item` (`order_item_id`)
 
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
@@ -327,3 +357,4 @@ CREATE TABLE `shop`.`suggestion`
         FOREIGN KEY (`product_id`) REFERENCES `shop`.`product` (`product_id`)
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+

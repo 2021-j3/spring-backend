@@ -1,7 +1,7 @@
 package com.ecommerce.j3.service;
 
-import com.ecommerce.j3.domain.Account;
-import com.ecommerce.j3.domain.Watch;
+import com.ecommerce.j3.domain.entity.Account;
+import com.ecommerce.j3.domain.entity.Watch;
 import com.ecommerce.j3.repository.WatchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,12 +24,6 @@ public class WatchService {
     public Watch update(Watch watch){
         watchRepository.save(watch);
         return watch;
-    }
-
-    public int increase(Watch watch){
-        watch.setWatchCount(watch.getWatchCount() + 1);
-        update(watch);
-        return watch.getWatchCount();
     }
 
     public Optional<Watch> findOne(Long watchId){

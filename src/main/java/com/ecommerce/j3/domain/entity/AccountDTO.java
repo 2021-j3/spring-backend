@@ -1,9 +1,5 @@
-package com.ecommerce.j3.domain;
+package com.ecommerce.j3.domain.entity;
 
-import com.ecommerce.j3.domain.Account;
-import com.ecommerce.j3.domain.GenderType;
-import com.ecommerce.j3.domain.PhoneNumber;
-import com.sun.istack.Nullable;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -14,8 +10,6 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 
 @Getter @Setter
 @NoArgsConstructor
@@ -34,7 +28,8 @@ public class AccountDTO {
     @Enumerated(EnumType.STRING)
     private GenderType gender;
     @DateTimeFormat(pattern="yyyy-MM-dd")
-    private LocalDateTime birthday;
+    private LocalDate birthday;
     @PhoneNumber(message="핸드폰번호 형식이 아닙니다")
     private String phoneNumber;
+    private AccountType accountType;
 }

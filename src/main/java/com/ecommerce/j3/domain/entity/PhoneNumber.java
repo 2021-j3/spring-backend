@@ -1,6 +1,4 @@
-package com.ecommerce.j3.domain;
-
-import org.springframework.validation.annotation.Validated;
+package com.ecommerce.j3.domain.entity;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
