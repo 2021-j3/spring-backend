@@ -1,12 +1,13 @@
 package com.ecommerce.j3.controller;
 
-import com.ecommerce.j3.domain.Account;
+import com.ecommerce.j3.domain.entity.Account;
 import com.ecommerce.j3.repository.AccountRepository;
 import com.ecommerce.j3.service.AccountService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.mapstruct.Mapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,13 +46,13 @@ public class AccountApiController {
 
     @PostMapping("/api/accounts")
     public CreateAccountResponse saveAccount(@RequestBody @Valid CreateAccountRequest request) {
-        Account account = new Account();
-        account.setNickname(request.getNickname());
-        account.setEmail(request.getEmail());
-        account.setPasswordHash(request.getPassword());
-        account.setRegisteredAt(LocalDateTime.now());
-        account.setLastName(request.getLastname());
-        account.setFirstName(request.getFirstname());
+        Account account = Account.builder()
+                .email(request.getEmail())
+                .passwordHash(request.getPassword())
+                .registeredAt(LocalDateTime.now())
+                .lastName(request.getLastname())
+                .firstName(request.getFirstname())
+                .build();
 
         Long id = accountService.join(account);
         return new CreateAccountResponse(id,account.getRegisteredAt(),account.getFirstName(),account.getLastName());
@@ -60,9 +61,19 @@ public class AccountApiController {
     @PutMapping("/api/accounts")
     public CreateAccountResponse updateAccount(@RequestBody @Valid UpdateAccountRequest request) {
         Account account = accountRepository.findByEmail(request.getEmail());
-        account.setRegisteredAt(LocalDateTime.now());
-        account.setLastName(request.getLastname());
-        account.setFirstName(request.getFirstname());
+        Account accountUpdate = Account.builder()
+                .accountId(account.getAccountId())
+                .email(account.getEmail())
+                .passwordHash(account.getPasswordHash())
+                .firstName(request.getFirstname())
+                .lastName(request.getLastname())
+                .birthday(account.getBirthday())
+                .gender(account.getGender())
+                .phoneNumber(account.getPhoneNumber())
+                .accountType(account.getAccountType())
+                .registeredAt(LocalDateTime.now())
+                .lastLogin(account.getLastLogin())
+                .build();
         accountService.join(account);   // 준영속 컨텍스트 핸들링
 
         return new CreateAccountResponse(account.getAccountId(),account.getRegisteredAt(),account.getFirstName(),account.getLastName());
@@ -127,5 +138,4 @@ public class AccountApiController {
             this.lastName = lastName;
         }
     }
-
 }

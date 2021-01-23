@@ -1,7 +1,7 @@
 package com.ecommerce.j3.controller;
 
-import com.ecommerce.j3.domain.Account;
-import com.ecommerce.j3.domain.Address;
+import com.ecommerce.j3.domain.entity.Account;
+import com.ecommerce.j3.domain.entity.Address;
 import com.ecommerce.j3.service.AccountService;
 import com.ecommerce.j3.service.AddressService;
 import lombok.RequiredArgsConstructor;
@@ -34,13 +34,11 @@ public class AccountController {
         if (result.hasErrors()) {
             return "createAccountForm";
         }
-        Account account = new Account();
-
-        account.setNickname(form.getNickname());
-
-        account.setEmail(form.getEmail());
-        account.setPasswordHash(form.getPassword());
-        account.setRegisteredAt(LocalDateTime.now());
+        Account account = Account.builder()
+                .email(form.getEmail())
+                .passwordHash(form.getPassword())
+                .registeredAt(LocalDateTime.now())
+                .build();
 
         log.info("account set ok");
 
@@ -50,7 +48,7 @@ public class AccountController {
         Address address = Address.createAddress(account,form.getAddress(),form.getZipcode());
         addressService.save(address);
         account.getAddresses().add(address);
-        log.info(account.getAddresses().get(0).getRoad_address());
+        log.info(account.getAddresses().get(0).getRoadAddress());
         return "redirect:/";
     }
 }

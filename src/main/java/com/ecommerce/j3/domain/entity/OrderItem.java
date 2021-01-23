@@ -41,4 +41,41 @@ public class OrderItem {
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+    //** 생성 매서드 **//
+    public static OrderItem createOrderItem(Product product, Integer price, Integer quantity){
+        OrderItem orderItem = new OrderItem();
+        orderItem.setProduct(product);
+        orderItem.setPrice(price);
+        orderItem.setQuantity(quantity);
+        product.removeQuantity(quantity);
+
+        return orderItem;
+    }
+
+    private void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    private void setPrice(Integer price) {
+        this.price = price;
+    }
+
+    //** 비즈니스 로직 **//
+    public void cancel(){
+        getProduct().addQuantity(quantity);
+    }
+    public Integer getTotalPrice(){
+        return getPrice()*getQuantity();
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+
+
+    public void setOrder(Order order){
+        this.order = order;
+    }
 }

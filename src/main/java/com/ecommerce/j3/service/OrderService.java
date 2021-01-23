@@ -1,6 +1,6 @@
 package com.ecommerce.j3.service;
 
-import com.ecommerce.j3.domain.*;
+import com.ecommerce.j3.domain.entity.*;
 import com.ecommerce.j3.repository.AccountRepository;
 import com.ecommerce.j3.repository.OrderRepository;
 import com.ecommerce.j3.repository.ProductRepository;
@@ -22,7 +22,7 @@ public class OrderService {
 
     /* 주문 */
     @Transactional
-    public Long order(Long accountId,Long productId,short quantity){
+    public Long order(Long accountId,Long productId,Integer quantity){
         // 조회
         Account account = accountRepository.findOne(accountId);
         Product product = productRepository.findOne(productId);

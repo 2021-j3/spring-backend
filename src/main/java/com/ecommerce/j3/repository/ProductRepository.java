@@ -1,6 +1,6 @@
 package com.ecommerce.j3.repository;
 
-import com.ecommerce.j3.domain.Product;
+import com.ecommerce.j3.domain.entity.Product;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.cache.spi.support.AbstractReadWriteAccess;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -56,10 +56,11 @@ public class AccountApiLogicService implements CrudInterface<AccountApiRequest, 
                 accountType(accountApiRequest.getAccountType()).
                 build();
 
-        Account newAccount = accountRepository.save(account);
-
+//        Account newAccount = accountRepository.save(account);
+        accountRepository.save(account);
         // 3. 생성된 데이터 -> return AccountApiResponse
-        return response(newAccount);
+//        return response(newAccount);
+        return response(account);
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.ecommerce.j3.service;
 
-import com.ecommerce.j3.domain.Address;
+import com.ecommerce.j3.domain.entity.Address;
 import com.ecommerce.j3.repository.AddressRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,5 +1,6 @@
 package com.ecommerce.j3.domain.entity;
 
+import com.ecommerce.j3.exception.NotEnoughStockException;
 import lombok.*;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.CreationTimestamp;
@@ -76,4 +77,17 @@ public class Product {
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
     private Set<Tag> tags;
+
+    //** 비즈니스 로직 **//
+    // 재고 증가
+    public void addQuantity(Integer quantity){
+        this.quantity += quantity;
+    }
+    public void removeQuantity(Integer quantity){
+        Integer restquantity = this.quantity = quantity;
+        if(restquantity < 0 ){
+            throw new NotEnoughStockException("Need More Stock");
+        }
+        this.quantity = restquantity;
+    }
 }

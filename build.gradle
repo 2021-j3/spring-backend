@@ -19,24 +19,41 @@ repositories {
 }
 
 dependencies {
+	gradle.projectsEvaluated {
+		tasks.withType(JavaCompile) {
+			options.compilerArgs << "-Xlint:deprecation"
+		}
+	}
+
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	compileOnly 'org.projectlombok:lombok'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	runtimeOnly 'com.h2database:h2'
-	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
-	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
 
 	implementation 'junit:junit:4.12'
 	implementation 'org.testng:testng:7.1.0'
+
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    // runtimeOnly 'com.h2database:h2'
+	// runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+	runtimeOnly 'mysql:mysql-connector-java'
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	// url mapping
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	// security
+	implementation 'org.springframework.session:spring-session-core'
+	implementation group: 'org.springframework.session', name: 'spring-session', version: '1.0.1.RELEASE'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
+	testImplementation 'org.springframework.security:spring-security-test'
+
+	// DTO
 	implementation 'javax.validation:validation-api'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
-
-
-
+	compileOnly 'org.mapstruct:mapstruct:1.3.0.Final', 'org.projectlombok:lombok:1.18.12'
+	annotationProcessor 'org.mapstruct:mapstruct-processor:1.3.0.Final', 'org.projectlombok:lombok:1.18.12'
+	annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
 }
 
 test {
