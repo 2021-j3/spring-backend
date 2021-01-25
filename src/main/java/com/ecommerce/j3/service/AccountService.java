@@ -1,9 +1,6 @@
 package com.ecommerce.j3.service;
 
-import com.ecommerce.j3.domain.entity.Account;
-import com.ecommerce.j3.domain.entity.AccountDTO;
-import com.ecommerce.j3.domain.entity.AccountMapper;
-import com.ecommerce.j3.domain.entity.AccountType;
+import com.ecommerce.j3.domain.entity.*;
 import com.ecommerce.j3.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -39,7 +36,12 @@ public class AccountService implements UserDetailsService {
         accountRepository.save(account);
         return account.getAccountId();  // em 이 생성해줌
     }
+    @Transactional
+    public Order makeOrder(Account account, OrderItem orderItem){
+        Order order = Order.createorder(account,orderItem);
 
+
+    }
 
     private void validateDuplicateAccount(Account account){
         //List<Account> findAccounts= accountRepository.findByName(account.getNickname());

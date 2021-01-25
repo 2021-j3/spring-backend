@@ -1,6 +1,8 @@
 package com.ecommerce.j3.controller;
 
 import com.ecommerce.j3.domain.entity.Account;
+import com.ecommerce.j3.domain.entity.AccountType;
+import com.ecommerce.j3.domain.entity.GenderType;
 import com.ecommerce.j3.repository.AccountRepository;
 import com.ecommerce.j3.service.AccountService;
 import lombok.Data;
@@ -49,11 +51,12 @@ public class AccountApiController {
         Account account = Account.builder()
                 .email(request.getEmail())
                 .passwordHash(request.getPassword())
-                .registeredAt(LocalDateTime.now())
                 .lastName(request.getLastname())
                 .firstName(request.getFirstname())
+                .gender(request.getGender())
+                .accountType(request.getAccounttype())
                 .build();
-
+            log.info("//////****************BUILDERRRRRRRR");
         Long id = accountService.join(account);
         return new CreateAccountResponse(id,account.getRegisteredAt(),account.getFirstName(),account.getLastName());
     }
@@ -86,10 +89,11 @@ public class AccountApiController {
     @Data
     static class CreateAccountRequest {
         private String email;
-        private String nickname;
         private String password;
         private  String lastname;
         private String firstname;
+        private GenderType gender;
+        private AccountType accounttype;
     }
     @Data
     static class UpdateAccountRequest {

@@ -8,6 +8,7 @@ import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -17,6 +18,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
+@Table (name = "ACCOUNT", schema = "SHOP")
+
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,6 +47,7 @@ public class Account {
 
     private String phoneNumber;
 
+    @NotNull
     @Column(columnDefinition = "enum('USER', 'SELLER', 'ADMIN')")
     @Enumerated(EnumType.STRING)
     private AccountType accountType;
