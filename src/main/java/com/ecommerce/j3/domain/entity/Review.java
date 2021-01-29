@@ -28,7 +28,6 @@ public class Review {
     @JoinColumn(name = "account_id")
     private Account account;
 
-
     private Integer rate; // set 1
 
     private String title;

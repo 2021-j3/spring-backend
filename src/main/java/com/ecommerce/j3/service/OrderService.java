@@ -36,7 +36,7 @@ public class OrderService {
 
         // Order save
         orderRepository.save(order);  // OrderItem 은 Cascade 로 따로 영속시켜주지않아도됨. OrderItem은 Order에서만 가르
-        return order.getOrderId();
+        return order.getOrdersId();
 
     }
 

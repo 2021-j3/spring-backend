@@ -2,6 +2,7 @@ package com.ecommerce.j3.service;
 
 import com.ecommerce.j3.domain.entity.CartItem;
 import com.ecommerce.j3.repository.CartItemRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,11 +10,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class CartItemService {
-    private CartItemRepository cartItemsRepository;
-
-    @Autowired
-    public CartItemService(CartItemRepository cartItemsRepository){this.cartItemsRepository = cartItemsRepository;}
+    private final CartItemRepository cartItemsRepository;
 
     public CartItem save(CartItem cartItems){
         cartItemsRepository.save(cartItems);

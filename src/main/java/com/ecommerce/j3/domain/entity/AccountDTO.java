@@ -1,5 +1,6 @@
 package com.ecommerce.j3.domain.entity;
 
+import com.ecommerce.j3.domain.mapper.PhoneNumber;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -9,14 +10,11 @@ import javax.persistence.Enumerated;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class AccountDTO {
-    @NotBlank(message = "닉네임을 입력해주세요")
-    private String nickname;
     @NotBlank(message = "이메일을 입력해주세요")
     @Email(message = "이메일 형식이 아닙니다")
     private String email;
@@ -32,4 +30,13 @@ public class AccountDTO {
     @PhoneNumber(message="핸드폰번호 형식이 아닙니다")
     private String phoneNumber;
     private AccountType accountType;
+
+
+    public static class RegisterRequest {
+        private String email;
+        private String passwordHash;
+        private String firstName;
+        private String lastName;
+        private GenderType gender;
+    }
 }

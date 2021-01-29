@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder // 생성자 생성을 위한 어노테이션
-public class Header<T> {
+public class BodyData<T> {
     // api 통신시간
     private LocalDateTime transactionTime;
 
@@ -22,8 +22,8 @@ public class Header<T> {
     private T data;
 
     // OK
-    public static <T> Header<T> OK() {
-        return (Header<T>) Header.builder()
+    public static <T> BodyData<T> OK() {
+        return (BodyData<T>) BodyData.builder()
                 .transactionTime(LocalDateTime.now())
                 .resultCode("OK")
                 .description("OK")
@@ -32,8 +32,8 @@ public class Header<T> {
 
 
     // DATA OK
-    public static <T> Header<T> OK(T data) {
-        return (Header<T>) Header.builder()
+    public static <T> BodyData<T> OK(T data) {
+        return (BodyData<T>) BodyData.builder()
                 .transactionTime(LocalDateTime.now())
                 .resultCode("OK")
                 .description("OK")
@@ -42,8 +42,8 @@ public class Header<T> {
     }
 
     // ERROR
-    public static <T> Header<T> ERROR(String description) {
-        return (Header<T>) Header.builder()
+    public static <T> BodyData<T> ERROR(String description) {
+        return (BodyData<T>) BodyData.builder()
                 .transactionTime(LocalDateTime.now())
                 .resultCode("ERROR")
                 .description(description)

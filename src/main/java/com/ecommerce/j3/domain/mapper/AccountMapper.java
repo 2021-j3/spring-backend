@@ -1,12 +1,12 @@
-package com.ecommerce.j3.domain.entity;
+package com.ecommerce.j3.domain.mapper;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.ReportingPolicy;
+import com.ecommerce.j3.domain.entity.Account;
+import com.ecommerce.j3.domain.entity.AccountDTO;
+import org.mapstruct.*;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface AccountMapper {
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateFromDTO(AccountDTO accountDTO, @MappingTarget Account account);
 
     @Mapping(target = "passwordHash", source = "password")
@@ -14,4 +14,6 @@ public interface AccountMapper {
 
     @Mapping(target = "password", source = "passwordHash")
     AccountDTO toDTO(Account account);
+
+    Account toEntity(AccountDTO.RegisterRequest request);
 }
