@@ -9,6 +9,8 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
+@Table ( schema = "SHOP")
+
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -59,7 +59,8 @@ public class Account {
     private LocalDateTime lastLogin;
 
     @OneToOne
-    @JoinTable(
+
+    @JoinTable(schema = "SHOP",
             name = "default_address",
             joinColumns = @JoinColumn( name = "account_id"),
             inverseJoinColumns = @JoinColumn( name = "address_id")

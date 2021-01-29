@@ -17,6 +17,8 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
+@Table (name = "PRODUCT", schema = "SHOP")
+
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -8,10 +8,11 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity @Getter @Builder
+@Entity @Getter @Builder @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
+@Table (name = "ORDER_ITEM", schema = "SHOP")
 public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,6 +49,9 @@ public class OrderItem {
         orderItem.setProduct(product);
         orderItem.setPrice(price);
         orderItem.setQuantity(quantity);
+        orderItem.setCreatedAt(LocalDateTime.now());
+        orderItem.setContent("d");
+        orderItem.setDiscountRate(11);
         product.removeQuantity(quantity);
 
         return orderItem;
@@ -61,7 +65,7 @@ public class OrderItem {
         this.price = price;
     }
 
-    //** 비즈니스 로직 **//
+    //** 비즈니스 로직 **   삭제 예정임 !!!!!//
     public void cancel(){
         getProduct().addQuantity(quantity);
     }

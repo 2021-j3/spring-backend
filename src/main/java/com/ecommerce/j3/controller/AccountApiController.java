@@ -3,7 +3,10 @@ package com.ecommerce.j3.controller;
 import com.ecommerce.j3.domain.entity.Account;
 import com.ecommerce.j3.domain.entity.AccountType;
 import com.ecommerce.j3.domain.entity.GenderType;
+import com.ecommerce.j3.domain.network.Header;
+import com.ecommerce.j3.domain.network.response.AccountApiResponse;
 import com.ecommerce.j3.repository.AccountRepository;
+import com.ecommerce.j3.service.AccountApiLogicService;
 import com.ecommerce.j3.service.AccountService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -31,18 +34,19 @@ import java.util.Set;
 public class AccountApiController {
 
     private final AccountService accountService;
+    private final AccountApiLogicService accountApiLogicService;
     private final AccountRepository accountRepository;
 
     @GetMapping("/api/accounts")
-    public ResponseEntity<String> showAccount(@RequestBody @Valid CreateAccountRequest request) {
+    public Header<AccountApiResponse> showAccount(@RequestBody @Valid CreateAccountRequest request) {
 
-        MultiValueMap<String,String> responseHeaders = new LinkedMultiValueMap<>();
-        responseHeaders.add("AUTHCODE","20210122");  // Sample Test for setting a header.
-        responseHeaders.add("TOKEN", "0443");
+     /* MultiValueMap<String,String> responseHeaders = new LinkedMultiValueMap<>();
+       responseHeaders.add("AUTHCODE","20210122");  // Sample Test for setting a header.
+      responseHeaders.add("TOKEN", "0443");
+    return new ResponseEntity<String>(String.valueOf(new ReadAccountResponse(account.getAccountId(),account.getFirstName(),account.getLastName())), responseHeaders, HttpStatus.OK);
+*/
+        return accountApiLogicService.read(request.getEmail());
 
-        Account account = accountService.findByEmail(request.getEmail());
-
-        return new ResponseEntity<String>(String.valueOf(new ReadAccountResponse(account.getAccountId(),account.getFirstName(),account.getLastName())), responseHeaders, HttpStatus.OK);
     }
 
 
@@ -56,7 +60,6 @@ public class AccountApiController {
                 .gender(request.getGender())
                 .accountType(request.getAccounttype())
                 .build();
-            log.info("//////****************BUILDERRRRRRRR");
         Long id = accountService.join(account);
         return new CreateAccountResponse(id,account.getRegisteredAt(),account.getFirstName(),account.getLastName());
     }

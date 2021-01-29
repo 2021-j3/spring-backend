@@ -21,6 +21,7 @@ public class OrderService {
     private final ProductRepository productRepository;
 
     /* 주문 */
+    /*
     @Transactional
     public Long order(Long accountId,Long productId,Integer quantity){
         // 조회
@@ -31,14 +32,16 @@ public class OrderService {
         OrderItem orderItem = OrderItem.createOrderItem(product,product.getPrice(),quantity);
 
         // order 생성
-        Order order = Order.createorder(account,orderItem);
+        //Order order = Order.createorder(account,orderItem);
 
 
-        // Order save
+        Order save
         orderRepository.save(order);  // OrderItem 은 Cascade 로 따로 영속시켜주지않아도됨. OrderItem은 Order에서만 가르
         return order.getOrderId();
 
     }
+    */
+
 
     // Cancel
     @Transactional

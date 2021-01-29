@@ -38,11 +38,6 @@ public class AccountRepository   {
         return em.createQuery("select a from Account a", Account.class).getResultList();
     }
 
-    /* Nickname column will be removed. */
-//    public Account findByName(String nickname){
-//        return em.createQuery("select a from Account a where a.nickname=:nickname", Account.class)
-//                .setParameter("nickname",nickname).getSingleResult();
-//    }
     public Account findByEmail(String email){
         return em.createQuery("select a from Account a where a.email=:email", Account.class)
                 .setParameter("email",email).getSingleResult();

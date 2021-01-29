@@ -32,7 +32,7 @@ public class OrderApiController {
     @GetMapping("/api/orders/buy")   // 바로 주문
     public CreateBuyOrderResponse buyOrder(@RequestBody @Valid OrderApiController.CreateBuyOrderRequest request) {
 
-            long order_id = orderService.order(request.getAccountId(),request.getProductId(),request.getQuantity());
+         //   long order_id = orderService.order(request.getAccountId(),request.getProductId(),request.getQuantity());
 
         return new CreateBuyOrderResponse();
     }
