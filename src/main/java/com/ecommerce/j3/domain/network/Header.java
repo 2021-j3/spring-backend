@@ -3,7 +3,7 @@ package com.ecommerce.j3.domain.network;
 import lombok.*;
 
 import java.time.LocalDateTime;
-
+@SuppressWarnings("unchecked")
 @Getter
 @Setter
 @NoArgsConstructor

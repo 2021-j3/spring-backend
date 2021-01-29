@@ -9,6 +9,8 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
+@Table ( schema = "SHOP")
+
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,4 +31,12 @@ public class Address {
     private String country;
 
     private Integer zipCode;
+    public static Address createAddress(Account account,String road_address,Integer zipCode){
+        Address ad = Address.builder()
+                .account(account)
+                .roadAddress(road_address)
+                .zipCode(zipCode)
+                .build();
+        return ad;
+    }
 }
