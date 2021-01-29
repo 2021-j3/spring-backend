@@ -1,38 +1,42 @@
-package com.ecommerce.j3.domain.entity;
+package com.ecommerce.j3.domain.network.request;
 
+import com.ecommerce.j3.domain.entity.Account;
 import lombok.*;
-import lombok.experimental.Accessors;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@Entity
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Accessors(chain = true)
-public class CartItem {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long cartItemId;
-    @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
-    @ManyToOne
-    @JoinColumn(name = "account_id")
+public class ProductApiRequest {
+
+    private Long productId;
+
     private Account account;
+
+    private String title;
+    private String metaTitle;
+    private String slug;
     private String sku;
-    private float price;
-    private float discountRate;
-    private short quantity;
-//    private byte active;
+    private BigDecimal price;
+    private Float discountRate;
+    private Short quantity;
+
     @CreationTimestamp
     private LocalDateTime createdAt;
+
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+    private LocalDateTime startsAt;
+    private LocalDateTime endsAt;
+
     @Column(columnDefinition = "TEXT")
     private String content;
 }

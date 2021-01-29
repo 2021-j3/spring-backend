@@ -20,7 +20,6 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long accountId;
 
-    private String nickname;
     private String email;
     private String passwordHash;
     private String firstName;
@@ -31,7 +30,7 @@ public class Account {
     private GenderType gender;
 
     @Column(columnDefinition = "VARCHAR")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "YYYY-MM-DD")
     private LocalDate birthday;
 
     private String phoneNumber;

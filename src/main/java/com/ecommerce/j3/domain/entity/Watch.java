@@ -1,15 +1,18 @@
 package com.ecommerce.j3.domain.entity;
 
 import lombok.*;
+import lombok.experimental.Accessors;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity @Getter @Setter
+@Entity
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Accessors(chain = true)
 public class Watch {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

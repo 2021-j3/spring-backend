@@ -1,13 +1,16 @@
 package com.ecommerce.j3.domain.entity;
 
 import lombok.*;
+import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 
-@Entity @Getter @Setter
+@Entity
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Accessors(chain = true)
 public class Suggestion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

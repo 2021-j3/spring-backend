@@ -9,12 +9,13 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder // 생성자 생성을 위한 어노테이션
-public class Header<T> {
+
+public class BodyData<T> {
     // api 통신시간
     private LocalDateTime transactionTime;
 
     // api 응답 코드
-    private String resultCode;
+    private Integer statusCode;
 
     // api 부가 설명
     private String description;
@@ -22,30 +23,32 @@ public class Header<T> {
     private T data;
 
     // OK
-    public static <T> Header<T> OK() {
-        return (Header<T>) Header.builder()
+    public static <T> BodyData<T> OK() {
+        // 생성자
+        return (BodyData<T>) BodyData.builder()
                 .transactionTime(LocalDateTime.now())
-                .resultCode("OK")
+                .statusCode(200)
                 .description("OK")
                 .build();
     }
 
-
     // DATA OK
-    public static <T> Header<T> OK(T data) {
-        return (Header<T>) Header.builder()
+    public static <T> BodyData<T> OK(T data) {
+        // 생성자
+        return (BodyData<T>) BodyData.builder()
                 .transactionTime(LocalDateTime.now())
-                .resultCode("OK")
+                .statusCode(200)
                 .description("OK")
                 .data(data)
                 .build();
     }
 
     // ERROR
-    public static <T> Header<T> ERROR(String description) {
-        return (Header<T>) Header.builder()
+    public static <T> BodyData<T> ERROR(String description) {
+        // 생성자
+        return (BodyData<T>) BodyData.builder()
                 .transactionTime(LocalDateTime.now())
-                .resultCode("ERROR")
+                .statusCode(404)
                 .description(description)
                 .build();
     }

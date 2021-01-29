@@ -19,18 +19,42 @@ repositories {
 }
 
 dependencies {
+	// jpa
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+	// web
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	// junit
 	implementation 'junit:junit:4.12'
 
+	// spring security
+//	implementation 'org.springframework.boot:spring-boot-starter-security'
+
+	// jwt
+//	implementation 'org.springframework.boot:spring-boot-starter-security'
+//	implementation 'io.jsonwebtoken:jjwt:0.9.1'
+
+	// swagger
+	implementation 'io.springfox:springfox-swagger2:2.6.1'
+	implementation 'io.springfox:springfox-swagger-ui:2.6.1'
+
+	// lombok
 	compileOnly 'org.projectlombok:lombok'
 
+	// devtools
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
-	// runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+	// MariaDB
+//	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+
+	// MySQL
 	runtimeOnly 'mysql:mysql-connector-java'
 
+	// lombok
 	annotationProcessor 'org.projectlombok:lombok'
+
+	// test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 

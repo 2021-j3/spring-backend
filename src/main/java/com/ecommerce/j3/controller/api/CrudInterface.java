@@ -1,13 +1,17 @@
 package com.ecommerce.j3.controller.api;
 
-import com.ecommerce.j3.domain.network.Header;
+import com.ecommerce.j3.domain.network.BodyData;
 
 public interface CrudInterface<Req, Res> {
-    Header<Res> create(Header<Req> request);
+    // POST
+    BodyData<Res> create(BodyData<Req> request);
 
-    Header<Res> read(Long id);
+    // GET
+    BodyData<Res> read(Long id);
 
-    Header<Res> update(Header<Req> request);
+    // PUT
+    BodyData<Res> update(BodyData<Req> request);
 
-    Header delete(Long id);
+    // DELETE
+    BodyData delete(Long id);
 }
