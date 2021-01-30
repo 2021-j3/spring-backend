@@ -1,32 +1,32 @@
 package com.ecommerce.j3.domain.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-
-@Entity(name="orders") @Getter @Builder @Setter
+@Entity @Getter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-@Table (name = "ORDERS", schema = "SHOP")
-public class Order {
+public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long ordersId;
+    private Long cartId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id")
     private Account account;
 
-    @OneToMany(mappedBy="order",cascade = CascadeType.ALL)    // 01-18 Megan
-    public List<OrderItem> orderItems ;
-
+    @OneToMany(mappedBy="cart",cascade = CascadeType.PERSIST)    // 01-18 Megan
+    private List<CartItem> cartItems;
 
     private String sessionId;
 
@@ -76,43 +76,4 @@ public class Order {
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
-
-    //** 연관 관계 메서드 **//
-    public void setAccount(Account account){
-        this.account = account;
-        //account.getOrders().add(this);
-    }
-
-    public void addOrderItem(OrderItem orderItem){
-        orderItems.add(orderItem);
-        orderItem.setOrder(this);
-    }
-
-    //** 생성 메서드 **//
-    public  Order (Account account) {
-      this.account = account;
-    }
-
-    //** 비즈니스 로직 **//
-    // 주문 취소
-    public void cancel(){
-//        this.setStatus((short)2);
-        this.setStatus(OrderStatus.CANCEL);
-        for(OrderItem orderItem:orderItems){
-            orderItem.cancel();
-        }
-    }
-
-    //  주문 조회
-    public float getgrandTotal(){
-        Integer totalprice  = 0;
-        for(OrderItem orderItem: orderItems){
-            grandTotal += orderItem.getTotalPrice();
-        }
-        return totalprice;
-    }
-
-    public void setStatus(OrderStatus status){
-        this.status = status;
-    }
 }

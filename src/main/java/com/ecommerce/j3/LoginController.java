@@ -1,11 +1,11 @@
 package com.ecommerce.j3;
 
-import com.ecommerce.j3.domain.network.request.AccountAuthRequest;
-import com.ecommerce.j3.domain.network.response.AccountAuthResponse;
+import com.ecommerce.j3.domain.entity.AccountDTO;
+import com.ecommerce.j3.domain.network.request.AccountLoginRequest;
+import com.ecommerce.j3.domain.network.response.AccountLoginResponse;
 import com.ecommerce.j3.service.AccountService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -19,17 +19,17 @@ import javax.servlet.http.HttpSession;
 @Slf4j
 @RestController
 @AllArgsConstructor
-@RequestMapping("/auth/login")
+@RequestMapping("/auth")
 public class LoginController {
     AuthenticationManager authenticationManager;
     AccountService accountService;
 
-    @PostMapping("")
-    public AccountAuthResponse login(@RequestBody AccountAuthRequest accountAuthRequest, HttpSession session){
+    @PostMapping("/login")
+    public AccountLoginResponse login(@RequestBody AccountLoginRequest accountAuthRequest, HttpSession session){
         String email = accountAuthRequest.getEmail();
         String password = accountAuthRequest.getPassword();
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        password = encoder.encode(password);
+//        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+//        password = encoder.encode(password);
 
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(email, password);
         Authentication authentication = authenticationManager.authenticate(token);
@@ -39,6 +39,12 @@ public class LoginController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
         UserDetails user = accountService.loadUserByUsername(email);
-        return new AccountAuthResponse(user.getUsername(), user.getAuthorities(), session.getId());
+        return new AccountLoginResponse(user.getUsername(), user.getAuthorities(), session.getId());
+    }
+
+    @PostMapping("/register")
+    public String register(@RequestBody AccountDTO account){
+        accountService.store(account);
+        return "success";
     }
 }

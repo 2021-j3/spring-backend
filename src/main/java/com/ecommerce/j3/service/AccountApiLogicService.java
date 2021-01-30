@@ -1,8 +1,9 @@
 package com.ecommerce.j3.service;
 
 import com.ecommerce.j3.controller.api.CrudInterface;
+
 import com.ecommerce.j3.domain.entity.*;
-import com.ecommerce.j3.domain.network.Header;
+import com.ecommerce.j3.domain.network.BodyData;
 import com.ecommerce.j3.domain.network.request.AccountApiRequest;
 import com.ecommerce.j3.domain.network.response.AccountApiResponse;
 
@@ -19,8 +20,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Optional;
 @Slf4j
 @Service
@@ -38,7 +37,7 @@ public class AccountApiLogicService implements CrudInterface<AccountApiRequest, 
 
 
     @Override
-    public Header<AccountApiResponse> create(Header<AccountApiRequest> request) {
+    public BodyData<AccountApiResponse> create(BodyData<AccountApiRequest> request) {
 
         // 1. request data
         AccountApiRequest accountApiRequest = request.getData();
@@ -67,24 +66,26 @@ public class AccountApiLogicService implements CrudInterface<AccountApiRequest, 
     }
 
     @Override
-    public Header<AccountApiResponse> read(String email) {
-
+    public BodyData<AccountApiResponse> read(Long id) {
         // 1. id -> repository getOne / getById
-        Account account = accountRepository.findByEmail(email);
+        Optional<Account> optional = accountRepository.findById(id);
+        // 2. return account -> accountApiResponse
+        return optional.map(account -> response(account))
+                .orElseGet(()-> BodyData.ERROR("데이터 없음"));
 
+    }
+
+    public BodyData<AccountApiResponse> readByEmail(String email){
+        Account account = accountRepository.findByEmail(email);
         AccountApiResponse accountApiResponse = AccountApiResponse.builder().
                 accountId(account.getAccountId()).
                 email(account.getEmail()).
                 build();
-        // 2. return account -> accountApiResponse
-
-
-        return Header.OK(accountApiResponse);
-
+        return response(account);
     }
 
     @Override
-    public Header<AccountApiResponse> update(Header<AccountApiRequest> request) {
+    public BodyData<AccountApiResponse> update(BodyData<AccountApiRequest> request) {
 
         // 1. data 생성
         AccountApiRequest accountApiRequest = request.getData();
@@ -122,23 +123,23 @@ public class AccountApiLogicService implements CrudInterface<AccountApiRequest, 
         })
                 .map(account -> accountRepository.save(account))
                 .map(updateAccount -> response(updateAccount))
-                .orElseGet(() -> Header.ERROR("데이터 없음"));
+                .orElseGet(() -> BodyData.ERROR("데이터 없음"));
     }
     @Override
-    public Header delete(Long id) {
+    public BodyData delete(Long id) {
         Optional<Account> optional = accountRepository.findById(id);
 
         // 2. repository -> delete
         return optional.map(account -> {
             accountRepository.delete(account);
 
-            return Header.OK();
+            return BodyData.OK();
 
         })
-                .orElseGet(()->Header.ERROR("데이터 없음"));
+                .orElseGet(()-> BodyData.ERROR("데이터 없음"));
     }
 
-    private Header<AccountApiResponse> response(Account account){
+    private BodyData<AccountApiResponse> response(Account account){
         AccountApiResponse accountApiResponse = AccountApiResponse.builder().
                 accountId(account.getAccountId()).
                 email(account.getEmail()).
@@ -153,7 +154,7 @@ public class AccountApiLogicService implements CrudInterface<AccountApiRequest, 
                 accountType(account.getAccountType()).
                 build();
 
-        return Header.OK(accountApiResponse);
+        return BodyData.OK(accountApiResponse);
     }
 
 }

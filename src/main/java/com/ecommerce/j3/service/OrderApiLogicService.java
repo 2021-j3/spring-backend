@@ -20,17 +20,17 @@ public class OrderApiLogicService {
     private final OrderRepository orderRepository;
     private final AccountRepository accountRepository;
 
-    Product product = productRepository.findOne(10l);
-    Product product1 = productRepository.findOne(11l);
-
-    OrderItem orderItem = OrderItem.createOrderItem(product,product.getPrice(),1);
-    orderItem.
-
-
-    OrderItem orderItem1 = OrderItem.createOrderItem(product1,product1.getPrice(),1);
-        orderItem1.setSku("sss");
-
-    Account account1 = accountRepository.findOne(1l);
-
-        orderRepository.makeOrder(account1,orderItem,orderItem1);
+//    Product product = productRepository.findOne(10l);
+//    Product product1 = productRepository.findOne(11l);
+//
+//    OrderItem orderItem = OrderItem.createOrderItem(product,product.getPrice(),1);
+//    orderItem.
+//
+//
+//            OrderItem orderItem1 = OrderItem.createOrderItem(product1,product1.getPrice(),1);
+//        orderItem1.setSku("sss");
+//
+//    Account account1 = accountRepository.findOne(1l);
+//
+//        orderRepository.makeOrder(account1,orderItem,orderItem1);
 }

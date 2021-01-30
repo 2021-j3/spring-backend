@@ -68,4 +68,5 @@ public class Account {
     private Address default_address;
     @OneToMany(mappedBy = "account")
     List<Address> addresses;
+
 }

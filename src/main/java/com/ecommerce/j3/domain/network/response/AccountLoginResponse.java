@@ -11,7 +11,7 @@ import java.util.Collection;
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AccountAuthResponse {
+public class AccountLoginResponse {
     private String username;
     private Collection<? extends GrantedAuthority> authorities;
     private String sessionId;
