@@ -8,9 +8,11 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity @Getter @Builder @Setter
+@Entity
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Accessors(chain = true)
 @Table (name = "ORDER_ITEM", schema = "SHOP")
 public class OrderItem {

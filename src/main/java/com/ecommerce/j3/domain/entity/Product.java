@@ -13,9 +13,11 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity @Getter @Builder
+@Entity
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Accessors(chain = true)
 @Table (name = "PRODUCT", schema = "SHOP")
 
@@ -23,6 +25,7 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productId;
+
 
     @NonNull
     @ManyToOne
@@ -66,8 +69,8 @@ public class Product {
 
     @ManyToMany
     @JoinTable(
-            name = "product_category"
-            ,joinColumns = @JoinColumn(name = "product_id"),
+            name = "product_category",
+            joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
     private Set<Category> categories;

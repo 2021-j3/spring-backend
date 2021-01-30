@@ -1,6 +1,7 @@
 package com.ecommerce.j3.service;
 
 import com.ecommerce.j3.controller.api.CrudInterface;
+import com.ecommerce.j3.domain.entity.Account;
 
 import com.ecommerce.j3.domain.entity.*;
 import com.ecommerce.j3.domain.network.BodyData;
@@ -8,6 +9,10 @@ import com.ecommerce.j3.domain.network.request.AccountApiRequest;
 import com.ecommerce.j3.domain.network.response.AccountApiResponse;
 
 import com.ecommerce.j3.repository.AccountRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 import com.ecommerce.j3.repository.OrderRepository;
 import com.ecommerce.j3.repository.ProductRepository;
 import lombok.Getter;
@@ -43,7 +48,6 @@ public class AccountApiLogicService implements CrudInterface<AccountApiRequest, 
         AccountApiRequest accountApiRequest = request.getData();
 
         // 2. account 생성
-
         Account account = Account.builder().
                 accountId(accountApiRequest.getAccountId()).
                 email(accountApiRequest.getEmail()).
@@ -94,32 +98,19 @@ public class AccountApiLogicService implements CrudInterface<AccountApiRequest, 
 
         return optional.map(account -> {
             // 3. update
-            Account account2 = Account.builder().
-                    accountId(account.getAccountId()).
-                    email(accountApiRequest.getEmail()).
-                    passwordHash(accountApiRequest.getPasswordHash()).
-                    firstName(accountApiRequest.getFirstName()).
-                    lastName(accountApiRequest.getLastName()).
-                    gender(accountApiRequest.getGender()).
-                    birthday(accountApiRequest.getBirthday()).
-                    phoneNumber(accountApiRequest.getPhoneNumber()).
-                    registeredAt(accountApiRequest.getRegisteredAt()).
-                    lastLogin(accountApiRequest.getLastLogin()).
-                    accountType(accountApiRequest.getAccountType()).
-                    build();
-//            account
-//                    .setEmail(accountApiRequest.getEmail())
-//                    .setPasswordHash(accountApiRequest.getPasswordHash())
-//                    .setFirstName(accountApiRequest.getFirstName())
-//                    .setLastName(accountApiRequest.getLastName())
-//                    .setGender(accountApiRequest.getGender())
-//                    .setBirthday(accountApiRequest.getBirthday())
-//                    .setPhoneNumber(accountApiRequest.getPhoneNumber())
-////                    .setRegisteredAt(accountApiRequest.getRegisteredAt())
-////                    .setLastLogin(accountApiRequest.getLastLogin())
-//                    .setAccountType(accountApiRequest.getAccountType())
+            account
+                    .setEmail(accountApiRequest.getEmail())
+                    .setPasswordHash(accountApiRequest.getPasswordHash())
+                    .setFirstName(accountApiRequest.getFirstName())
+                    .setLastName(accountApiRequest.getLastName())
+                    .setGender(accountApiRequest.getGender())
+                    .setBirthday(accountApiRequest.getBirthday())
+                    .setPhoneNumber(accountApiRequest.getPhoneNumber())
+//                    .setRegisteredAt(accountApiRequest.getRegisteredAt())
+//                    .setLastLogin(accountApiRequest.getLastLogin())
+                    .setAccountType(accountApiRequest.getAccountType())
             ;
-            return account2;
+            return account;
         })
                 .map(account -> accountRepository.save(account))
                 .map(updateAccount -> response(updateAccount))
@@ -132,7 +123,6 @@ public class AccountApiLogicService implements CrudInterface<AccountApiRequest, 
         // 2. repository -> delete
         return optional.map(account -> {
             accountRepository.delete(account);
-
             return BodyData.OK();
 
         })

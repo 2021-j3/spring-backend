@@ -5,9 +5,11 @@ import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 
-@Entity @Getter @Builder
+@Entity
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Accessors(chain = true)
 public class Category {
     @Id
