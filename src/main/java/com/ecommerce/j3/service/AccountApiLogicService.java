@@ -1,30 +1,40 @@
 package com.ecommerce.j3.service;
 
 import com.ecommerce.j3.controller.api.CrudInterface;
-import com.ecommerce.j3.domain.entity.Account;
+
+import com.ecommerce.j3.domain.entity.*;
 import com.ecommerce.j3.domain.network.BodyData;
 import com.ecommerce.j3.domain.network.request.AccountApiRequest;
 import com.ecommerce.j3.domain.network.response.AccountApiResponse;
 
 import com.ecommerce.j3.repository.AccountRepository;
+import com.ecommerce.j3.repository.OrderRepository;
+import com.ecommerce.j3.repository.ProductRepository;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.Optional;
-
+@Slf4j
 @Service
+@Transactional
+@RequiredArgsConstructor
 public class AccountApiLogicService implements CrudInterface<AccountApiRequest, AccountApiResponse> {
 
     // 1. request data
     // 2. account 생성
     // 3. 생성된 데이터 -> return AccountApiResponse
 
-    private AccountRepository accountRepository;
+    private final AccountRepository accountRepository;
+    private final OrderRepository orderRepository;
+    private final ProductRepository productRepository;
 
-    @Autowired
-    public AccountApiLogicService(AccountRepository accountRepository){
-        this.accountRepository = accountRepository;
-    }
 
     @Override
     public BodyData<AccountApiResponse> create(BodyData<AccountApiRequest> request) {
@@ -59,11 +69,19 @@ public class AccountApiLogicService implements CrudInterface<AccountApiRequest, 
     public BodyData<AccountApiResponse> read(Long id) {
         // 1. id -> repository getOne / getById
         Optional<Account> optional = accountRepository.findById(id);
-
         // 2. return account -> accountApiResponse
         return optional.map(account -> response(account))
                 .orElseGet(()-> BodyData.ERROR("데이터 없음"));
 
+    }
+
+    public BodyData<AccountApiResponse> readByEmail(String email){
+        Account account = accountRepository.findByEmail(email);
+        AccountApiResponse accountApiResponse = AccountApiResponse.builder().
+                accountId(account.getAccountId()).
+                email(account.getEmail()).
+                build();
+        return response(account);
     }
 
     @Override
