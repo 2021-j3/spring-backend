@@ -1,8 +1,13 @@
 package com.ecommerce.j3.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
 import com.ecommerce.j3.domain.entity.Review;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface ReviewRepository extends JpaRepository<Review, Long> {
+import java.util.Optional;
 
+@Repository
+public interface ReviewRepository extends JpaRepository<Review, Long>, ReviewRepositoryInterface {
+    @Override
+    Optional<Review> findOneByParent(Review review);
 }

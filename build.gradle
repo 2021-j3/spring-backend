@@ -1,6 +1,6 @@
 plugins {
-	id 'org.springframework.boot' version '2.4.1'
-	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+	id 'org.springframework.boot' version '2.4.2'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
 }
 
@@ -56,6 +56,21 @@ dependencies {
 
 	// test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	// url mapping
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	// security
+	implementation 'org.springframework.session:spring-session-core'
+	implementation group: 'org.springframework.session', name: 'spring-session', version: '1.0.1.RELEASE'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
+	testImplementation 'org.springframework.security:spring-security-test'
+
+	// DTO
+	implementation 'javax.validation:validation-api'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	compileOnly 'org.mapstruct:mapstruct:1.3.0.Final', 'org.projectlombok:lombok:1.18.12'
+	annotationProcessor 'org.mapstruct:mapstruct-processor:1.3.0.Final', 'org.projectlombok:lombok:1.18.12'
+	annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
 }
 
 test {

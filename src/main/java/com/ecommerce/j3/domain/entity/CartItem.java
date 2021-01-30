@@ -18,21 +18,30 @@ public class CartItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cartItemId;
+
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
     @ManyToOne
-    @JoinColumn(name = "account_id")
-    private Account account;
+    @JoinColumn(name = "cart_id")
+    private Cart cart;
+
     private String sku;
-    private float price;
-    private float discountRate;
-    private short quantity;
-//    private byte active;
-    @CreationTimestamp
-    private LocalDateTime createdAt;
-    @UpdateTimestamp
-    private LocalDateTime updatedAt;
+
+    private Integer price;
+
+    private Integer discountRate;
+
+    private Integer quantity;
+
+    private Integer active;
+
     @Column(columnDefinition = "TEXT")
     private String content;
+
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 }

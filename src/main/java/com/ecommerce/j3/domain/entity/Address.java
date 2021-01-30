@@ -1,9 +1,6 @@
 package com.ecommerce.j3.domain.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
@@ -14,6 +11,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Builder
 @Accessors(chain = true)
+@Table ( schema = "SHOP")
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +24,18 @@ public class Address {
     private String address;
     private String roadAddress;
     private String city;
+
     private String province;
+
     private String country;
+
     private Integer zipCode;
+    public static Address createAddress(Account account,String road_address,Integer zipCode){
+        Address ad = Address.builder()
+                .account(account)
+                .roadAddress(road_address)
+                .zipCode(zipCode)
+                .build();
+        return ad;
+    }
 }

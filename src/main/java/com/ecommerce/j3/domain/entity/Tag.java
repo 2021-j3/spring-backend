@@ -15,9 +15,13 @@ public class Tag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long tagId;
+
     private String title;
-    private String meta_title;
+
+    private String metaTitle;
+
     private String slug;
+
     @Column(columnDefinition = "TEXT")
     private String content;
 }

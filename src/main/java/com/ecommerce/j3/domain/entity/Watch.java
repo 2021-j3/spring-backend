@@ -17,13 +17,17 @@ public class Watch {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long watchId;
+
     @ManyToOne
     @JoinColumn(name = "account_id")
     private Account account;
+
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
+
     @UpdateTimestamp
     private LocalDateTime recentWatch;
-    private Integer watchCount = 1;
+
+    private Integer watchCount;
 }

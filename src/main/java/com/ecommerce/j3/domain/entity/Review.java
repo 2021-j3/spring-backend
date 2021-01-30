@@ -17,19 +17,29 @@ public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reviewId;
-    @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
-    @ManyToOne
-    @JoinColumn(name = "account_id")
-    private Account account;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
     private Review parent;
-    private short rate;
+
+    @ManyToOne
+    @JoinColumn(name = "order_item_id")
+    private OrderItem orderItem;
+
+    @ManyToOne
+    @JoinColumn(name = "account_id")
+    private Account account;
+
+    private Integer rate; // set 1
+
     private String title;
-    @CreationTimestamp
-    private LocalDateTime createdAt;
+
+    // private ReviewType type;
+    // private bool public;
+
     @Column(columnDefinition = "TEXT")
     private String content;
+
+    @CreationTimestamp
+    private LocalDateTime createdAt;
 }

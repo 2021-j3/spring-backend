@@ -14,7 +14,6 @@ import javax.persistence.*;
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "category_id")
     private Long categoryId;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -22,7 +21,9 @@ public class Category {
     private Category parent;
 
     private String title;
+
     private String metaTitle;
+
     private String slug;
 
     @Column(columnDefinition = "TEXT")

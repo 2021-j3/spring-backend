@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div th:if="${errors}">
+    <h5>입력한 내용에 문제가 있습니다</h5>
+    <div th:each="error : ${errors}"><p th:text="${error.defaultMessage}"></p></div>
+</div>
+
+<form action="#" th:action="@{/auth/register}" th:object="${registerForm}" method="post">
+    <div>*닉네임<input type="text" th:field="*{nickname}" name="nickname"/></div>
+    <div>*이메일<input type="text" th:field="*{email}" name="email"/></div>
+    <div>*패스워드<input type="password" th:field="*{password}" name="password"/></div>
+    <div>성<input type="text" th:field="*{lastName}" name="lastName"/></div>
+    <div>이름<input type="text" th:field="*{firstName}" name="firstName"/></div>
+    <div>성별<select th:field="*{gender}" name="gender">
+        <option th:each="type : ${T(com.ecommerce.j3.domain.entity.GenderType).values()}"
+                th:value="${type}" th:text="${type}"></option>
+    </select></div>
+    <div>핸드폰 번호<input type="text" th:field="*{phoneNumber}" name="phoneNumber"/></div>
+    <div>생일<input type="date" th:field="*{birthday}" name="birthday"></div>
+    <button type="submit">가입</button>
+</form>
+</body>
+</html>

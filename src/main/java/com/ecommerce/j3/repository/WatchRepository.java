@@ -1,7 +1,15 @@
 package com.ecommerce.j3.repository;
 
+import com.ecommerce.j3.domain.entity.Account;
 import com.ecommerce.j3.domain.entity.Watch;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface WatchRepository extends JpaRepository<Watch, Long> {
+import java.util.List;
+import java.util.Optional;
+
+@Repository
+public interface WatchRepository extends JpaRepository<Watch, Long>, WatchRepositoryInterface{
+    @Override
+    List<Watch> findByAccount(Account account);
 }
