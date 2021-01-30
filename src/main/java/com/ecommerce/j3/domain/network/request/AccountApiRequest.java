@@ -30,7 +30,7 @@ public class AccountApiRequest {
     private GenderType gender;
 
     @Column(columnDefinition = "VARCHAR")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "YYYY-MM-DD")
     private LocalDate birthday;
 
     private String phoneNumber;
@@ -43,5 +43,4 @@ public class AccountApiRequest {
     @Column(columnDefinition = "ENUM('USER','SELLER','ADMIN')")
     @Enumerated(EnumType.STRING)
     private AccountType accountType;
-
 }

@@ -8,9 +8,11 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity @Getter @Builder @Setter
+@Entity
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Accessors(chain = true)
 @Table (name = "ORDER_ITEM", schema = "SHOP")
 public class OrderItem {
@@ -45,13 +47,12 @@ public class OrderItem {
 
     //** 생성 매서드 **//
     public static OrderItem createOrderItem(Product product, Integer price, Integer quantity){
-        OrderItem orderItem = new OrderItem();
-        orderItem.setProduct(product);
-        orderItem.setPrice(price);
-        orderItem.setQuantity(quantity);
-        orderItem.setCreatedAt(LocalDateTime.now());
-        orderItem.setContent("d");
-        orderItem.setDiscountRate(11);
+        OrderItem orderItem = OrderItem.builder()
+            .product(product)
+            .price(price)
+            .quantity(quantity)
+            .content("d")
+            .discountRate(11).build();
         product.removeQuantity(quantity);
 
         return orderItem;

@@ -3,12 +3,12 @@ package com.ecommerce.j3.domain.network;
 import lombok.*;
 
 import java.time.LocalDateTime;
-@SuppressWarnings("unchecked")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder // 생성자 생성을 위한 어노테이션
+@SuppressWarnings("unchecked")
 public class BodyData<T> {
     // api 통신시간
     private LocalDateTime transactionTime;

@@ -1,14 +1,17 @@
 package com.ecommerce.j3.controller.api;
 
 import com.ecommerce.j3.domain.network.BodyData;
-import com.fasterxml.jackson.core.JsonProcessingException;
 
 public interface CrudInterface<Req, Res> {
-    BodyData<Res> create(BodyData<Req> request) throws JsonProcessingException;
+    // POST
+    BodyData<Res> create(BodyData<Req> request);
 
+    // GET
     BodyData<Res> read(Long id);
 
+    // PUT
     BodyData<Res> update(BodyData<Req> request);
 
+    // DELETE
     BodyData delete(Long id);
 }

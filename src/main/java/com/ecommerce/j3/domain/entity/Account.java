@@ -24,8 +24,6 @@ public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long accountId;
-
-    @NotNull
     private String email;
 
     @NotNull
@@ -37,7 +35,8 @@ public class Account {
     @NotNull
     private String lastName;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Column(columnDefinition = "VARCHAR")
+    @DateTimeFormat(pattern = "YYYY-MM-DD")
     private LocalDate birthday;
 
     @NotNull

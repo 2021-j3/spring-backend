@@ -10,9 +10,11 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity(name="orders") @Getter @Builder @Setter
+@Entity(name = "orders")
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Accessors(chain = true)
 @Table (name = "ORDERS", schema = "SHOP")
 public class Order {
