@@ -27,15 +27,12 @@ public class ProductApiResponse {
     private Float discountRate;
     private Short quantity;
 
-    @CreationTimestamp
     private LocalDateTime createdAt;
 
-    @UpdateTimestamp
     private LocalDateTime updatedAt;
 
     private LocalDateTime startsAt;
     private LocalDateTime endsAt;
 
-    @Column(columnDefinition = "TEXT")
     private String content;
 }

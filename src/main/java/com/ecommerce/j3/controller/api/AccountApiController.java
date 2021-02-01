@@ -10,6 +10,7 @@ import com.ecommerce.j3.domain.network.response.AccountApiResponse;
 import com.ecommerce.j3.repository.AccountRepository;
 import com.ecommerce.j3.service.AccountApiLogicService;
 import com.ecommerce.j3.service.AccountService;
+import com.ecommerce.j3.service.CartService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
@@ -27,15 +28,18 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class AccountApiController implements CrudInterface<AccountApiRequest, AccountApiResponse> {
     private final AccountApiLogicService accountApiLogicService;
+    private final CartService cartService;
     private final AccountService accountService;
     private final AccountRepository accountRepository;
 
     @ApiOperation(value = "회원 추가", notes = "회원을 추가한다.")
     @PostMapping("")
     @Override
-    public BodyData<AccountApiResponse> create(@RequestBody BodyData<AccountApiRequest> request) {
+    public BodyData<AccountApiResponse> create(@RequestBody AccountApiRequest request) {
         log.info("{}",request);
-        return accountApiLogicService.create(request);
+//        return accountApiLogicService.create(request);
+        BodyData<AccountApiResponse> response = accountApiLogicService.create(request);
+        return response;
     }
 
     @ApiOperation(value = "회원 조회", notes = "id에 해당하는 회원을 조회한다.")
@@ -49,7 +53,7 @@ public class AccountApiController implements CrudInterface<AccountApiRequest, Ac
     @ApiOperation(value = "회원 수정", notes = "회원을 수정한다.")
     @PutMapping("{id}")
     @Override
-    public BodyData<AccountApiResponse> update(@RequestBody BodyData<AccountApiRequest> request) {
+    public BodyData<AccountApiResponse> update(@RequestBody AccountApiRequest request) {
         return accountApiLogicService.update(request);
     }
     
@@ -91,7 +95,7 @@ public class AccountApiController implements CrudInterface<AccountApiRequest, Ac
 
     @PutMapping("/api/accounts")
     public CreateAccountResponse updateAccount(@RequestBody @Valid UpdateAccountRequest request) {
-        Account account = accountRepository.findByEmail(request.getEmail());
+        Account account = accountRepository.findByEmail(request.getEmail()).orElseThrow(()->new RuntimeException("cannot find"));
         Account accountUpdate = Account.builder()
                 .accountId(account.getAccountId())
                 .email(account.getEmail())

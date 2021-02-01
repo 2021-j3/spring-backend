@@ -18,8 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-@Table (name = "ACCOUNT", schema = "SHOP")
-
+//@Table (name = "ACCOUNT", schema = "SHOP")
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

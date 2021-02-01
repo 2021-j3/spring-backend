@@ -2,6 +2,8 @@ package com.ecommerce.j3.service;
 
 import com.ecommerce.j3.domain.entity.*;
 import com.ecommerce.j3.domain.mapper.AccountMapper;
+import com.ecommerce.j3.domain.network.request.AccountApiRequest;
+import com.ecommerce.j3.domain.network.response.AccountApiResponse;
 import com.ecommerce.j3.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -57,45 +59,46 @@ public class AccountService implements UserDetailsService {
     }
     @Transactional(readOnly = true)
     public Account findOne(Long id){
-        return accountRepository.findOne(id);
+        Account account = accountRepository.findById(id).orElseThrow(
+                ()->new RuntimeException("cannot find")
+        );
+        return account;
     }
     public Account findByEmail(String email){
-        return accountRepository.findByEmail(email);
+        return accountRepository.findByEmail(email).orElseThrow(()->new RuntimeException("cannot find"));
     }
 
-    public AccountDTO store(AccountDTO accountInfo){
+    public AccountApiResponse store(AccountApiRequest accountInfo){
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); // Bean 에 등록된 인코더불러오기
-        accountInfo.setPassword(passwordEncoder.encode(accountInfo.getPassword())); // 해시처리
+        accountInfo.setPasswordHash(passwordEncoder.encode(accountInfo.getPasswordHash())); // 해시처리
         accountInfo.setAccountType(AccountType.USER); // 웹 페이지에서 처음 생성 시 무조건 user
         Account account = accountMapper.toEntity(accountInfo); // dto -> entity
         accountRepository.save(account);
-        return accountInfo;
+        return accountMapper.toDto(account);
     }
 
-    public AccountDTO findById(Long accountId){
+    public AccountApiResponse findById(Long accountId){
         Account account = accountRepository
                 .findById(accountId)
                 .orElseThrow(()->new UsernameNotFoundException("다음 정보로 Account를 찾을 수 없습니다: accountId=" + accountId.toString()));
-        return accountMapper.toDTO(account);
+        return accountMapper.toDto(account);
     }
 
-    public AccountDTO update(AccountDTO accountInfo){
-        Account accountFromDB = accountRepository
-                .findByEmail(accountInfo.getEmail());
+    public AccountApiResponse update(AccountApiRequest accountInfo){
+        Account accountFromDB = accountRepository.findByEmail(accountInfo.getEmail()).orElseThrow(()->new RuntimeException("cannot find"));
 //                .findByEmail(accountInfo.getEmail()).orElseThrow(()->new UsernameNotFoundException("DB에서 유저가 삭제됬습니다"));
-        accountMapper.updateFromDTO(accountInfo, accountFromDB);
+        accountMapper.updateFromDto(accountFromDB, accountInfo);
         accountRepository.save(accountFromDB);
-        return accountMapper.toDTO(accountFromDB);
+        return accountMapper.toDto(accountFromDB);
     }
 
-    public void delete(AccountDTO accountInfo){
+    public void delete(AccountApiRequest accountInfo){
         // 에러처리
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Account account = accountRepository
-                .findByEmail(username);
+        Account account = accountRepository.findByEmail(username).orElseThrow(()->new RuntimeException("cannot find"));
 //                .findByEmail(username).orElseThrow(()->new UsernameNotFoundException(username));
         return new User(account.getEmail(),
                 account.getPasswordHash(),

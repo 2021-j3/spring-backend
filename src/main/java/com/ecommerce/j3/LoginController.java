@@ -1,50 +1,38 @@
 package com.ecommerce.j3;
 
-import com.ecommerce.j3.domain.entity.AccountDTO;
-import com.ecommerce.j3.domain.network.request.AccountLoginRequest;
-import com.ecommerce.j3.domain.network.response.AccountLoginResponse;
-import com.ecommerce.j3.service.AccountService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 @Slf4j
 @RestController
 @AllArgsConstructor
 @RequestMapping("/auth")
 public class LoginController {
-    AuthenticationManager authenticationManager;
-    AccountService accountService;
+//    AuthenticationManager authenticationManager;
+//    AccountService accountService;
 
-    @PostMapping("/login")
-    public AccountLoginResponse login(@RequestBody AccountLoginRequest accountAuthRequest, HttpSession session){
-        String email = accountAuthRequest.getEmail();
-        String password = accountAuthRequest.getPassword();
-//        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-//        password = encoder.encode(password);
+//    @PostMapping("/login")
+//    public AccountLoginResponse login(@RequestBody AccountApiRequest.AccountLoginRequest accountAuthRequest, HttpSession session){
+//        String email = accountAuthRequest.getEmail();
+//        String password = accountAuthRequest.getPassword();
+////        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+////        password = encoder.encode(password);
+//
+//        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(email, password);
+//        Authentication authentication = authenticationManager.authenticate(token);
+//
+//
+//
+//        SecurityContextHolder.getContext().setAuthentication(authentication);
+//        session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
+//        UserDetails user = accountService.loadUserByUsername(email);
+//        return new AccountLoginResponse(user.getUsername(), user.getAuthorities(), session.getId());
+//    }
 
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(email, password);
-        Authentication authentication = authenticationManager.authenticate(token);
-
-
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
-        UserDetails user = accountService.loadUserByUsername(email);
-        return new AccountLoginResponse(user.getUsername(), user.getAuthorities(), session.getId());
-    }
-
-    @PostMapping("/register")
-    public String register(@RequestBody AccountDTO account){
-        accountService.store(account);
-        return "success";
-    }
+//    @PostMapping("/register")
+//    public String register(@RequestBody AccountDTO account){
+//        accountService.store(account);
+//        return "success";
+//    }
 }

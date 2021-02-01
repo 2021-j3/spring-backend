@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AccountDTO {
+public class AccountApiRequest_will_be_delete {
     @NotBlank(message = "이메일을 입력해주세요")
     @Email(message = "이메일 형식이 아닙니다")
     private String email;

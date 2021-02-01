@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @Accessors(chain = true)
-@Table (name = "ORDER_ITEM", schema = "SHOP")
+//@Table (name = "ORDER_ITEM", schema = "SHOP")
 public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

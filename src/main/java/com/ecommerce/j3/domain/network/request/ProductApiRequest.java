@@ -15,11 +15,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class ProductApiRequest {
-
     private Long productId;
-
     private Account account;
-
     private String title;
     private String metaTitle;
     private String slug;
@@ -27,16 +24,9 @@ public class ProductApiRequest {
     private BigDecimal price;
     private Float discountRate;
     private Short quantity;
-
-    @CreationTimestamp
     private LocalDateTime createdAt;
-
-    @UpdateTimestamp
     private LocalDateTime updatedAt;
-
     private LocalDateTime startsAt;
     private LocalDateTime endsAt;
-
-    @Column(columnDefinition = "TEXT")
     private String content;
 }

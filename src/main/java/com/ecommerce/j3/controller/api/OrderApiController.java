@@ -1,20 +1,12 @@
-package com.ecommerce.j3.controller;
+package com.ecommerce.j3.controller.api;
 
 
-import com.ecommerce.j3.domain.entity.Account;
-import com.ecommerce.j3.domain.entity.Order;
-import com.ecommerce.j3.domain.entity.OrderItem;
-import com.ecommerce.j3.domain.entity.Product;
 import com.ecommerce.j3.service.AccountService;
 import com.ecommerce.j3.service.OrderService;
 import com.ecommerce.j3.service.ProductService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
