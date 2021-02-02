@@ -1,5 +1,6 @@
 package com.ecommerce.j3.controller.dto;
 
+
 import com.ecommerce.j3.domain.entity.Account;
 import com.ecommerce.j3.domain.entity.Category;
 import com.ecommerce.j3.domain.entity.Tag;
@@ -49,7 +50,7 @@ public class ProductDto {
 
         @Column(columnDefinition = "TEXT")
         private String content;
-
+      
         private Set<Category> categories;
         private Set<Tag> tags;
     }

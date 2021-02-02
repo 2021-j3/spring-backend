@@ -1,15 +1,10 @@
 package com.ecommerce.j3.domain.mapper;
 
-import com.ecommerce.j3.domain.entity.Account;
-import com.ecommerce.j3.domain.entity.Order;
+
 import com.ecommerce.j3.domain.entity.OrderItem;
 import com.ecommerce.j3.controller.dto.OrderItemDto.OrderItemApiRequest;
 import com.ecommerce.j3.controller.dto.OrderItemDto.OrderItemApiResponse;
-import com.ecommerce.j3.domain.entity.Product;
-import com.ecommerce.j3.repository.OrderRepository;
-import com.ecommerce.j3.repository.ProductRepository;
 import org.mapstruct.*;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.EntityNotFoundException;
 

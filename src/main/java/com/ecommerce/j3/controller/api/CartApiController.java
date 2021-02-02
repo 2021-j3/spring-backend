@@ -1,22 +1,21 @@
 package com.ecommerce.j3.controller.api;
 
-import com.ecommerce.j3.controller.dto.CartDto;
+
 import com.ecommerce.j3.controller.dto.BodyData;
 import com.ecommerce.j3.controller.dto.CartDto.CartApiRequest;
 import com.ecommerce.j3.controller.dto.CartDto.CartApiResponse;
-import com.ecommerce.j3.service.CartService;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Api(tags = {"2. Cart"})
+@Api(tags = {"3. Cart"})
+@Slf4j
 @RestController
-@RequestMapping("/api/cartes")
+@RequestMapping("/api/accounts")
 @AllArgsConstructor
-public class CartApiController implements CrudInterface<CartDto.CartApiRequest, CartDto.CartApiResponse> {
-    private final CartService cartService;
-    @ApiOperation(value = "카트 추가", notes = "카트를 추가한다.")
+public class CartApiController implements CrudInterface<CartApiRequest, CartApiResponse> {
     @Override
     @PostMapping
     public BodyData<CartDto.CartApiResponse> create(@RequestBody CartDto.CartApiRequest request) {

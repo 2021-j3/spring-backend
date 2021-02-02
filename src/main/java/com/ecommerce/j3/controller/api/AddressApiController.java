@@ -1,5 +1,6 @@
 package com.ecommerce.j3.controller.api;
 
+
 import com.ecommerce.j3.controller.dto.AddressDto;
 import com.ecommerce.j3.controller.dto.AddressDto.AddressApiRequest;
 import com.ecommerce.j3.controller.dto.AddressDto.AddressApiResponse;
@@ -18,12 +19,13 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 public class AddressApiController implements CrudInterface<AddressApiRequest, AddressApiResponse> {
     private final AddressService addressService;
-    @ApiOperation(value = "주소 추가", notes = "주소를 추가한다.")
+  
+    @ApiOperation(value = "주소 추가", notes="주소를 추가한다")
+    @PostMapping("")
     @Override
-    @PostMapping
-    public BodyData<AddressApiResponse> create(@RequestBody AddressApiRequest request) {
-        AddressApiResponse addressApiResponse = addressService.save(request);
-        return BodyData.OK(addressApiResponse);
+    public BodyData<AddressApiResponse> create(AddressApiRequest request) {
+        System.out.println("test");
+        return null;
     }
 
     @ApiOperation(value = "주소 일기", notes = "주소를 가져온다")

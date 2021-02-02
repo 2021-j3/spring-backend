@@ -1,14 +1,10 @@
 package com.ecommerce.j3.domain.mapper;
 
+
 import com.ecommerce.j3.domain.entity.Category;
 import com.ecommerce.j3.controller.dto.CategoryDto.CategoryApiRequest;
 import com.ecommerce.j3.controller.dto.CategoryDto.CategoryApiResponse;
-import com.ecommerce.j3.domain.entity.Product;
-import com.ecommerce.j3.repository.CategoryRepository;
 import org.mapstruct.*;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import javax.persistence.EntityNotFoundException;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, uses = {CommonMapper.class})
 public abstract class CategoryMapper implements DefaultMapper<Category, CategoryApiRequest, CategoryApiResponse> {

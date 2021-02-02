@@ -1,5 +1,6 @@
 package com.ecommerce.j3.controller.dto;
 
+
 import com.ecommerce.j3.domain.entity.Account;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,7 +18,7 @@ public class AddressDto {
     public static class AddressApiRequest {
         private Long addressId;
         private Long accountId;
-//        private Account account;
+        //        private Account account;
         private String address;
         private String roadAddress;
         private String city;
@@ -37,5 +38,4 @@ public class AddressDto {
         private String country;
         private Integer zipCode;
     }
-
 }
