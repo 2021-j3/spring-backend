@@ -1,8 +1,8 @@
 package com.ecommerce.j3.domain.mapper;
 
 import com.ecommerce.j3.domain.entity.Cart;
-import com.ecommerce.j3.domain.network.CartDto.CartApiRequest;
-import com.ecommerce.j3.domain.network.CartDto.CartApiResponse;
+import com.ecommerce.j3.controller.dto.CartDto.CartApiRequest;
+import com.ecommerce.j3.controller.dto.CartDto.CartApiResponse;
 import org.mapstruct.*;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)

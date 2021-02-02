@@ -1,8 +1,8 @@
 package com.ecommerce.j3.domain.mapper;
 
 import com.ecommerce.j3.domain.entity.Address;
-import com.ecommerce.j3.domain.network.AddressDto.AddressApiRequest;
-import com.ecommerce.j3.domain.network.AddressDto.AddressApiResponse;
+import com.ecommerce.j3.controller.dto.AddressDto.AddressApiRequest;
+import com.ecommerce.j3.controller.dto.AddressDto.AddressApiResponse;
 import org.mapstruct.*;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)

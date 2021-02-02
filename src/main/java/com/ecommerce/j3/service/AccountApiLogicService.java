@@ -5,9 +5,9 @@ import com.ecommerce.j3.domain.entity.Account;
 
 import com.ecommerce.j3.domain.entity.AccountType;
 import com.ecommerce.j3.domain.mapper.AccountMapper;
-import com.ecommerce.j3.domain.network.BodyData;
-import com.ecommerce.j3.domain.network.AccountDto.AccountApiRequest;
-import com.ecommerce.j3.domain.network.AccountDto.AccountApiResponse;
+import com.ecommerce.j3.controller.dto.BodyData;
+import com.ecommerce.j3.controller.dto.AccountDto.AccountApiRequest;
+import com.ecommerce.j3.controller.dto.AccountDto.AccountApiResponse;
 
 import com.ecommerce.j3.repository.AccountRepository;
 import org.springframework.stereotype.Service;

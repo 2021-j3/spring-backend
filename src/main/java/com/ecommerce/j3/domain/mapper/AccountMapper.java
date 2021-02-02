@@ -1,9 +1,9 @@
 package com.ecommerce.j3.domain.mapper;
 
 import com.ecommerce.j3.domain.entity.Account;
-import com.ecommerce.j3.domain.network.AccountDto.AccountApiRequest;
-import com.ecommerce.j3.domain.network.AccountDto.AccountApiResponse;
-import com.ecommerce.j3.domain.network.AccountDto.UpdateAccountRequest;
+import com.ecommerce.j3.controller.dto.AccountDto.AccountApiRequest;
+import com.ecommerce.j3.controller.dto.AccountDto.AccountApiResponse;
+import com.ecommerce.j3.controller.dto.AccountDto.UpdateAccountRequest;
 import org.mapstruct.*;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
