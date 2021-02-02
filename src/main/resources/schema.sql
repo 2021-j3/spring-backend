@@ -1,5 +1,3 @@
-drop schema `shop`;
-
 CREATE SCHEMA `shop` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `shop`.`account`;
