@@ -19,7 +19,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Builder
 @Accessors(chain = true)
-@Table (name = "PRODUCT", schema = "SHOP")
+//@Table (name = "PRODUCT", schema = "SHOP")
 
 public class Product {
     @Id

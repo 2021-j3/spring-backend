@@ -16,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Accessors(chain = true)
-@Table (name = "ORDERS", schema = "SHOP")
+//@Table (name = "ORDERS", schema = "SHOP")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

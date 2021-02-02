@@ -3,29 +3,23 @@ package com.ecommerce.j3.service;
 import com.ecommerce.j3.controller.api.CrudInterface;
 import com.ecommerce.j3.domain.entity.Account;
 
-import com.ecommerce.j3.domain.entity.*;
+import com.ecommerce.j3.domain.entity.AccountType;
+import com.ecommerce.j3.domain.mapper.AccountMapper;
 import com.ecommerce.j3.domain.network.BodyData;
-import com.ecommerce.j3.domain.network.request.AccountApiRequest;
-import com.ecommerce.j3.domain.network.response.AccountApiResponse;
+import com.ecommerce.j3.domain.network.AccountDto.AccountApiRequest;
+import com.ecommerce.j3.domain.network.AccountDto.AccountApiResponse;
 
 import com.ecommerce.j3.repository.AccountRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import com.ecommerce.j3.repository.OrderRepository;
 import com.ecommerce.j3.repository.ProductRepository;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.Optional;
+
 @Slf4j
 @Service
 @Transactional
@@ -39,29 +33,32 @@ public class AccountApiLogicService implements CrudInterface<AccountApiRequest, 
     private final AccountRepository accountRepository;
     private final OrderRepository orderRepository;
     private final ProductRepository productRepository;
+    private final AccountMapper accountMapper;
 
 
     @Override
-    public BodyData<AccountApiResponse> create(BodyData<AccountApiRequest> request) {
+//    public BodyData<AccountApiResponse> create(BodyData<AccountApiRequest> request) {
+    public BodyData<AccountApiResponse> create(AccountApiRequest request) {
 
         // 1. request data
-        AccountApiRequest accountApiRequest = request.getData();
-
+//        AccountApiRequest accountApiRequest = request.getData();
+        AccountApiRequest accountApiRequest = request;
         // 2. account 생성
-        Account account = Account.builder().
-                accountId(accountApiRequest.getAccountId()).
-                email(accountApiRequest.getEmail()).
-                passwordHash(accountApiRequest.getPasswordHash()).
-                firstName(accountApiRequest.getFirstName()).
-                lastName(accountApiRequest.getLastName()).
-                gender(accountApiRequest.getGender()).
-                birthday(accountApiRequest.getBirthday()).
-                phoneNumber(accountApiRequest.getPhoneNumber()).
-                registeredAt(accountApiRequest.getRegisteredAt()).
-                lastLogin(accountApiRequest.getLastLogin()).
-                accountType(accountApiRequest.getAccountType()).
-                build();
-
+//        Account account = Account.builder().
+//                accountId(accountApiRequest.getAccountId()).
+//                email(accountApiRequest.getEmail()).
+//                passwordHash(accountApiRequest.getPasswordHash()).
+//                firstName(accountApiRequest.getFirstName()).
+//                lastName(accountApiRequest.getLastName()).
+//                gender(accountApiRequest.getGender()).
+//                birthday(accountApiRequest.getBirthday()).
+//                phoneNumber(accountApiRequest.getPhoneNumber()).
+//                registeredAt(accountApiRequest.getRegisteredAt()).
+//                lastLogin(accountApiRequest.getLastLogin()).
+//                accountType(accountApiRequest.getAccountType()).
+//                build();
+        request.setAccountType(AccountType.USER);
+        Account account = accountMapper.toEntity(request);
 //        Account newAccount = accountRepository.save(account);
         accountRepository.save(account);
         // 3. 생성된 데이터 -> return AccountApiResponse
@@ -75,47 +72,33 @@ public class AccountApiLogicService implements CrudInterface<AccountApiRequest, 
         Optional<Account> optional = accountRepository.findById(id);
         // 2. return account -> accountApiResponse
         return optional.map(account -> response(account))
-                .orElseGet(()-> BodyData.ERROR("데이터 없음"));
+                .orElseGet(() -> BodyData.ERROR("데이터 없음"));
 
     }
 
-    public BodyData<AccountApiResponse> readByEmail(String email){
-        Account account = accountRepository.findByEmail(email);
-        AccountApiResponse accountApiResponse = AccountApiResponse.builder().
-                accountId(account.getAccountId()).
-                email(account.getEmail()).
-                build();
+    public BodyData<AccountApiResponse> readByEmail(String email) {
+        Account account = accountRepository.findByEmail(email).orElseThrow(()->new RuntimeException("cannot find"));
         return response(account);
     }
 
     @Override
-    public BodyData<AccountApiResponse> update(BodyData<AccountApiRequest> request) {
-
+//    public BodyData<AccountApiResponse> update(BodyData<AccountApiRequest> request) {
+    public BodyData<AccountApiResponse> update(AccountApiRequest request) {
         // 1. data 생성
-        AccountApiRequest accountApiRequest = request.getData();
+//        AccountApiRequest accountApiRequest = request.getData();
+        AccountApiRequest accountApiRequest = request;
         // 2. id -> account 찾고
-        Optional<Account> optional = accountRepository.findById(accountApiRequest.getAccountId());
+        Account accountFromDB = accountRepository
+                .findById(accountApiRequest.getAccountId())
+                .orElseThrow(()->new RuntimeException("cannot find"));
 
-        return optional.map(account -> {
-            // 3. update
-            Account accountUpdate = Account.builder()
-                    .accountId(account.getAccountId())
-                    .email(accountApiRequest.getEmail())
-                    .passwordHash(accountApiRequest.getPasswordHash())
-                    .firstName(accountApiRequest.getFirstName())
-                    .lastLogin(accountApiRequest.getLastLogin())
-                    .gender(accountApiRequest.getGender())
-                    .birthday(accountApiRequest.getBirthday())
-                    .phoneNumber(accountApiRequest.getPhoneNumber())
-                    .accountType(accountApiRequest.getAccountType())
-                    .build();
-            ;
-            return account;
-        })
-                .map(account -> accountRepository.save(account))
-                .map(updateAccount -> response(updateAccount))
-                .orElseGet(() -> BodyData.ERROR("데이터 없음"));
+        // 3. update
+
+        accountMapper.updateFromDto(accountFromDB, accountApiRequest);
+        accountRepository.save(accountFromDB);
+        return response(accountFromDB);
     }
+
     @Override
     public BodyData delete(Long id) {
         Optional<Account> optional = accountRepository.findById(id);
@@ -125,26 +108,12 @@ public class AccountApiLogicService implements CrudInterface<AccountApiRequest, 
             accountRepository.delete(account);
             return BodyData.OK();
 
-        })
-                .orElseGet(()-> BodyData.ERROR("데이터 없음"));
+        }).orElseGet(() -> BodyData.ERROR("데이터 없음"));
     }
 
-    private BodyData<AccountApiResponse> response(Account account){
-        AccountApiResponse accountApiResponse = AccountApiResponse.builder().
-                accountId(account.getAccountId()).
-                email(account.getEmail()).
-                passwordHash(account.getPasswordHash()).
-                firstName(account.getFirstName()).
-                lastName(account.getLastName()).
-                gender(account.getGender()).
-                birthday(account.getBirthday()).
-                phoneNumber(account.getPhoneNumber()).
-                registeredAt(account.getRegisteredAt()).
-                lastLogin(account.getLastLogin()).
-                accountType(account.getAccountType()).
-                build();
-
-        return BodyData.OK(accountApiResponse);
+    private BodyData<AccountApiResponse> response(Account account) {
+        AccountApiResponse response = accountMapper.toDto(account);
+        return BodyData.OK(response);
     }
 
 }

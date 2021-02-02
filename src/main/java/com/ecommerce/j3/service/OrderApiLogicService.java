@@ -1,8 +1,5 @@
 package com.ecommerce.j3.service;
 
-import com.ecommerce.j3.domain.entity.Account;
-import com.ecommerce.j3.domain.entity.OrderItem;
-import com.ecommerce.j3.domain.entity.Product;
 import com.ecommerce.j3.repository.AccountRepository;
 import com.ecommerce.j3.repository.OrderRepository;
 import com.ecommerce.j3.repository.ProductRepository;

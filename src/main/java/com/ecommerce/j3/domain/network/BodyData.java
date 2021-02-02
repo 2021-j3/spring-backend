@@ -14,7 +14,7 @@ public class BodyData<T> {
     private LocalDateTime transactionTime;
 
     // api 응답 코드
-    private String resultCode;
+    private Integer statusCode;
 
     // api 부가 설명
     private String description;
@@ -25,7 +25,7 @@ public class BodyData<T> {
     public static <T> BodyData<T> OK() {
         return (BodyData<T>) BodyData.builder()
                 .transactionTime(LocalDateTime.now())
-                .resultCode("OK")
+                .statusCode(200)
                 .description("OK")
                 .build();
     }
@@ -35,7 +35,7 @@ public class BodyData<T> {
     public static <T> BodyData<T> OK(T data) {
         return (BodyData<T>) BodyData.builder()
                 .transactionTime(LocalDateTime.now())
-                .resultCode("OK")
+                .statusCode(200)
                 .description("OK")
                 .data(data)
                 .build();
@@ -45,7 +45,7 @@ public class BodyData<T> {
     public static <T> BodyData<T> ERROR(String description) {
         return (BodyData<T>) BodyData.builder()
                 .transactionTime(LocalDateTime.now())
-                .resultCode("ERROR")
+                .statusCode(404)
                 .description(description)
                 .build();
     }

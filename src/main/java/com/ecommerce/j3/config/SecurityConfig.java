@@ -54,8 +54,8 @@
  import org.springframework.security.config.http.SessionCreationPolicy;
  import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
  import org.springframework.security.crypto.password.PasswordEncoder;
- import org.springframework.session.web.http.HeaderHttpSessionStrategy;
- import org.springframework.session.web.http.HttpSessionStrategy;
+// import org.springframework.session.web.http.HeaderHttpSessionStrategy;
+// import org.springframework.session.web.http.HttpSessionStrategy;
 
  @Configuration
  @EnableWebSecurity
@@ -72,10 +72,10 @@
          return super.authenticationManagerBean();
      }
 
-     @Bean
-     public HttpSessionStrategy httpSessionStrategy() {
-         return new HeaderHttpSessionStrategy();
-     }
+//     @Bean
+//     public HttpSessionStrategy httpSessionStrategy() {
+//         return new HeaderHttpSessionStrategy();
+//     }
 
      @Override
      public void configure(WebSecurity webSecurity){
