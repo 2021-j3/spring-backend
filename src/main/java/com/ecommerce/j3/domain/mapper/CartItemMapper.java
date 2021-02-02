@@ -1,8 +1,8 @@
 package com.ecommerce.j3.domain.mapper;
 
 import com.ecommerce.j3.domain.entity.CartItem;
-import com.ecommerce.j3.domain.network.CartItemDto.CartItemApiRequest;
-import com.ecommerce.j3.domain.network.CartItemDto.CartItemApiResponse;
+import com.ecommerce.j3.controller.dto.CartItemDto.CartItemApiRequest;
+import com.ecommerce.j3.controller.dto.CartItemDto.CartItemApiResponse;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.MappingTarget;

@@ -1,8 +1,8 @@
 package com.ecommerce.j3.domain.mapper;
 
 import com.ecommerce.j3.domain.entity.Suggestion;
-import com.ecommerce.j3.domain.network.SuggestionDto.SuggestionApiRequest;
-import com.ecommerce.j3.domain.network.SuggestionDto.SuggestionApiResponse;
+import com.ecommerce.j3.controller.dto.SuggestionDto.SuggestionApiRequest;
+import com.ecommerce.j3.controller.dto.SuggestionDto.SuggestionApiResponse;
 import org.mapstruct.*;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
