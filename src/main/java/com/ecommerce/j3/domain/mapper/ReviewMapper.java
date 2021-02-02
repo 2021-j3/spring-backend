@@ -1,8 +1,8 @@
 package com.ecommerce.j3.domain.mapper;
 
 import com.ecommerce.j3.domain.entity.Review;
-import com.ecommerce.j3.domain.network.request.ReviewApiRequest;
-import com.ecommerce.j3.domain.network.response.ReviewApiResponse;
+import com.ecommerce.j3.domain.network.ReviewDto.ReviewApiRequest;
+import com.ecommerce.j3.domain.network.ReviewDto.ReviewApiResponse;
 import org.mapstruct.*;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)

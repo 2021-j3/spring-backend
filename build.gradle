@@ -27,7 +27,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
 	// web
-	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation'org.springframework.boot:spring-boot-starter-web'
 
 	// junit
 	implementation 'junit:junit:4.12'
@@ -53,7 +53,7 @@ dependencies {
 	runtimeOnly 'mysql:mysql-connector-java'
 
 	// lombok
-//	annotationProcessor 'org.projectlombok:lombok'
+	compileOnly "org.projectlombok:lombok:${lombokVersion}"
 
 	// test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'

@@ -3,10 +3,11 @@ package com.ecommerce.j3.service;
 import com.ecommerce.j3.controller.api.CrudInterface;
 import com.ecommerce.j3.domain.entity.Account;
 
+import com.ecommerce.j3.domain.entity.AccountType;
 import com.ecommerce.j3.domain.mapper.AccountMapper;
 import com.ecommerce.j3.domain.network.BodyData;
-import com.ecommerce.j3.domain.network.request.AccountApiRequest;
-import com.ecommerce.j3.domain.network.response.AccountApiResponse;
+import com.ecommerce.j3.domain.network.AccountDto.AccountApiRequest;
+import com.ecommerce.j3.domain.network.AccountDto.AccountApiResponse;
 
 import com.ecommerce.j3.repository.AccountRepository;
 import org.springframework.stereotype.Service;
@@ -56,7 +57,7 @@ public class AccountApiLogicService implements CrudInterface<AccountApiRequest, 
 //                lastLogin(accountApiRequest.getLastLogin()).
 //                accountType(accountApiRequest.getAccountType()).
 //                build();
-
+        request.setAccountType(AccountType.USER);
         Account account = accountMapper.toEntity(request);
 //        Account newAccount = accountRepository.save(account);
         accountRepository.save(account);
@@ -77,10 +78,6 @@ public class AccountApiLogicService implements CrudInterface<AccountApiRequest, 
 
     public BodyData<AccountApiResponse> readByEmail(String email) {
         Account account = accountRepository.findByEmail(email).orElseThrow(()->new RuntimeException("cannot find"));
-        AccountApiResponse accountApiResponse = AccountApiResponse.builder().
-                accountId(account.getAccountId()).
-                email(account.getEmail()).
-                build();
         return response(account);
     }
 
@@ -115,21 +112,8 @@ public class AccountApiLogicService implements CrudInterface<AccountApiRequest, 
     }
 
     private BodyData<AccountApiResponse> response(Account account) {
-        AccountApiResponse accountApiResponse = AccountApiResponse.builder().
-                accountId(account.getAccountId()).
-                email(account.getEmail()).
-                passwordHash(account.getPasswordHash()).
-                firstName(account.getFirstName()).
-                lastName(account.getLastName()).
-                gender(account.getGender()).
-                birthday(account.getBirthday()).
-                phoneNumber(account.getPhoneNumber()).
-                registeredAt(account.getRegisteredAt()).
-                lastLogin(account.getLastLogin()).
-                accountType(account.getAccountType()).
-                build();
-
-        return BodyData.OK(accountApiResponse);
+        AccountApiResponse response = accountMapper.toDto(account);
+        return BodyData.OK(response);
     }
 
 }

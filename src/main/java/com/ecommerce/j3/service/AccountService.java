@@ -2,8 +2,8 @@ package com.ecommerce.j3.service;
 
 import com.ecommerce.j3.domain.entity.*;
 import com.ecommerce.j3.domain.mapper.AccountMapper;
-import com.ecommerce.j3.domain.network.request.AccountApiRequest;
-import com.ecommerce.j3.domain.network.response.AccountApiResponse;
+import com.ecommerce.j3.domain.network.AccountDto.AccountApiRequest;
+import com.ecommerce.j3.domain.network.AccountDto.AccountApiResponse;
 import com.ecommerce.j3.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
 

@@ -1,8 +1,8 @@
 package com.ecommerce.j3.domain.mapper;
 
 import com.ecommerce.j3.domain.entity.Category;
-import com.ecommerce.j3.domain.network.request.CategoryApiRequest;
-import com.ecommerce.j3.domain.network.response.CategoryApiResponse;
+import com.ecommerce.j3.domain.network.CategoryDto.CategoryApiRequest;
+import com.ecommerce.j3.domain.network.CategoryDto.CategoryApiResponse;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.MappingTarget;

@@ -1,8 +1,8 @@
 package com.ecommerce.j3.domain.mapper;
 
 import com.ecommerce.j3.domain.entity.Payment;
-import com.ecommerce.j3.domain.network.request.PaymentApiRequest;
-import com.ecommerce.j3.domain.network.response.PaymentApiResponse;
+import com.ecommerce.j3.domain.network.PaymentDto.PaymentApiRequest;
+import com.ecommerce.j3.domain.network.PaymentDto.PaymentApiResponse;
 import org.mapstruct.*;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)

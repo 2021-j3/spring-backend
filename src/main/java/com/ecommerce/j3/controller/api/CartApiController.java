@@ -1,9 +1,8 @@
 package com.ecommerce.j3.controller.api;
 
-import com.ecommerce.j3.domain.entity.Account;
 import com.ecommerce.j3.domain.network.BodyData;
-import com.ecommerce.j3.domain.network.request.CartApiRequest;
-import com.ecommerce.j3.domain.network.response.CartApiResponse;
+import com.ecommerce.j3.domain.network.CartDto.CartApiRequest;
+import com.ecommerce.j3.domain.network.CartDto.CartApiResponse;
 
 public class CartApiController implements CrudInterface<CartApiRequest, CartApiResponse> {
     @Override

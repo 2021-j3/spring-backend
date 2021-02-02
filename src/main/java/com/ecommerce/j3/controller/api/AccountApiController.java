@@ -2,11 +2,14 @@ package com.ecommerce.j3.controller.api;
 
 
 import com.ecommerce.j3.domain.entity.Account;
-import com.ecommerce.j3.domain.entity.AccountType;
-import com.ecommerce.j3.domain.entity.GenderType;
+import com.ecommerce.j3.domain.mapper.AccountMapper;
+import com.ecommerce.j3.domain.network.AccountDto.AccountApiRequest;
+import com.ecommerce.j3.domain.network.AccountDto.AccountApiResponse;
+import com.ecommerce.j3.domain.network.AccountDto.CreateAccountRequest;
+import com.ecommerce.j3.domain.network.AccountDto.CreateAccountResponse;
+import com.ecommerce.j3.domain.network.AccountDto.UpdateAccountRequest;
+import com.ecommerce.j3.domain.network.AccountDto.CreateAccountResponse;
 import com.ecommerce.j3.domain.network.BodyData;
-import com.ecommerce.j3.domain.network.request.AccountApiRequest;
-import com.ecommerce.j3.domain.network.response.AccountApiResponse;
 import com.ecommerce.j3.repository.AccountRepository;
 import com.ecommerce.j3.service.AccountApiLogicService;
 import com.ecommerce.j3.service.AccountService;
@@ -14,12 +17,10 @@ import com.ecommerce.j3.service.CartService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.time.LocalDateTime;
 
 @Api(tags = {"1. Account"})
 @Slf4j
@@ -31,12 +32,13 @@ public class AccountApiController implements CrudInterface<AccountApiRequest, Ac
     private final CartService cartService;
     private final AccountService accountService;
     private final AccountRepository accountRepository;
+    private final AccountMapper accountMapper;
 
     @ApiOperation(value = "회원 추가", notes = "회원을 추가한다.")
     @PostMapping("")
     @Override
     public BodyData<AccountApiResponse> create(@RequestBody AccountApiRequest request) {
-        log.info("{}",request);
+        log.info("{}", request);
 //        return accountApiLogicService.create(request);
         BodyData<AccountApiResponse> response = accountApiLogicService.create(request);
         return response;
@@ -56,12 +58,12 @@ public class AccountApiController implements CrudInterface<AccountApiRequest, Ac
     public BodyData<AccountApiResponse> update(@RequestBody AccountApiRequest request) {
         return accountApiLogicService.update(request);
     }
-    
+
     @ApiOperation(value = "회원 삭제", notes = "회원을 삭제한다.")
     @DeleteMapping("{id}")
     @Override
     public BodyData delete(@PathVariable Long id) {
-        log.info("delete : {}",id);
+        log.info("delete : {}", id);
         return accountApiLogicService.delete(id);
     }
 
@@ -95,90 +97,11 @@ public class AccountApiController implements CrudInterface<AccountApiRequest, Ac
 
     @PutMapping("/api/accounts")
     public CreateAccountResponse updateAccount(@RequestBody @Valid UpdateAccountRequest request) {
-        Account account = accountRepository.findByEmail(request.getEmail()).orElseThrow(()->new RuntimeException("cannot find"));
-        Account accountUpdate = Account.builder()
-                .accountId(account.getAccountId())
-                .email(account.getEmail())
-                .passwordHash(account.getPasswordHash())
-                .firstName(request.getFirstname())
-                .lastName(request.getLastname())
-                .birthday(account.getBirthday())
-                .gender(account.getGender())
-                .phoneNumber(account.getPhoneNumber())
-                .accountType(account.getAccountType())
-                .lastLogin(account.getLastLogin())
-                .build();
+        Account account = accountRepository.findByEmail(request.getEmail()).orElseThrow(() -> new RuntimeException("cannot find"));
+        AccountApiRequest fullRequest = accountMapper.toDto(request);
+        accountMapper.updateFromDto(account, fullRequest);
         accountService.join(account);   // 준영속 컨텍스트 핸들링
 
         return new CreateAccountResponse(account.getAccountId(), account.getRegisteredAt(), account.getFirstName(), account.getLastName());
-    }
-
-    @Data
-    static class ReadAccountRequest {
-        private String email;
-    }
-
-    @Data
-    static class CreateAccountRequest {
-        private String email;
-        private String password;
-        private String lastname;
-        private String firstname;
-        private GenderType gender;
-        private AccountType accounttype;
-    }
-
-    @Data
-    static class UpdateAccountRequest {
-        private String email;
-        private String lastname;
-        private String firstname;
-    }
-
-    @Data
-    class ReadAccountResponse {
-
-        private Long id;
-        private String firstName;
-        private String lastName;
-
-        public ReadAccountResponse(Long id, String firstName, String lastName) { /* Constructor */
-            this.id = id;
-            this.firstName = firstName;
-            this.lastName = lastName;
-
-        }
-    }
-
-    @Data
-    class CreateAccountResponse {
-
-        private Long id;
-        private LocalDateTime dateTime;
-        private String firstName;
-        private String lastName;
-
-        public CreateAccountResponse(Long id, LocalDateTime dateTime, String firstName, String lastName) {
-            this.id = id;
-            this.dateTime = dateTime;
-            this.firstName = firstName;
-            this.lastName = lastName;
-        }
-    }
-
-    @Data
-    class UpdateAccountResponse {
-
-        private Long id;
-        private LocalDateTime dateTime;
-        private String firstName;
-        private String lastName;
-
-        public UpdateAccountResponse(Long id, LocalDateTime dateTime, String firstName, String lastName) {
-            this.id = id;
-            this.dateTime = dateTime;
-            this.firstName = firstName;
-            this.lastName = lastName;
-        }
     }
 }

@@ -1,15 +1,12 @@
 package com.ecommerce.j3.domain.mapper;
 
-import com.ecommerce.j3.domain.entity.Account;
 import com.ecommerce.j3.domain.entity.Address;
-import com.ecommerce.j3.domain.network.request.AccountApiRequest;
-import com.ecommerce.j3.domain.network.request.AddressApiRequest;
-import com.ecommerce.j3.domain.network.response.AddressApiResponse;
+import com.ecommerce.j3.domain.network.AddressDto.AddressApiRequest;
+import com.ecommerce.j3.domain.network.AddressDto.AddressApiResponse;
 import org.mapstruct.*;
-import org.springframework.web.bind.annotation.Mapping;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
-public abstract class AddressMapper implements DefaultMapper<Address, AddressApiRequest, AddressApiResponse>{
+public abstract class AddressMapper implements DefaultMapper<Address, AddressApiRequest, AddressApiResponse> {
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     public abstract void updateFromDto(@MappingTarget Address entity, AddressApiRequest dto);

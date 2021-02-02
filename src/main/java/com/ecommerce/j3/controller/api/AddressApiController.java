@@ -1,9 +1,8 @@
 package com.ecommerce.j3.controller.api;
 
+import com.ecommerce.j3.domain.network.AddressDto.AddressApiRequest;
+import com.ecommerce.j3.domain.network.AddressDto.AddressApiResponse;
 import com.ecommerce.j3.domain.network.BodyData;
-import com.ecommerce.j3.domain.network.request.AddressApiRequest;
-import com.ecommerce.j3.domain.network.response.AccountApiResponse;
-import com.ecommerce.j3.domain.network.response.AddressApiResponse;
 import org.springframework.stereotype.Controller;
 
 @Controller

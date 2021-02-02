@@ -1,8 +1,8 @@
 package com.ecommerce.j3.domain.mapper;
 
 import com.ecommerce.j3.domain.entity.OrderItem;
-import com.ecommerce.j3.domain.network.request.OrderItemApiRequest;
-import com.ecommerce.j3.domain.network.response.OrderItemApiResponse;
+import com.ecommerce.j3.domain.network.OrderItemDto.OrderItemApiRequest;
+import com.ecommerce.j3.domain.network.OrderItemDto.OrderItemApiResponse;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.MappingTarget;
