@@ -1,13 +1,20 @@
 package com.ecommerce.j3.domain.mapper;
 
+import com.ecommerce.j3.domain.entity.Account;
 import com.ecommerce.j3.domain.entity.Order;
-import com.ecommerce.j3.domain.network.OrderDto.OrderApiRequest;
-import com.ecommerce.j3.domain.network.OrderDto.OrderApiResponse;
-import org.mapstruct.AfterMapping;
-import org.mapstruct.BeanMapping;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.NullValuePropertyMappingStrategy;
+import com.ecommerce.j3.controller.dto.OrderDto.OrderApiRequest;
+import com.ecommerce.j3.controller.dto.OrderDto.OrderApiResponse;
+import com.ecommerce.j3.domain.entity.OrderItem;
+import com.ecommerce.j3.repository.AccountRepository;
+import com.ecommerce.j3.repository.OrderItemRepository;
+import com.ecommerce.j3.repository.ProductRepository;
+import org.mapstruct.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.persistence.EntityNotFoundException;
+import java.util.List;
+
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, uses = {CommonMapper.class})
 public abstract class OrderMapper implements DefaultMapper<Order, OrderApiRequest, OrderApiResponse> {
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
@@ -18,8 +25,11 @@ public abstract class OrderMapper implements DefaultMapper<Order, OrderApiReques
         // TODO: 구현 해야함, account mapper 참조
     }
 
+    @Mapping(source = "accountId", target = "account")
+    @Mapping(source = "orderItemIds", target = "orderItems")
     @Override
     public abstract Order toEntity(OrderApiRequest dto);
+
     @Override
     public abstract OrderApiResponse toDto(Order cart);
 }

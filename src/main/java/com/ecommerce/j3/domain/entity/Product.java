@@ -1,6 +1,8 @@
 package com.ecommerce.j3.domain.entity;
 
 import com.ecommerce.j3.exception.NotEnoughStockException;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.CreationTimestamp;
@@ -20,6 +22,7 @@ import java.util.Set;
 @Builder
 @Accessors(chain = true)
 //@Table (name = "PRODUCT", schema = "SHOP")
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 
 public class Product {
     @Id

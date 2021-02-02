@@ -1,6 +1,8 @@
 package com.ecommerce.j3.service;
 
+import com.ecommerce.j3.controller.dto.OrderDto;
 import com.ecommerce.j3.domain.entity.*;
+import com.ecommerce.j3.domain.mapper.OrderMapper;
 import com.ecommerce.j3.repository.AccountRepository;
 import com.ecommerce.j3.repository.OrderRepository;
 import com.ecommerce.j3.repository.ProductRepository;
@@ -16,7 +18,13 @@ public class OrderService {
     private final OrderRepository orderRepository;  // final 은 entity 를 한번만 declare 하게 해줌.
     private final AccountRepository accountRepository;
     private final ProductRepository productRepository;
+    private final OrderMapper orderMapper;
 
+    public OrderDto.OrderApiResponse save(OrderDto.OrderApiRequest request){
+        Order order = orderMapper.toEntity(request);
+        orderRepository.save(order);
+        return orderMapper.toDto(order);
+    }
     /* 주문 */
     /*
     @Transactional

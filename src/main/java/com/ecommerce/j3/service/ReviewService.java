@@ -1,8 +1,12 @@
 package com.ecommerce.j3.service;
 
+import com.ecommerce.j3.controller.dto.ReviewDto;
+import com.ecommerce.j3.domain.entity.Review;
 import com.ecommerce.j3.domain.entity.Product;
 import com.ecommerce.j3.domain.entity.Review;
+import com.ecommerce.j3.domain.mapper.ReviewMapper;
 import com.ecommerce.j3.repository.ReviewRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,12 +15,16 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class ReviewService {
     private ReviewRepository reviewRepository;
+    private final ReviewMapper reviewMapper;
 
-    @Autowired
-    public ReviewService(ReviewRepository reviewRepository){this.reviewRepository = reviewRepository;}
-
+    public ReviewDto.ReviewApiResponse save(ReviewDto.ReviewApiRequest request){
+        Review review = reviewMapper.toEntity(request);
+        reviewRepository.save(review);
+        return reviewMapper.toDto(review);
+    }
     public Review save(Review review){
         reviewRepository.save(review);
         return review;

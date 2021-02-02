@@ -3,13 +3,8 @@ package com.ecommerce.j3.controller.api;
 
 import com.ecommerce.j3.domain.entity.Account;
 import com.ecommerce.j3.domain.mapper.AccountMapper;
-import com.ecommerce.j3.domain.network.AccountDto.AccountApiRequest;
-import com.ecommerce.j3.domain.network.AccountDto.AccountApiResponse;
-import com.ecommerce.j3.domain.network.AccountDto.CreateAccountRequest;
-import com.ecommerce.j3.domain.network.AccountDto.CreateAccountResponse;
-import com.ecommerce.j3.domain.network.AccountDto.UpdateAccountRequest;
-import com.ecommerce.j3.domain.network.AccountDto.CreateAccountResponse;
-import com.ecommerce.j3.domain.network.BodyData;
+import com.ecommerce.j3.controller.dto.AccountDto.*;
+import com.ecommerce.j3.controller.dto.BodyData;
 import com.ecommerce.j3.repository.AccountRepository;
 import com.ecommerce.j3.service.AccountApiLogicService;
 import com.ecommerce.j3.service.AccountService;
@@ -39,9 +34,9 @@ public class AccountApiController implements CrudInterface<AccountApiRequest, Ac
     @Override
     public BodyData<AccountApiResponse> create(@RequestBody AccountApiRequest request) {
         log.info("{}", request);
-//        return accountApiLogicService.create(request);
-        BodyData<AccountApiResponse> response = accountApiLogicService.create(request);
-        return response;
+        return accountApiLogicService.create(request);
+//        AccountApiResponse response = accountService.store(request);
+//        return  BodyData.OK(response);
     }
 
     @ApiOperation(value = "회원 조회", notes = "id에 해당하는 회원을 조회한다.")

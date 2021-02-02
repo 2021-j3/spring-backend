@@ -1,4 +1,4 @@
-package com.ecommerce.j3.domain.network;
+package com.ecommerce.j3.controller.dto;
 
 import com.ecommerce.j3.domain.entity.AccountType;
 import com.ecommerce.j3.domain.entity.GenderType;
@@ -34,7 +34,7 @@ public class AccountDto {
         private GenderType gender;
 
         @Column(columnDefinition = "VARCHAR")
-        @DateTimeFormat(pattern = "YYYY-MM-DD")
+        @DateTimeFormat(pattern = "yyyy-MM-dd")
         private LocalDate birthday;
 
         private String phoneNumber;
@@ -79,6 +79,12 @@ public class AccountDto {
 
         @Enumerated(EnumType.STRING)
         private AccountType accountType;
+    }
+
+    @Data
+    public static class LoginRequest{
+        private String email;
+        private String password;
     }
 
     @Data

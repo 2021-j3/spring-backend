@@ -1,5 +1,7 @@
 package com.ecommerce.j3.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.sun.istack.NotNull;
 import lombok.*;
 import lombok.experimental.Accessors;
@@ -19,6 +21,8 @@ import java.util.List;
 @AllArgsConstructor
 @Accessors(chain = true)
 //@Table (name = "ACCOUNT", schema = "SHOP")
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,14 +61,13 @@ public class Account {
     private LocalDateTime lastLogin;
 
     @OneToOne
-
-    @JoinTable(schema = "SHOP",
+    @JoinTable(schema = "shop",
             name = "default_address",
             joinColumns = @JoinColumn( name = "account_id"),
             inverseJoinColumns = @JoinColumn( name = "address_id")
     )
-    private Address default_address;
-    @OneToMany(mappedBy = "account")
+    private Address defaultAddress;
+    @OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
     List<Address> addresses;
 
 }

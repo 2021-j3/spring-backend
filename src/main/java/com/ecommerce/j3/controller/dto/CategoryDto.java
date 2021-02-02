@@ -1,4 +1,4 @@
-package com.ecommerce.j3.domain.network;
+package com.ecommerce.j3.controller.dto;
 
 import com.ecommerce.j3.domain.entity.Category;
 import lombok.AllArgsConstructor;
@@ -13,7 +13,7 @@ public class CategoryDto {
     @AllArgsConstructor
     public static class CategoryApiRequest {
         private Long categoryId;
-        private Category parent;
+        private Long parentId;
         private String title;
         private String metaTitle;
         private String slug;

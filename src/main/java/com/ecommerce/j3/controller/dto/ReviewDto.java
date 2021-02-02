@@ -1,4 +1,4 @@
-package com.ecommerce.j3.domain.network;
+package com.ecommerce.j3.controller.dto;
 
 import com.ecommerce.j3.domain.entity.Account;
 import com.ecommerce.j3.domain.entity.OrderItem;
@@ -17,9 +17,9 @@ public class ReviewDto {
     @AllArgsConstructor
     public static class ReviewApiRequest {
         private Long reviewId;
-        private Review parent;
-        private OrderItem orderItem;
-        private Account account;
+        private Long parentId;
+        private Long orderItemId;
+        private Long accountId;
         private Integer rate; // set 1
         private String title;
         private String content;

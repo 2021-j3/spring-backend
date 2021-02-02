@@ -1,5 +1,7 @@
 package com.ecommerce.j3.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.CreationTimestamp;
@@ -17,6 +19,7 @@ import java.util.List;
 @Builder
 @Accessors(chain = true)
 //@Table (name = "ORDERS", schema = "SHOP")
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +31,6 @@ public class Order {
 
     @OneToMany(mappedBy="order",cascade = CascadeType.ALL)    // 01-18 Megan
     public List<OrderItem> orderItems ;
-
 
     private String sessionId;
 

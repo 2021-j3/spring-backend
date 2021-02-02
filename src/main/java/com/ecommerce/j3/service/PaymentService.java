@@ -1,8 +1,12 @@
 package com.ecommerce.j3.service;
 
+import com.ecommerce.j3.controller.dto.PaymentDto;
 import com.ecommerce.j3.domain.entity.Account;
 import com.ecommerce.j3.domain.entity.Payment;
+import com.ecommerce.j3.domain.entity.Payment;
+import com.ecommerce.j3.domain.mapper.PaymentMapper;
 import com.ecommerce.j3.repository.PaymentRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,12 +14,17 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class PaymentService {
     private PaymentRepository paymentRepository;
+    private final PaymentMapper paymentMapper;
 
-    @Autowired
-    public PaymentService(PaymentRepository paymentRepository){this.paymentRepository = paymentRepository;}
-
+    public PaymentDto.PaymentApiResponse save(PaymentDto.PaymentApiRequest request){
+        Payment payment = paymentMapper.toEntity(request);
+        paymentRepository.save(payment);
+        return paymentMapper.toDto(payment);
+    }
+    
     public Payment save(Payment payment){
         paymentRepository.save(payment);
         return payment;

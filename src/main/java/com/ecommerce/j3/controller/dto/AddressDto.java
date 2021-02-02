@@ -1,4 +1,4 @@
-package com.ecommerce.j3.domain.network;
+package com.ecommerce.j3.controller.dto;
 
 import com.ecommerce.j3.domain.entity.Account;
 import lombok.AllArgsConstructor;
@@ -16,7 +16,8 @@ public class AddressDto {
     @AllArgsConstructor
     public static class AddressApiRequest {
         private Long addressId;
-        private Account account;
+        private Long accountId;
+//        private Account account;
         private String address;
         private String roadAddress;
         private String city;

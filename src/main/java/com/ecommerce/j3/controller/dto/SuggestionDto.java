@@ -1,4 +1,4 @@
-package com.ecommerce.j3.domain.network;
+package com.ecommerce.j3.controller.dto;
 
 import com.ecommerce.j3.domain.entity.Account;
 import com.ecommerce.j3.domain.entity.Product;
@@ -14,8 +14,8 @@ public class SuggestionDto {
     @AllArgsConstructor
     public static class SuggestionApiRequest {
         private Long suggestionId;
-        private Account account;
-        private Product product;
+        private Long accountId;
+        private Long productId;
         private String content;
     }
 

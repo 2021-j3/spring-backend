@@ -1,11 +1,11 @@
 package com.ecommerce.j3.domain.mapper;
 
 import com.ecommerce.j3.domain.entity.Product;
-import com.ecommerce.j3.domain.network.ProductDto.ProductApiRequest;
-import com.ecommerce.j3.domain.network.ProductDto.ProductApiResponse;
+import com.ecommerce.j3.controller.dto.ProductDto.ProductApiRequest;
+import com.ecommerce.j3.controller.dto.ProductDto.ProductApiResponse;
 import org.mapstruct.*;
 
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, uses = {CommonMapper.class})
 public abstract class ProductMapper implements DefaultMapper<Product, ProductApiRequest, ProductApiResponse> {
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
