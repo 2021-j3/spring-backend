@@ -60,7 +60,7 @@ public class AccountDto {
 
         private String email;
 
-        // 암호화 처리
+        // 암호화 처리 필요
         private String passwordHash;
 
 //    private String firstName;

@@ -35,7 +35,7 @@ public class Account {
     private String lastName;
 
     @Column(columnDefinition = "VARCHAR")
-    @DateTimeFormat(pattern = "YYYY-MM-DD")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthday;
 
     @NotNull
@@ -58,12 +58,12 @@ public class Account {
 
     @OneToOne
 
-    @JoinTable(schema = "SHOP",
+    @JoinTable(schema = "shop",
             name = "default_address",
             joinColumns = @JoinColumn( name = "account_id"),
             inverseJoinColumns = @JoinColumn( name = "address_id")
     )
-    private Address default_address;
+    private Address defaultAddress;
     @OneToMany(mappedBy = "account")
     List<Address> addresses;
 

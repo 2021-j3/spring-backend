@@ -8,6 +8,12 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public abstract class CartMapper implements DefaultMapper<Cart, CartApiRequest, CartApiResponse> {
 
+    @Override
+    public abstract Cart toEntity(CartApiRequest dto);
+
+    @Override
+    public abstract CartApiResponse toDto(Cart entity);
+
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     public abstract void updateFromDto(@MappingTarget Cart entity, CartApiRequest dto);
 
@@ -16,9 +22,5 @@ public abstract class CartMapper implements DefaultMapper<Cart, CartApiRequest, 
         // TODO: 구현 해야함, account mapper 참조
     }
 
-    @Override
-    public abstract Cart toEntity(CartApiRequest dto);
 
-    @Override
-    public abstract CartApiResponse toDto(Cart entity);
 }

@@ -9,6 +9,7 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public abstract class AccountMapper implements DefaultMapper<Account, AccountApiRequest, AccountApiResponse>{
     public abstract void updateFromDto(@MappingTarget Account entity, AccountApiRequest dto);
+    public abstract AccountApiRequest toDto(UpdateAccountRequest dtoWithSomeField);
 
     @AfterMapping
     protected void afterUpdateFromDto(@MappingTarget Account entity, AccountApiRequest dto){
@@ -18,7 +19,7 @@ public abstract class AccountMapper implements DefaultMapper<Account, AccountApi
                 .accountId(db.getAccountId())
                 .registeredAt(db.getRegisteredAt())
                 .lastLogin(db.getLastLogin())
-                .default_address(db.getDefault_address())
+                .defaultAddress(db.getDefaultAddress())
                 // 필수 값, 입력된 값이 null일 경우, 기존 값을 사용
                 .email(!dto.getEmail().equals("") ? dto.getEmail() : db.getEmail())
                 .passwordHash(!dto.getPasswordHash().equals("") ? dto.getPasswordHash() : db.getPasswordHash())
@@ -31,8 +32,6 @@ public abstract class AccountMapper implements DefaultMapper<Account, AccountApi
                 .phoneNumber(dto.getPhoneNumber())
                 .build();
     }
-
-    public abstract AccountApiRequest toDto(UpdateAccountRequest dtoWithSomeField);
 
     //    @Mapping(target = "passwordHash", source = "password")
 //    public abstract Account toEntity(AccountDTO dto);
