@@ -20,7 +20,7 @@ public class CartController {
 //      생성은 account controller에서 account 생성 후 cart service 사용하여 생성
 //    }
 
-    @PutMapping("/")
+    @PutMapping("/api/carts")
     public String updateCart(@RequestBody List<Long> cartItemList){
         // 근데 결제 완료시점에서 order item list는 있어도 cart item list는 없겠는데 세션에 저장해서 사용 후 삭제
         return "success";

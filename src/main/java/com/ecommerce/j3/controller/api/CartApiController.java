@@ -5,17 +5,20 @@ import com.ecommerce.j3.controller.dto.BodyData;
 import com.ecommerce.j3.controller.dto.CartDto.CartApiRequest;
 import com.ecommerce.j3.controller.dto.CartDto.CartApiResponse;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Api(tags = {"3. Cart"})
 @Slf4j
 @RestController
-@RequestMapping("/api/accounts")
+@RequestMapping("/api/carts")
 @AllArgsConstructor
 public class CartApiController implements CrudInterface<CartApiRequest, CartApiResponse> {
+
+    @ApiOperation(value = "카트 추가", notes = "카트를 추가한다.")
+    @PostMapping("")
     @Override
     @PostMapping
     public BodyData<CartDto.CartApiResponse> create(@RequestBody CartDto.CartApiRequest request) {
@@ -23,7 +26,8 @@ public class CartApiController implements CrudInterface<CartApiRequest, CartApiR
         return BodyData.OK(cartApiResponse);
     }
 
-    @ApiOperation(value = "카트 일기", notes = "카트를 가져온다")
+    @ApiOperation(value = "카트 조회", notes = "카트를 조회한다.")
+    @GetMapping("")
     @Override
 //    @GetMapping
     public BodyData<CartDto.CartApiResponse> read(Long id) {

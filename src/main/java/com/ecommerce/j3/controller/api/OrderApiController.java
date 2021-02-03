@@ -1,22 +1,28 @@
 package com.ecommerce.j3.controller.api;
 
 
+import com.ecommerce.j3.controller.dto.BodyData;
+import com.ecommerce.j3.controller.dto.OrderDto;
 import com.ecommerce.j3.service.AccountService;
 import com.ecommerce.j3.service.OrderService;
 import com.ecommerce.j3.service.ProductService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.hibernate.annotations.Table;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-@RestController
-@RequiredArgsConstructor
+@Api(tags = {"5. Order"})
 @Slf4j
-public class OrderApiController {
+@RestController
+@RequestMapping("/api/orders")
+@AllArgsConstructor
+public class OrderApiController implements CrudInterface<OrderDto.OrderApiRequest, OrderDto.OrderApiResponse> {
     private final OrderService orderService;
     private final ProductService productService;
     private final AccountService accountService;
@@ -27,6 +33,34 @@ public class OrderApiController {
          //   long order_id = orderService.order(request.getAccountId(),request.getProductId(),request.getQuantity());
 
         return new CreateBuyOrderResponse();
+    }
+
+    @ApiOperation(value = "Order 추가", notes = "Order를 추가한다.")
+    @PostMapping("")
+    @Override
+    public BodyData<OrderDto.OrderApiResponse> create(OrderDto.OrderApiRequest request) {
+        return null;
+    }
+
+    @ApiOperation(value = "Order 조회", notes = "Order를 조회한다.")
+    @GetMapping("")
+    @Override
+    public BodyData<OrderDto.OrderApiResponse> read(Long id) {
+        return null;
+    }
+
+    @ApiOperation(value = "Order 수정", notes = "Order를 수정한다.")
+    @PutMapping("")
+    @Override
+    public BodyData<OrderDto.OrderApiResponse> update(OrderDto.OrderApiRequest request) {
+        return null;
+    }
+
+    @ApiOperation(value = "Order 삭제", notes = "Order를 삭제한다.")
+    @DeleteMapping("")
+    @Override
+    public BodyData delete(Long id) {
+        return null;
     }
 
     @Data
