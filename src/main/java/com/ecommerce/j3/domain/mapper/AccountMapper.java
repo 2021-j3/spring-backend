@@ -27,6 +27,7 @@ public abstract class AccountMapper implements DefaultMapper<Account, AccountApi
                 .lastName(!dto.getLastName().equals("") ? dto.getLastName() : db.getLastName())
                 .gender(dto.getGender() != null ? dto.getGender() : db.getGender())
                 .accountType(dto.getAccountType() != null ? dto.getAccountType() : db.getAccountType())
+                .lastLogin(dto.getLastLogin() != null ? dto.getLastLogin() : db.getLastLogin())
                 // 필수 아님, null 가능
                 .birthday(dto.getBirthday())
                 .phoneNumber(dto.getPhoneNumber())
@@ -38,8 +39,10 @@ public abstract class AccountMapper implements DefaultMapper<Account, AccountApi
     @Override
     public abstract AccountApiResponse toDto(Account entity);
 
-//    public abstract Account toEntity(AccountDTO.RegisterRequest dto);
-
     @Override
     public abstract Account toEntity(AccountApiRequest dto);
+
+//    @Named("accountWithoutRef")
+//    @Mapping(target = "addresses", ignore = true)
+//    public abstract Account toEntityWithoutRef(AccountApiRequest dto);
 }

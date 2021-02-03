@@ -1,5 +1,6 @@
 package com.ecommerce.j3.controller.api;
 
+
 import com.ecommerce.j3.controller.dto.BodyData;
 import com.ecommerce.j3.controller.dto.CartDto.CartApiRequest;
 import com.ecommerce.j3.controller.dto.CartDto.CartApiResponse;
@@ -19,27 +20,30 @@ public class CartApiController implements CrudInterface<CartApiRequest, CartApiR
     @ApiOperation(value = "카트 추가", notes = "카트를 추가한다.")
     @PostMapping("")
     @Override
-    public BodyData<CartApiResponse> create(CartApiRequest request) {
-        return null;
+    @PostMapping
+    public BodyData<CartDto.CartApiResponse> create(@RequestBody CartDto.CartApiRequest request) {
+        CartDto.CartApiResponse cartApiResponse = cartService.save(request);
+        return BodyData.OK(cartApiResponse);
     }
 
     @ApiOperation(value = "카트 조회", notes = "카트를 조회한다.")
     @GetMapping("")
     @Override
-    public BodyData<CartApiResponse> read(Long id) {
+//    @GetMapping
+    public BodyData<CartDto.CartApiResponse> read(Long id) {
         return null;
     }
 
-    @ApiOperation(value = "카트 수정", notes = "카트를 수정한다.")
-    @PutMapping("")
+    @ApiOperation(value = "카트 갱신", notes = "카트를 갱신한다.")
     @Override
-    public BodyData<CartApiResponse> update(CartApiRequest request) {
+    @PutMapping
+    public BodyData<CartDto.CartApiResponse> update(@RequestBody CartDto.CartApiRequest request) {
         return null;
     }
 
     @ApiOperation(value = "카트 삭제", notes = "카트를 삭제한다.")
-    @DeleteMapping("")
     @Override
+    @DeleteMapping
     public BodyData delete(Long id) {
         return null;
     }

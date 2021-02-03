@@ -1,5 +1,6 @@
 package com.ecommerce.j3.controller.dto;
 
+
 import com.ecommerce.j3.domain.entity.Order;
 import com.ecommerce.j3.domain.entity.Product;
 import lombok.AllArgsConstructor;
@@ -16,8 +17,8 @@ public class OrderItemDto {
     @AllArgsConstructor
     public static class OrderItemApiRequest {
         private Long orderItemId;
-        private Product product;
-        private Order order;
+        private Long productId;
+        private Long orderId;
         private String sku;
         private Integer price;
         private Integer discountRate;

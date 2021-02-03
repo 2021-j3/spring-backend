@@ -1,5 +1,6 @@
 package com.ecommerce.j3.controller.dto;
 
+
 import com.ecommerce.j3.domain.entity.Account;
 import com.ecommerce.j3.domain.entity.CartItem;
 import com.ecommerce.j3.domain.entity.OrderStatus;
@@ -21,8 +22,8 @@ public class CartDto {
     @AllArgsConstructor
     public static class CartApiRequest {
         private Long cartId;
-        private Account account;
-        private List<CartItem> cartItems;
+        private Long accountId;
+        private List<Long> cartItemIds;
         private String sessionId;
         private String token;
         private OrderStatus status;

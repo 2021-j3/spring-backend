@@ -1,5 +1,6 @@
 package com.ecommerce.j3.controller.dto;
 
+
 import com.ecommerce.j3.domain.entity.Account;
 import com.ecommerce.j3.domain.entity.Order;
 import com.ecommerce.j3.domain.entity.PaymentStatus;
@@ -18,8 +19,8 @@ public class PaymentDto {
     @AllArgsConstructor
     public static class PaymentApiRequest {
         private Long paymentId;
-        private Account account;
-        private Order order;
+        private Long accountId;
+        private Long orderId;
         private String code;
         private PaymentType type;
         private PaymentStatus status;

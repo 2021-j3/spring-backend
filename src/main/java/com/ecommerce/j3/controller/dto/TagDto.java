@@ -1,20 +1,23 @@
 package com.ecommerce.j3.controller.dto;
 
-
-import com.ecommerce.j3.domain.entity.Category;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-public class CategoryDto {
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+public class TagDto {
+
     @Getter
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class CategoryApiRequest {
-        private Long categoryId;
-        private Long parentId;
+    public static class TagApiRequest{
+        private Long tagId;
         private String title;
         private String metaTitle;
         private String slug;
@@ -25,13 +28,11 @@ public class CategoryDto {
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class CategoryApiResponse {
-        private Long categoryId;
-        private Category parent;
+    public static class TagApiResponse{
+        private Long tagId;
         private String title;
         private String metaTitle;
         private String slug;
         private String content;
     }
-
 }
