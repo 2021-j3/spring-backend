@@ -1,6 +1,11 @@
 package com.ecommerce.j3.service;
 
+import com.ecommerce.j3.controller.dto.CartDto;
+import com.ecommerce.j3.controller.dto.CartItemDto;
+import com.ecommerce.j3.domain.entity.Cart;
 import com.ecommerce.j3.domain.entity.CartItem;
+import com.ecommerce.j3.domain.mapper.CartItemMapper;
+import com.ecommerce.j3.domain.mapper.CartMapper;
 import com.ecommerce.j3.repository.CartItemRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +18,13 @@ import java.util.Optional;
 @AllArgsConstructor
 public class CartItemService {
     private final CartItemRepository cartItemsRepository;
+    private final CartItemMapper cartItemMapper;
 
+    public CartItemDto.CartItemApiResponse save(CartItemDto.CartItemApiRequest request){
+        CartItem cartItem = cartItemMapper.toEntity(request);
+        cartItemsRepository.save(cartItem);
+        return cartItemMapper.toDto(cartItem);
+    }
     public CartItem save(CartItem cartItems){
         cartItemsRepository.save(cartItems);
         return cartItems;

@@ -1,5 +1,6 @@
 package com.ecommerce.j3.controller.dto;
 
+
 import com.ecommerce.j3.domain.entity.Cart;
 import com.ecommerce.j3.domain.entity.Product;
 import lombok.AllArgsConstructor;
@@ -16,8 +17,8 @@ public class CartItemDto {
     @AllArgsConstructor
     public static class CartItemApiRequest {
         private Long cartItemId;
-        private Product product;
-        private Cart cart;
+        private Long productId;
+        private Long cartId;
         private String sku;
         private Integer price;
         private Integer discountRate;

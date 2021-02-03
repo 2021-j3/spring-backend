@@ -1,5 +1,6 @@
 package com.ecommerce.j3.controller.dto;
 
+
 import com.ecommerce.j3.domain.entity.Account;
 import com.ecommerce.j3.domain.entity.OrderItem;
 import com.ecommerce.j3.domain.entity.OrderStatus;
@@ -18,8 +19,8 @@ public class OrderDto {
     @AllArgsConstructor
     public static class OrderApiRequest {
         private Long ordersId;
-        private Account account;
-        public List<OrderItem> orderItems;
+        private Long accountId;
+        public List<Long> orderItemIds;
         private String sessionId;
         private String token;
         private OrderStatus status;
@@ -34,7 +35,6 @@ public class OrderDto {
         private String phoneNumber;
         private String email;
         private String roadAddress;
-        ;
         private String address;
         private String city;
         private String province;

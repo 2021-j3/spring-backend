@@ -72,6 +72,10 @@
          return super.authenticationManagerBean();
      }
 
+     @Override
+     public void configure(AuthenticationManagerBuilder auth) throws Exception{
+         auth.userDetailsService(accountService).passwordEncoder(passwordEncoder());
+     }
 //     @Bean
 //     public HttpSessionStrategy httpSessionStrategy() {
 //         return new HeaderHttpSessionStrategy();
@@ -105,10 +109,5 @@
                  .invalidateHttpSession(true)
                  .and()
                  .exceptionHandling().accessDeniedPage("/auth/denied");
-     }
-
-     @Override
-     public void configure(AuthenticationManagerBuilder auth) throws Exception{
-         auth.userDetailsService(accountService).passwordEncoder(passwordEncoder());
      }
  }

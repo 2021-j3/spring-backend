@@ -1,5 +1,6 @@
 package com.ecommerce.j3.controller.dto;
 
+
 import com.ecommerce.j3.domain.entity.Account;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -37,5 +38,4 @@ public class AddressDto {
         private String country;
         private Integer zipCode;
     }
-
 }
