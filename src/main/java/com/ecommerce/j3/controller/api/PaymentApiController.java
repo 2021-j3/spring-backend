@@ -1,6 +1,5 @@
 package com.ecommerce.j3.controller.api;
 
-import com.ecommerce.j3.controller.dto.AccountDto;
 import com.ecommerce.j3.controller.dto.BodyData;
 import com.ecommerce.j3.controller.dto.PaymentDto;
 import io.swagger.annotations.Api;
@@ -14,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/payments")
 @AllArgsConstructor
-public class PaymentApiController implements CrudInterface<PaymentDto.PaymentApiRequest, PaymentDto.PaymentApiResponse> {
+public class PaymentApiController implements ControllerCrudInterface<PaymentDto.PaymentApiRequest, PaymentDto.PaymentApiResponse> {
 
     @ApiOperation(value = "결제 POST", notes = "결제를 한다.")
     @PostMapping("")

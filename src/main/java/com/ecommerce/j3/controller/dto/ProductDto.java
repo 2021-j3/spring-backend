@@ -5,14 +5,7 @@ import com.ecommerce.j3.domain.entity.Account;
 import com.ecommerce.j3.domain.entity.Category;
 import com.ecommerce.j3.domain.entity.Tag;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -26,33 +19,24 @@ public class ProductDto {
     @AllArgsConstructor
     @Builder
     public static class ProductApiRequest {
-
         private Long productId;
-
-        private Account account;
-
+        private Long sellerId;
         private String title;
         private String metaTitle;
         private String slug;
         private String sku;
-        private BigDecimal price;
-        private Float discountRate;
-        private Short quantity;
-
-        @CreationTimestamp
+        private Integer price;
+        private Integer discountRate;
+        private Integer quantity;
+        private String thumbnailPath;
+        private String imagePath;
+        private String content;
         private LocalDateTime createdAt;
-
-        @UpdateTimestamp
         private LocalDateTime updatedAt;
-
         private LocalDateTime startsAt;
         private LocalDateTime endsAt;
-
-        @Column(columnDefinition = "TEXT")
-        private String content;
-      
-        private Set<Category> categories;
-        private Set<Tag> tags;
+        private Set<Long> categoryIds;
+        private Set<Long> tagIds;
     }
 
 
@@ -63,26 +47,21 @@ public class ProductDto {
     @Builder
     public static class ProductApiResponse {
         private Long productId;
-
-        private Account account;
-
+        private Account seller;
         private String title;
         private String metaTitle;
         private String slug;
         private String sku;
-        private BigDecimal price;
-        private Float discountRate;
-        private Short quantity;
-
+        private Integer price;
+        private Integer discountRate;
+        private Integer quantity;
+        private String thumbnailPath;
+        private String imagePath;
+        private String content;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
-
         private LocalDateTime startsAt;
         private LocalDateTime endsAt;
-
-        @Column(columnDefinition = "TEXT")
-        private String content;
-
         private Set<Category> categories;
         private Set<Tag> tags;
     }

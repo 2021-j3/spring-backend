@@ -8,6 +8,12 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, uses = {CommonMapper.class})
 public abstract class TagMapper implements DefaultMapper<Tag, TagApiRequest, TagApiResponse> {
 
+    @Override
+    public abstract Tag toEntity(TagApiRequest dto);
+
+    @Override
+    public abstract TagApiResponse toDto(Tag entity);
+
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     public abstract void updateFromDto(@MappingTarget Tag entity, TagApiRequest dto);
 
@@ -15,10 +21,4 @@ public abstract class TagMapper implements DefaultMapper<Tag, TagApiRequest, Tag
     protected void afterUpdateFromDto(@MappingTarget Tag entity, TagApiRequest dto) {
         // TODO: 구현 해야함, account mapper 참조
     }
-
-    @Override
-    public abstract Tag toEntity(TagApiRequest dto);
-
-    @Override
-    public abstract TagApiResponse toDto(Tag entity);
 }

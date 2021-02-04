@@ -8,15 +8,18 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, uses = {CommonMapper.class})
 public abstract class ProductMapper implements DefaultMapper<Product, ProductApiRequest, ProductApiResponse> {
 
-    @Override
-    public void updateFromDto(@MappingTarget Product entity, ProductApiRequest dto){
-        if (dto == null) return;
-        // TODO: 구현 해야함, account mapper 참조
-    }
-
+    @Mapping(source = "sellerId", target = "seller")
+    @Mapping(source = "categoryIds", target = "categories")
+    @Mapping(source = "tagIds", target = "tags")
     @Override
     public abstract Product toEntity(ProductApiRequest dto);
 
     @Override
     public abstract ProductApiResponse toDto(Product entity);
+
+    @Override
+    public void updateFromDto(@MappingTarget Product entity, ProductApiRequest dto){
+        if (dto == null) return;
+        // TODO: 구현 해야함, account mapper 참조
+    }
 }

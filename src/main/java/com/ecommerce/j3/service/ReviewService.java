@@ -2,15 +2,11 @@ package com.ecommerce.j3.service;
 
 import com.ecommerce.j3.controller.dto.ReviewDto;
 import com.ecommerce.j3.domain.entity.Review;
-import com.ecommerce.j3.domain.entity.Product;
-import com.ecommerce.j3.domain.entity.Review;
 import com.ecommerce.j3.domain.mapper.ReviewMapper;
 import com.ecommerce.j3.repository.ReviewRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Parameter;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,8 +17,16 @@ public class ReviewService {
     private final ReviewMapper reviewMapper;
 
     public ReviewDto.ReviewApiResponse save(ReviewDto.ReviewApiRequest request){
-        Review review = reviewMapper.toEntity(request);
-        reviewRepository.save(review);
+        Long id = reviewRepository.save(
+                request.getReviewId(),
+                request.getParentId(),
+                request.getOrderItemId(),
+                request.getAccountId(),
+                request.getRate(),
+                request.getTitle(),
+                request.getContent(),
+                request.getCreatedAt());
+        Review review = reviewRepository.findById(id).orElseThrow(() -> new RuntimeException("실패!"));
         return reviewMapper.toDto(review);
     }
     public Review save(Review review){

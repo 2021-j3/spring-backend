@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface ReviewRepository extends JpaRepository<Review, Long>, ReviewRepositoryInterface {
-    @Override
+public interface ReviewRepository extends JpaRepository<Review, Long>, ReviewRepositoryCustom {
     Optional<Review> findOneByParent(Review review);
 }

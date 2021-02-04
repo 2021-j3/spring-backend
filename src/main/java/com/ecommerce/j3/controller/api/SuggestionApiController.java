@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/suggestions")
 @AllArgsConstructor
-public class SuggestionApiController implements CrudInterface<SuggestionDto.SuggestionApiRequest, SuggestionDto.SuggestionApiResponse> {
+public class SuggestionApiController implements ControllerCrudInterface<SuggestionDto.SuggestionApiRequest, SuggestionDto.SuggestionApiResponse> {
 
     @ApiOperation(value = "추천 POST", notes = "추천를 생성한다.")
     @PostMapping("")

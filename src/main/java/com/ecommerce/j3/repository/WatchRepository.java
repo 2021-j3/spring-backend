@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface WatchRepository extends JpaRepository<Watch, Long>, WatchRepositoryInterface{
+public interface WatchRepository extends JpaRepository<Watch, Long>, WatchRepositoryInterface, WatchRepositoryCustom{
     @Override
     List<Watch> findByAccount(Account account);
 }

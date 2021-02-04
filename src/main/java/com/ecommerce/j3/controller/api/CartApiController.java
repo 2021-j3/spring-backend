@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/carts")
 @AllArgsConstructor
-public class CartApiController implements CrudInterface<CartApiRequest, CartApiResponse> {
+public class CartApiController implements ControllerCrudInterface<CartApiRequest, CartApiResponse> {
     private final CartService cartService;
 
     @ApiOperation(value = "카트 추가", notes = "카트를 추가한다.")

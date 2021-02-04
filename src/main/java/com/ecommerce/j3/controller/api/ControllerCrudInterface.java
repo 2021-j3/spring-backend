@@ -2,7 +2,7 @@ package com.ecommerce.j3.controller.api;
 
 import com.ecommerce.j3.controller.dto.BodyData;
 
-public interface CrudInterface<Req, Res> {
+public interface ControllerCrudInterface<Req, Res> {
     // POST
     BodyData<Res> create(Req request);
 
