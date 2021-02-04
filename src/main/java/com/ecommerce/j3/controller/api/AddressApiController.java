@@ -23,7 +23,7 @@ public class AddressApiController implements CrudInterface<AddressApiRequest, Ad
     @ApiOperation(value = "주소 추가", notes="주소를 추가한다")
     @PostMapping("")
     @Override
-    public BodyData<AddressApiResponse> create(AddressApiRequest request) {
+    public BodyData<AddressApiResponse> create(@RequestBody AddressApiRequest request) {
         System.out.println("test");
         return null;
     }

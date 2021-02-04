@@ -19,7 +19,7 @@ public class PaymentApiController implements CrudInterface<PaymentDto.PaymentApi
     @ApiOperation(value = "결제 POST", notes = "결제를 한다.")
     @PostMapping("")
     @Override
-    public BodyData<PaymentDto.PaymentApiResponse> create(PaymentDto.PaymentApiRequest request) {
+    public BodyData<PaymentDto.PaymentApiResponse> create(@RequestBody PaymentDto.PaymentApiRequest request) {
         return null;
     }
 
@@ -33,7 +33,7 @@ public class PaymentApiController implements CrudInterface<PaymentDto.PaymentApi
     @ApiOperation(value = "결제 PUT", notes = "결제를 수정한다.")
     @PutMapping("")
     @Override
-    public BodyData<PaymentDto.PaymentApiResponse> update(PaymentDto.PaymentApiRequest request) {
+    public BodyData<PaymentDto.PaymentApiResponse> update(@RequestBody PaymentDto.PaymentApiRequest request) {
         return null;
     }
 

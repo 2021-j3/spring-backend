@@ -38,7 +38,7 @@ public class OrderApiController implements CrudInterface<OrderDto.OrderApiReques
     @ApiOperation(value = "Order 추가", notes = "Order를 추가한다.")
     @PostMapping("")
     @Override
-    public BodyData<OrderDto.OrderApiResponse> create(OrderDto.OrderApiRequest request) {
+    public BodyData<OrderDto.OrderApiResponse> create(@RequestBody OrderDto.OrderApiRequest request) {
         return null;
     }
 
@@ -52,7 +52,7 @@ public class OrderApiController implements CrudInterface<OrderDto.OrderApiReques
     @ApiOperation(value = "Order 수정", notes = "Order를 수정한다.")
     @PutMapping("")
     @Override
-    public BodyData<OrderDto.OrderApiResponse> update(OrderDto.OrderApiRequest request) {
+    public BodyData<OrderDto.OrderApiResponse> update(@RequestBody OrderDto.OrderApiRequest request) {
         return null;
     }
 

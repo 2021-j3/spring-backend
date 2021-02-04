@@ -3,17 +3,17 @@ package com.ecommerce.j3.domain.entity;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.sun.istack.NotNull;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity @Getter @Builder
@@ -60,6 +60,7 @@ public class Account {
 
     private LocalDateTime lastLogin;
 
+    @OneToOne
     @JoinTable(schema = "shop",
             name = "default_address",
             joinColumns = @JoinColumn( name = "account_id"),

@@ -19,7 +19,7 @@ public class ReviewApiController implements CrudInterface<ReviewDto.ReviewApiReq
     @ApiOperation(value = "리뷰 POST", notes = "리뷰를 생성한다.")
     @PostMapping("")
     @Override
-    public BodyData<ReviewDto.ReviewApiResponse> create(ReviewDto.ReviewApiRequest request) {
+    public BodyData<ReviewDto.ReviewApiResponse> create(@RequestBody ReviewDto.ReviewApiRequest request) {
         return null;
     }
 
@@ -33,7 +33,7 @@ public class ReviewApiController implements CrudInterface<ReviewDto.ReviewApiReq
     @ApiOperation(value = "리뷰 PUT", notes = "리뷰를 수정한다.")
     @PutMapping("")
     @Override
-    public BodyData<ReviewDto.ReviewApiResponse> update(ReviewDto.ReviewApiRequest request) {
+    public BodyData<ReviewDto.ReviewApiResponse> update(@RequestBody ReviewDto.ReviewApiRequest request) {
         return null;
     }
 

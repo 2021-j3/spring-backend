@@ -18,7 +18,7 @@ public class CategoryApiController implements CrudInterface<CartDto.CartApiReque
     @ApiOperation(value = "카테고리 POST", notes = "카테고리를 한다.")
     @PostMapping("")
     @Override
-    public BodyData<CartDto.CartApiResponse> create(CartDto.CartApiRequest request) {
+    public BodyData<CartDto.CartApiResponse> create(@RequestBody CartDto.CartApiRequest request) {
         return null;
     }
 
@@ -32,7 +32,7 @@ public class CategoryApiController implements CrudInterface<CartDto.CartApiReque
     @ApiOperation(value = "카테고리 PUT", notes = "카테고리를 수정한다.")
     @PutMapping("")
     @Override
-    public BodyData<CartDto.CartApiResponse> update(CartDto.CartApiRequest request) {
+    public BodyData<CartDto.CartApiResponse> update(@RequestBody CartDto.CartApiRequest request) {
         return null;
     }
     

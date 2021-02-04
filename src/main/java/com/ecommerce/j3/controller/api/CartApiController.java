@@ -2,8 +2,10 @@ package com.ecommerce.j3.controller.api;
 
 
 import com.ecommerce.j3.controller.dto.BodyData;
+import com.ecommerce.j3.controller.dto.CartDto;
 import com.ecommerce.j3.controller.dto.CartDto.CartApiRequest;
 import com.ecommerce.j3.controller.dto.CartDto.CartApiResponse;
+import com.ecommerce.j3.service.CartService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
@@ -16,9 +18,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/carts")
 @AllArgsConstructor
 public class CartApiController implements CrudInterface<CartApiRequest, CartApiResponse> {
+    private final CartService cartService;
 
     @ApiOperation(value = "카트 추가", notes = "카트를 추가한다.")
-    @PostMapping("")
     @Override
     @PostMapping
     public BodyData<CartDto.CartApiResponse> create(@RequestBody CartDto.CartApiRequest request) {
