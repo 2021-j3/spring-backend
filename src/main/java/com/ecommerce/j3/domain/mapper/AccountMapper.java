@@ -1,10 +1,10 @@
 package com.ecommerce.j3.domain.mapper;
 
+import com.ecommerce.j3.controller.dto.AccountDto.*;
 import com.ecommerce.j3.domain.entity.Account;
-import com.ecommerce.j3.controller.dto.AccountDto.AccountApiRequest;
-import com.ecommerce.j3.controller.dto.AccountDto.AccountApiResponse;
-import com.ecommerce.j3.controller.dto.AccountDto.UpdateAccountRequest;
-import org.mapstruct.*;
+import org.mapstruct.Mapper;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.ReportingPolicy;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public abstract class AccountMapper implements DefaultMapper<Account, AccountApiRequest, AccountApiResponse>{
@@ -33,6 +33,8 @@ public abstract class AccountMapper implements DefaultMapper<Account, AccountApi
     }
 
     public abstract AccountApiRequest toDto(UpdateAccountRequest dtoWithSomeField);
+    public abstract AccountApiRequest toDto(CreateAccountRequest dtoWithSomeField);
+    public abstract CreateAccountResponse toCreateAccountResponse(Account account);
 
     //    @Mapping(target = "passwordHash", source = "password")
 //    public abstract Account toEntity(AccountDTO dto);
