@@ -1,4 +1,4 @@
-package com.ecommerce.j3.domain.network;
+package com.ecommerce.j3.controller.dto;
 
 import com.ecommerce.j3.domain.entity.Account;
 import lombok.AllArgsConstructor;
@@ -20,6 +20,7 @@ public class AddressDto {
         private String address;
         private String roadAddress;
         private String city;
+        private String province;
         private String country;
         private Integer zipCode;
     }

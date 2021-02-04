@@ -1,6 +1,6 @@
-package com.ecommerce.j3.domain.network;
+package com.ecommerce.j3.controller.dto;
 
-import com.ecommerce.j3.domain.entity.Cart;
+import com.ecommerce.j3.domain.entity.Order;
 import com.ecommerce.j3.domain.entity.Product;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,41 +9,37 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-public class CartItemDto {
+public class OrderItemDto {
     @Getter
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class CartItemApiRequest {
-        private Long cartItemId;
+    public static class OrderItemApiRequest {
+        private Long orderItemId;
         private Product product;
-        private Cart cart;
+        private Order order;
         private String sku;
         private Integer price;
         private Integer discountRate;
         private Integer quantity;
-        private Integer active;
         private String content;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
     }
-
     @Getter
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class CartItemApiResponse {
-        private Long cartItemId;
+    public static class OrderItemApiResponse {
+        private Long orderItemId;
         private Product product;
-        private Cart cart;
+        private Order order;
         private String sku;
         private Integer price;
         private Integer discountRate;
         private Integer quantity;
-        private Integer active;
         private String content;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
     }
-
 }

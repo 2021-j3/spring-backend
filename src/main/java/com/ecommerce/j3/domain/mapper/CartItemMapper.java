@@ -1,21 +1,31 @@
 package com.ecommerce.j3.domain.mapper;
 
 import com.ecommerce.j3.domain.entity.CartItem;
-import com.ecommerce.j3.domain.network.CartItemDto.CartItemApiRequest;
-import com.ecommerce.j3.domain.network.CartItemDto.CartItemApiResponse;
-import org.mapstruct.AfterMapping;
-import org.mapstruct.BeanMapping;
+import com.ecommerce.j3.controller.dto.CartItemDto.CartItemApiRequest;
+import com.ecommerce.j3.controller.dto.CartItemDto.CartItemApiResponse;
 import org.mapstruct.MappingTarget;
-import org.mapstruct.NullValuePropertyMappingStrategy;
 
 public abstract class CartItemMapper implements DefaultMapper<CartItem, CartItemApiRequest, CartItemApiResponse> {
 
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    public abstract void updateFromDto(@MappingTarget CartItem entity, CartItemApiRequest dto);
+    @Override
+    public void updateFromDto(@MappingTarget CartItem entity, CartItemApiRequest dto){
+        if (dto == null) return;
 
-    @AfterMapping
-    protected void afterUpdateFromDto(@MappingTarget CartItem entity, CartItemApiRequest dto) {
-        // TODO: 구현 해야함, account mapper 참조
+        CartItem db = entity;
+        entity = CartItem.builder()
+                // 바뀌면 안되는 값
+                .cartItemId(db.getCartItemId())
+                .product(db.getProduct())
+                .cart(dto.getCart() != null ? dto.getCart() : db.getCart())
+                .sku(dto.getSku() != null ? dto.getSku() : db.getSku())
+                .price(dto.getPrice() != null ? dto.getPrice() : db.getPrice())
+                .discountRate(dto.getDiscountRate() != null ? dto.getDiscountRate() : db.getDiscountRate())
+                .quantity(dto.getQuantity() != null ? dto.getQuantity() : db.getQuantity())
+                .active(dto.getActive() != null ? dto.getActive() : db.getActive())
+                .content(dto.getContent() != null ? dto.getContent() : db.getContent())
+                // 업데이트에 상관없이 갱신되는 값
+                .updatedAt(db.getUpdatedAt())
+                .build();
     }
     
     @Override

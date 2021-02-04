@@ -1,21 +1,42 @@
 package com.ecommerce.j3.domain.mapper;
 
 import com.ecommerce.j3.domain.entity.Order;
-import com.ecommerce.j3.domain.network.OrderDto.OrderApiRequest;
-import com.ecommerce.j3.domain.network.OrderDto.OrderApiResponse;
-import org.mapstruct.AfterMapping;
-import org.mapstruct.BeanMapping;
+import com.ecommerce.j3.controller.dto.OrderDto.OrderApiRequest;
+import com.ecommerce.j3.controller.dto.OrderDto.OrderApiResponse;
 import org.mapstruct.MappingTarget;
-import org.mapstruct.NullValuePropertyMappingStrategy;
 
 public abstract class OrderMapper implements DefaultMapper<Order, OrderApiRequest, OrderApiResponse> {
 
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    public abstract void updateFromDto(@MappingTarget Order entity, OrderApiRequest dto);
-
-    @AfterMapping
-    protected void afterUpdateFromDto(@MappingTarget Order entity, OrderApiRequest dto) {
-        // TODO: 구현 해야함, account mapper 참조
+    @Override
+    public void updateFromDto(@MappingTarget Order entity, OrderApiRequest dto) {
+        if (dto == null) return;
+        Order db = entity;
+        Order req = toEntity(dto);
+        entity = Order.builder()
+                .ordersId(db.getOrdersId())
+                .account(db.getAccount())
+                .orderItems(req.getOrderItems())
+                .sessionId(req.getSessionId() != "" ? req.getSessionId() : req.getSessionId())
+                .token(req.getToken() != "" ? req.getToken() : req.getToken())
+                .status(req.getStatus() != null ? req.getStatus() : req.getStatus())
+                .itemPriceTotal(req.getItemPriceTotal() != null ? req.getItemPriceTotal() : req.getItemPriceTotal())
+                .itemDiscount(req.getItemDiscount() != null ? req.getItemDiscount() : req.getItemDiscount())
+                .tax(req.getTax() != null ? req.getTax() : req.getTax())
+                .shipping(req.getShipping() != null ? req.getShipping() : req.getShipping())
+                .userDiscount(req.getUserDiscount() != null ? req.getUserDiscount() : req.getUserDiscount())
+                .grandTotal(req.getgrandTotal())
+                .firstName(req.getFirstName() != "" ? req.getFirstName() : req.getFirstName())
+                .lastName(req.getLastName() != "" ? req.getLastName() : req.getLastName())
+                .phoneNumber(req.getPhoneNumber() != "" ? req.getPhoneNumber() : req.getPhoneNumber())
+                .email(req.getEmail() != "" ? req.getEmail() : req.getEmail())
+                .roadAddress(req.getRoadAddress() != "" ? req.getRoadAddress() : req.getRoadAddress())
+                .address(req.getAddress() != "" ? req.getAddress() : req.getAddress())
+                .city(req.getCity() != "" ? req.getCity() : req.getCity())
+                .province(req.getProvince() != "" ? req.getProvince() : req.getProvince())
+                .country(req.getCountry() != "" ? req.getCountry() : req.getCountry())
+                .zipCode(req.getZipCode() != null ? req.getZipCode() : req.getZipCode())
+                .content(req.getContent() != "" ? req.getContent() : req.getContent())
+                .build();
     }
 
     @Override

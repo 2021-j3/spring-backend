@@ -1,4 +1,4 @@
-package com.ecommerce.j3.domain.network;
+package com.ecommerce.j3.controller.dto;
 
 import com.ecommerce.j3.domain.entity.Account;
 import com.ecommerce.j3.domain.entity.Order;

@@ -1,20 +1,15 @@
 package com.ecommerce.j3.domain.mapper;
 
 import com.ecommerce.j3.domain.entity.OrderItem;
-import com.ecommerce.j3.domain.network.OrderItemDto.OrderItemApiRequest;
-import com.ecommerce.j3.domain.network.OrderItemDto.OrderItemApiResponse;
-import org.mapstruct.AfterMapping;
-import org.mapstruct.BeanMapping;
+import com.ecommerce.j3.controller.dto.OrderItemDto.OrderItemApiRequest;
+import com.ecommerce.j3.controller.dto.OrderItemDto.OrderItemApiResponse;
 import org.mapstruct.MappingTarget;
-import org.mapstruct.NullValuePropertyMappingStrategy;
 
 public abstract class OrderItemMapper implements DefaultMapper<OrderItem, OrderItemApiRequest, OrderItemApiResponse> {
 
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    public abstract void updateFromDto(@MappingTarget OrderItem entity, OrderItemApiRequest dto);
-
-    @AfterMapping
-    protected void afterUpdateFromDto(@MappingTarget OrderItem entity, OrderItemApiRequest dto) {
+    @Override
+    public void updateFromDto(@MappingTarget OrderItem entity, OrderItemApiRequest dto){
+        if (dto == null) return;
         // TODO: 구현 해야함, account mapper 참조
     }
 
