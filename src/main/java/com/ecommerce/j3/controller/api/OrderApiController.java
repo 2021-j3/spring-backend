@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-@Api(tags = {"5. Order"})
+@Api(tags = {"05. Order"})
 @Slf4j
 @RestController
 @RequestMapping("/api/orders")

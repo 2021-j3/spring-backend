@@ -2,14 +2,16 @@ package com.ecommerce.j3.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "orders")
@@ -108,7 +110,7 @@ public class Order {
     }
 
     //  주문 조회
-    public float getgrandTotal(){
+    public Integer getGrandTotal(){
         Integer totalprice  = 0;
         for(OrderItem orderItem: orderItems){
             grandTotal += orderItem.getTotalPrice();

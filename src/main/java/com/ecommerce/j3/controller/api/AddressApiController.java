@@ -13,7 +13,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-@Api(tags = {"2. Address"})
+@Api(tags = {"02. Address"})
 @RestController
 @RequestMapping("/api/addresses")
 @AllArgsConstructor

@@ -12,11 +12,9 @@ import javax.persistence.EntityNotFoundException;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, uses = {CommonMapper.class})
 public abstract class PaymentMapper implements DefaultMapper<Payment, PaymentApiRequest, PaymentApiResponse> {
 
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    public abstract void updateFromDto(@MappingTarget Payment entity, PaymentApiRequest dto);
-
-    @AfterMapping
-    protected void afterUpdateFromDto(@MappingTarget Payment entity, PaymentApiRequest dto) {
+    @Override
+    public void updateFromDto(@MappingTarget Payment entity, PaymentApiRequest dto) {
+        if (dto == null) return;
         // TODO: 구현 해야함, account mapper 참조
     }
 

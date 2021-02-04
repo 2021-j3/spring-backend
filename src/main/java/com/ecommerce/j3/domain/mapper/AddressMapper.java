@@ -1,36 +1,34 @@
 package com.ecommerce.j3.domain.mapper;
 
-
-import com.ecommerce.j3.domain.entity.Account;
 import com.ecommerce.j3.domain.entity.Address;
 import com.ecommerce.j3.controller.dto.AddressDto.AddressApiRequest;
 import com.ecommerce.j3.controller.dto.AddressDto.AddressApiResponse;
-import com.ecommerce.j3.domain.entity.Product;
-import com.ecommerce.j3.repository.AccountRepository;
-import com.ecommerce.j3.repository.ProductRepository;
 import org.mapstruct.*;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.persistence.EntityNotFoundException;
-
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, uses = { CommonMapper.class })
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public abstract class AddressMapper implements DefaultMapper<Address, AddressApiRequest, AddressApiResponse> {
 
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    public abstract void updateFromDto(@MappingTarget Address entity, AddressApiRequest dto);
+    @Override
+    public void updateFromDto(@MappingTarget Address entity, AddressApiRequest dto) {
+        if (dto == null) return;
 
-    @AfterMapping
-    protected void afterUpdateFromDto(@MappingTarget Address entity, AddressApiRequest dto) {
-        // TODO: 구현 해야함, account mapper 참조
+        Address db = entity;
+        // Address req = toEntity(dto);
+        entity = Address.builder()
+                .addressId(db.getAddressId())
+                // .account(req.getAccount() ? req.getAccount() : db.getAccount()) // 사실 상 바꿀 이유가 없음
+                .account(db.getAccount())
+                .address(dto.getAddress() != null ? dto.getAddress() : db.getAddress())
+                .roadAddress(dto.getRoadAddress() != null ? dto.getRoadAddress() : db.getRoadAddress())
+                .city(dto.getCity() != null ? dto.getCity() : db.getCity())
+                .province(dto.getProvince() != null ? dto.getProvince() : db.getProvince())
+                .country(dto.getCountry() != null ? dto.getCountry() : db.getCountry())
+                .zipCode(dto.getZipCode() != null ? dto.getZipCode() : db.getZipCode())
+                .build();
     }
 
-    @Mapping(source = "accountId", target = "account")
     @Override
     public abstract Address toEntity(AddressApiRequest addressRequest);
-
-//    @Named("addressWithoutRef")
-//    @Mapping(target = "account", ignore = true)
-//    public abstract Address toEntityWithoutRef(AddressApiRequest addressApiRequest);
 
     @Override
     public abstract AddressApiResponse toDto(Address address);

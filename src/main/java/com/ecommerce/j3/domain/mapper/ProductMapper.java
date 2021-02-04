@@ -8,11 +8,9 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, uses = {CommonMapper.class})
 public abstract class ProductMapper implements DefaultMapper<Product, ProductApiRequest, ProductApiResponse> {
 
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    public abstract void updateFromDto(@MappingTarget Product entity, ProductApiRequest dto);
-
-    @AfterMapping
-    protected void afterUpdateFromDto(@MappingTarget Product entity, ProductApiRequest dto) {
+    @Override
+    public void updateFromDto(@MappingTarget Product entity, ProductApiRequest dto){
+        if (dto == null) return;
         // TODO: 구현 해야함, account mapper 참조
     }
 

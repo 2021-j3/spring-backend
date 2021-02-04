@@ -8,11 +8,10 @@ import org.mapstruct.*;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public abstract class AccountMapper implements DefaultMapper<Account, AccountApiRequest, AccountApiResponse>{
-    public abstract void updateFromDto(@MappingTarget Account entity, AccountApiRequest dto);
-    public abstract AccountApiRequest toDto(UpdateAccountRequest dtoWithSomeField);
 
-    @AfterMapping
-    protected void afterUpdateFromDto(@MappingTarget Account entity, AccountApiRequest dto){
+    @Override
+    public void updateFromDto(@MappingTarget Account entity, AccountApiRequest dto){
+        if (dto == null) return;
         Account db = entity;
         entity = Account.builder()
                 // db 값만 존재
@@ -27,22 +26,21 @@ public abstract class AccountMapper implements DefaultMapper<Account, AccountApi
                 .lastName(!dto.getLastName().equals("") ? dto.getLastName() : db.getLastName())
                 .gender(dto.getGender() != null ? dto.getGender() : db.getGender())
                 .accountType(dto.getAccountType() != null ? dto.getAccountType() : db.getAccountType())
-                .lastLogin(dto.getLastLogin() != null ? dto.getLastLogin() : db.getLastLogin())
                 // 필수 아님, null 가능
                 .birthday(dto.getBirthday())
                 .phoneNumber(dto.getPhoneNumber())
                 .build();
     }
 
+    public abstract AccountApiRequest toDto(UpdateAccountRequest dtoWithSomeField);
+
     //    @Mapping(target = "passwordHash", source = "password")
 //    public abstract Account toEntity(AccountDTO dto);
     @Override
     public abstract AccountApiResponse toDto(Account entity);
 
+//    public abstract Account toEntity(AccountDTO.RegisterRequest dto);
+
     @Override
     public abstract Account toEntity(AccountApiRequest dto);
-
-//    @Named("accountWithoutRef")
-//    @Mapping(target = "addresses", ignore = true)
-//    public abstract Account toEntityWithoutRef(AccountApiRequest dto);
 }

@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 
-@Api(tags = {"1. Account"})
+@Api(tags = {"01. Account"})
 @Slf4j
 @RestController
 @RequestMapping("/api/accounts")

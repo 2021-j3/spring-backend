@@ -12,7 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
-@Api(tags = {"3. Cart"})
+@Api(tags = {"03. Cart"})
 @Slf4j
 @RestController
 @RequestMapping("/api/carts")
