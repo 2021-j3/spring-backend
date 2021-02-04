@@ -24,13 +24,13 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/api/accounts")
 @AllArgsConstructor
-public class AccountApiController implements CrudInterface<AccountApiRequest, AccountApiResponse> {
+public class AccountApiController implements ControllerCrudInterface<AccountApiRequest, AccountApiResponse> {
     private final AccountApiLogicService accountService;
     private final CartService cartService;
     private final AccountRepository accountRepository;
     private final AccountMapper accountMapper;
 
-    @ApiOperation(value = "계정 추가", notes="계정를 추가한다")
+    @ApiOperation(value = "회원 추가", notes="회원을 추가한다")
     @PostMapping("")
     @Override
     public BodyData<AccountDto.AccountApiResponse> create(@RequestBody AccountDto.AccountApiRequest request) {
@@ -38,7 +38,7 @@ public class AccountApiController implements CrudInterface<AccountApiRequest, Ac
         return null;
     }
 
-    @ApiOperation(value = "계정 일기", notes = "계정를 가져온다")
+    @ApiOperation(value = "회원 일기", notes = "회원을 가져온다")
     @Override
 //    @GetMapping
     public BodyData<AccountDto.AccountApiResponse> read(Long id) {
@@ -49,7 +49,7 @@ public class AccountApiController implements CrudInterface<AccountApiRequest, Ac
         }
     }
 
-    @ApiOperation(value = "계정 갱신", notes = "계정를 갱신한다.")
+    @ApiOperation(value = "회원 갱신", notes = "회원을 갱신한다.")
     @Override
     @PutMapping
     public BodyData<AccountDto.AccountApiResponse> update(@RequestBody AccountDto.AccountApiRequest request) {
@@ -60,7 +60,7 @@ public class AccountApiController implements CrudInterface<AccountApiRequest, Ac
         }
     }
 
-    @ApiOperation(value = "계정 삭제", notes = "계정를 삭제한다.")
+    @ApiOperation(value = "회원 삭제", notes = "회원을 삭제한다.")
     @Override
     @DeleteMapping
     public BodyData delete(Long id) {
@@ -98,7 +98,7 @@ public class AccountApiController implements CrudInterface<AccountApiRequest, Ac
 //                .build();
 //        Long id = accountService.save(request);
 //        return new CreateAccountResponse(id, account.getRegisteredAt(), account.getFirstName(), account.getLastName());
-        Account account = accountMapper.toEntity(accountMapper.toDto(request));
+        Account account = accountMapper.toEntity(accountMapper.toRequestDto(request));
         accountRepository.save(account);
         return accountMapper.toCreateAccountResponse(account);
     }

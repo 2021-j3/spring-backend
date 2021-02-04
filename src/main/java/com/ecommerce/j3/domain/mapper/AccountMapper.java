@@ -6,8 +6,18 @@ import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.ReportingPolicy;
 
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, uses = {CommonMapper.class})
 public abstract class AccountMapper implements DefaultMapper<Account, AccountApiRequest, AccountApiResponse>{
+
+    @Override
+    public abstract Account toEntity(AccountApiRequest dto);
+
+    @Override
+    public abstract AccountApiResponse toDto(Account entity);
+
+    public abstract AccountApiRequest toRequestDto(UpdateAccountRequest dtoWithSomeField);
+    public abstract AccountApiRequest toRequestDto(CreateAccountRequest dtoWithSomeField);
+    public abstract CreateAccountResponse toCreateAccountResponse(Account account);
 
     @Override
     public void updateFromDto(@MappingTarget Account entity, AccountApiRequest dto){
@@ -31,18 +41,4 @@ public abstract class AccountMapper implements DefaultMapper<Account, AccountApi
                 .phoneNumber(dto.getPhoneNumber())
                 .build();
     }
-
-    public abstract AccountApiRequest toDto(UpdateAccountRequest dtoWithSomeField);
-    public abstract AccountApiRequest toDto(CreateAccountRequest dtoWithSomeField);
-    public abstract CreateAccountResponse toCreateAccountResponse(Account account);
-
-    //    @Mapping(target = "passwordHash", source = "password")
-//    public abstract Account toEntity(AccountDTO dto);
-    @Override
-    public abstract AccountApiResponse toDto(Account entity);
-
-//    public abstract Account toEntity(AccountDTO.RegisterRequest dto);
-
-    @Override
-    public abstract Account toEntity(AccountApiRequest dto);
 }

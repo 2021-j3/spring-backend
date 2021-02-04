@@ -1,14 +1,23 @@
 package com.ecommerce.j3.domain.mapper;
 
-import com.ecommerce.j3.domain.entity.Order;
 import com.ecommerce.j3.controller.dto.OrderDto.OrderApiRequest;
 import com.ecommerce.j3.controller.dto.OrderDto.OrderApiResponse;
+import com.ecommerce.j3.domain.entity.Order;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.ReportingPolicy;
 
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, uses = {CommonMapper.class})
 public abstract class OrderMapper implements DefaultMapper<Order, OrderApiRequest, OrderApiResponse> {
+
+    @Mapping(source = "accountId", target = "account")
+    @Mapping(source = "orderItemIds", target = "orderItems")
+    @Override
+    public abstract Order toEntity(OrderApiRequest dto);
+
+    @Override
+    public abstract OrderApiResponse toDto(Order cart);
 
     @Override
     public void updateFromDto(@MappingTarget Order entity, OrderApiRequest dto) {
@@ -41,9 +50,4 @@ public abstract class OrderMapper implements DefaultMapper<Order, OrderApiReques
                 .content(req.getContent() != "" ? req.getContent() : req.getContent())
                 .build();
     }
-
-    @Override
-    public abstract Order toEntity(OrderApiRequest dto);
-    @Override
-    public abstract OrderApiResponse toDto(Order cart);
 }

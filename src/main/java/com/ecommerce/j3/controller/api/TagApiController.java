@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/tags")
 @AllArgsConstructor
-public class TagApiController implements CrudInterface<TagDto.TagApiRequest, TagDto.TagApiResponse> {
+public class TagApiController implements ControllerCrudInterface<TagDto.TagApiRequest, TagDto.TagApiResponse> {
 
     @ApiOperation(value = "태그 POST", notes = "태그를 생성한다.")
     @PostMapping("")

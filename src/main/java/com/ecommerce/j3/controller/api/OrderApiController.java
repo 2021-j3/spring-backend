@@ -10,9 +10,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.annotations.Table;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -22,7 +20,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/api/orders")
 @AllArgsConstructor
-public class OrderApiController implements CrudInterface<OrderDto.OrderApiRequest, OrderDto.OrderApiResponse> {
+public class OrderApiController implements ControllerCrudInterface<OrderDto.OrderApiRequest, OrderDto.OrderApiResponse> {
     private final OrderService orderService;
     private final ProductService productService;
     private final AccountService accountService;

@@ -16,7 +16,7 @@ import javax.persistence.EntityNotFoundException;
 @RestController
 @RequestMapping("/api/Product")
 @AllArgsConstructor
-public class ProductApiController implements CrudInterface<ProductApiRequest, ProductApiResponse> {
+public class ProductApiController implements ControllerCrudInterface<ProductApiRequest, ProductApiResponse> {
     private final ProductService productService;
 
     @ApiOperation(value = "제품 추가", notes="제품를 추가한다")
@@ -29,7 +29,7 @@ public class ProductApiController implements CrudInterface<ProductApiRequest, Pr
 
     @ApiOperation(value = "제품 일기", notes = "제품를 가져온다")
     @Override
-//    @GetMapping
+    @GetMapping
     public BodyData<ProductApiResponse> read(Long id) {
         try {
             return BodyData.OK(productService.findOne(id));

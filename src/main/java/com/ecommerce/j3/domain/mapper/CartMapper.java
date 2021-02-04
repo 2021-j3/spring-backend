@@ -5,8 +5,16 @@ import com.ecommerce.j3.controller.dto.CartDto.CartApiRequest;
 import com.ecommerce.j3.controller.dto.CartDto.CartApiResponse;
 import org.mapstruct.*;
 
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, uses = {CommonMapper.class})
 public abstract class CartMapper implements DefaultMapper<Cart, CartApiRequest, CartApiResponse> {
+
+    @Mapping(source = "accountId", target = "account")
+    @Mapping(source = "cartItemIds", target = "cartItems")
+    @Override
+    public abstract Cart toEntity(CartApiRequest dto);
+
+    @Override
+    public abstract CartApiResponse toDto(Cart entity);
 
     @Override
     public void updateFromDto(@MappingTarget Cart entity, CartApiRequest dto){
@@ -40,10 +48,4 @@ public abstract class CartMapper implements DefaultMapper<Cart, CartApiRequest, 
                 .content(req.getContent() != "" ? req.getContent() : db.getContent())
                 .build();
     }
-
-    @Override
-    public abstract Cart toEntity(CartApiRequest dto);
-
-    @Override
-    public abstract CartApiResponse toDto(Cart entity);
 }

@@ -6,11 +6,11 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public class CommonMapper {
@@ -30,6 +30,8 @@ public class CommonMapper {
     private OrderItemRepository orderItemRepository;
     @Autowired
     private ReviewRepository reviewRepository;
+    @Autowired
+    private TagRepository tagRepository;
 
     @Mapping(target="addresses", ignore = true)
     Account mapIdToAccount(Long accountId) {
@@ -41,6 +43,8 @@ public class CommonMapper {
     }
 
     List<CartItem> mapIdsToCartItems(List<Long> cartItemIds) {
+        if (cartItemIds == null)
+            return null;
         List<CartItem> cartItems = new ArrayList<>();
         for (Long cartItemId : cartItemIds) {
             cartItems.add(cartItemRepository.findById(cartItemId).orElse(null));
@@ -61,6 +65,8 @@ public class CommonMapper {
     }
 
     List<OrderItem> mapIdsToOrderItems(List<Long> orderItemIds) {
+        if (orderItemIds == null)
+            return null;
         // TODO: 더 괜찮은 구현 필요
         List<OrderItem> orderItems = new ArrayList<>();
         for (Long orderItemId : orderItemIds) {
@@ -75,5 +81,25 @@ public class CommonMapper {
 
     Review mapIdToReview(Long reviewId) {
         return reviewRepository.findById(reviewId).orElse(null);
+    }
+
+    Set<Category> mapIdsToCategorySet(Set<Long> categoryIds){
+        if (categoryIds == null)
+            return null;
+        Set<Category> categories = new HashSet<>();
+        for(Long categoryId : categoryIds){
+            categories.add(categoryRepository.findById(categoryId).orElse(null));
+        }
+        return categories;
+    }
+
+    Set<Tag> mapIdsToTagSet(Set<Long> tagIds){
+        if (tagIds == null)
+            return null;
+        Set<Tag> tags = new HashSet<>();
+        for(Long tagId : tagIds){
+            tags.add(tagRepository.findById(tagId).orElse(null));
+        }
+        return tags;
     }
 }

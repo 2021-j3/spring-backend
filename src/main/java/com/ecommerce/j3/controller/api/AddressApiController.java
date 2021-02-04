@@ -1,13 +1,10 @@
 package com.ecommerce.j3.controller.api;
 
 
-import com.ecommerce.j3.controller.dto.AddressDto;
 import com.ecommerce.j3.controller.dto.AddressDto.AddressApiRequest;
 import com.ecommerce.j3.controller.dto.AddressDto.AddressApiResponse;
 import com.ecommerce.j3.controller.dto.BodyData;
 import com.ecommerce.j3.service.AddressService;
-import com.fasterxml.jackson.annotation.JsonValue;
-import com.fasterxml.jackson.annotation.JsonView;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
@@ -17,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/addresses")
 @AllArgsConstructor
-public class AddressApiController implements CrudInterface<AddressApiRequest, AddressApiResponse> {
+public class AddressApiController implements ControllerCrudInterface<AddressApiRequest, AddressApiResponse> {
     private final AddressService addressService;
   
     @ApiOperation(value = "주소 추가", notes="주소를 추가한다")

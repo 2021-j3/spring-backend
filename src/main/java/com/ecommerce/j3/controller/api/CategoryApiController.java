@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/categories")
 @AllArgsConstructor
-public class CategoryApiController implements CrudInterface<CartDto.CartApiRequest, CartDto.CartApiResponse> {
+public class CategoryApiController implements ControllerCrudInterface<CartDto.CartApiRequest, CartDto.CartApiResponse> {
 
     @ApiOperation(value = "카테고리 POST", notes = "카테고리를 한다.")
     @PostMapping("")

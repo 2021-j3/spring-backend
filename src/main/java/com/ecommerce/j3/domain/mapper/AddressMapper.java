@@ -5,8 +5,16 @@ import com.ecommerce.j3.controller.dto.AddressDto.AddressApiRequest;
 import com.ecommerce.j3.controller.dto.AddressDto.AddressApiResponse;
 import org.mapstruct.*;
 
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, uses = {CommonMapper.class})
 public abstract class AddressMapper implements DefaultMapper<Address, AddressApiRequest, AddressApiResponse> {
+
+    @Mapping(source = "accountId", target = "account")
+    @Override
+    public abstract Address toEntity(AddressApiRequest addressRequest);
+
+    @Override
+    public abstract AddressApiResponse toDto(Address address);
+
 
     @Override
     public void updateFromDto(@MappingTarget Address entity, AddressApiRequest dto) {
@@ -26,10 +34,4 @@ public abstract class AddressMapper implements DefaultMapper<Address, AddressApi
                 .zipCode(dto.getZipCode() != null ? dto.getZipCode() : db.getZipCode())
                 .build();
     }
-
-    @Override
-    public abstract Address toEntity(AddressApiRequest addressRequest);
-
-    @Override
-    public abstract AddressApiResponse toDto(Address address);
 }

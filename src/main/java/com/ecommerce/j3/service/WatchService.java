@@ -3,11 +3,9 @@ package com.ecommerce.j3.service;
 import com.ecommerce.j3.controller.dto.WatchDto;
 import com.ecommerce.j3.domain.entity.Account;
 import com.ecommerce.j3.domain.entity.Watch;
-import com.ecommerce.j3.domain.entity.Watch;
 import com.ecommerce.j3.domain.mapper.WatchMapper;
 import com.ecommerce.j3.repository.WatchRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,7 +19,12 @@ public class WatchService {
 
     public WatchDto.WatchApiResponse save(WatchDto.WatchApiRequest request){
         Watch watch = watchMapper.toEntity(request);
-        watchRepository.save(watch);
+        Long id = watchRepository.save(
+                request.getAccountId(),
+                request.getAccountId(),
+                request.getProductId(),
+                request.getRecentWatch(),
+                request.getWatchCount());
         return watchMapper.toDto(watch);
     }
     public Watch save(Watch watch){
