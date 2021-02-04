@@ -35,9 +35,9 @@ public class AccountApiController implements CrudInterface<AccountApiRequest, Ac
     @Override
     public BodyData<AccountApiResponse> create(@RequestBody AccountApiRequest request) {
         log.info("{}", request);
-        return accountApiLogicService.create(request);
-//        AccountApiResponse response = accountService.store(request);
-//        return  BodyData.OK(response);
+//        return accountApiLogicService.create(request);
+        AccountApiResponse response = accountService.store(request);
+        return  BodyData.OK(response);
     }
 
     @ApiOperation(value = "회원 조회", notes = "id에 해당하는 회원을 조회한다.")
@@ -93,11 +93,11 @@ public class AccountApiController implements CrudInterface<AccountApiRequest, Ac
 
     @PutMapping("/api/accounts")
     public CreateAccountResponse updateAccount(@RequestBody @Valid UpdateAccountRequest request) {
-        Account account = accountRepository.findByEmail(request.getEmail()).orElseThrow(() -> new RuntimeException("cannot find"));
+        Account accountFromDB = accountRepository.findByEmail(request.getEmail()).orElseThrow(() -> new RuntimeException("cannot find"));
         AccountApiRequest fullRequest = accountMapper.toDto(request);
-        accountMapper.updateFromDto(account, fullRequest);
-        accountService.join(account);   // 준영속 컨텍스트 핸들링
+        accountMapper.updateFromDto(accountFromDB, fullRequest);
+        accountService.join(accountFromDB);   // 준영속 컨텍스트 핸들링
 
-        return new CreateAccountResponse(account.getAccountId(), account.getRegisteredAt(), account.getFirstName(), account.getLastName());
+        return new CreateAccountResponse(accountFromDB.getAccountId(), accountFromDB.getRegisteredAt(), accountFromDB.getFirstName(), accountFromDB.getLastName());
     }
 }
