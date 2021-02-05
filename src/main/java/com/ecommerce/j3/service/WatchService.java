@@ -20,7 +20,7 @@ public class WatchService {
     public WatchDto.WatchApiResponse save(WatchDto.WatchApiRequest request){
         Watch watch = watchMapper.toEntity(request);
         Long id = watchRepository.save(
-                request.getAccountId(),
+                request.getWatchId(),
                 request.getAccountId(),
                 request.getProductId(),
                 request.getRecentWatch(),

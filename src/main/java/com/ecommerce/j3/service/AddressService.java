@@ -1,43 +1,49 @@
 package com.ecommerce.j3.service;
 
+import com.ecommerce.j3.controller.dto.AddressDto.AddressApiRequest;
+import com.ecommerce.j3.controller.dto.AddressDto.AddressApiResponse;
 import com.ecommerce.j3.domain.entity.Address;
 import com.ecommerce.j3.domain.mapper.AddressMapper;
-import com.ecommerce.j3.controller.dto.AddressDto;
 import com.ecommerce.j3.repository.AddressRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
+import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
 
 @Service
+//@Transactional(readOnly = true)
 @Transactional
 @RequiredArgsConstructor
-public class AddressService {
+public class AddressService implements ServiceCrudInterface<AddressApiRequest, AddressApiResponse>{
     private final AddressRepository addressRepository;
     private final AddressMapper addressMapper;
 
-    public AddressDto.AddressApiResponse save(AddressDto.AddressApiRequest request){
+    @Override
+    public AddressApiResponse save(AddressApiRequest request){
         Address address = addressMapper.toEntity(request);
         addressRepository.save(address);
         return addressMapper.toDto(address);
     }
 
-    public Address update(Address address){
-        addressRepository.save(address);
-        return address;
+    @Override
+    public AddressApiResponse update(AddressApiRequest request) {
+        Address addressFromDB = addressRepository.findById(request.getAddressId())
+                .orElseThrow(EntityNotFoundException::new);
+        addressMapper.updateFromDto(addressFromDB, request);
+        addressRepository.save(addressFromDB);
+        return addressMapper.toDto(addressFromDB);
     }
 
-    public Optional<Address> findOne(Long addressId){
-        return addressRepository.findById(addressId);
+    @Override
+    public AddressApiResponse findOne(Long addressId){
+        Address addressFromDB = addressRepository.findById(addressId)
+                .orElseThrow(EntityNotFoundException::new);
+        return addressMapper.toDto(addressFromDB);
     }
 
-    public List<Address> findAll(){
-        return addressRepository.findAll();
-    }
-
-    public void remove(Address address){
-        addressRepository.delete(address);
+    @Override
+    public void remove(Long id) {
+        addressRepository.deleteById(id);
     }
 }
