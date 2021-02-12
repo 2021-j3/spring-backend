@@ -24,7 +24,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/api/accounts")
 @AllArgsConstructor
-public class AccountApiController implements ControllerCrudInterface<AccountApiRequest, AccountApiResponse> {
+public class AccountApiController{
     private final AccountApiLogicService accountService;
     private final CartService cartService;
     private final AccountRepository accountRepository;
@@ -32,14 +32,12 @@ public class AccountApiController implements ControllerCrudInterface<AccountApiR
 
     @ApiOperation(value = "회원 추가", notes="회원을 추가한다")
     @PostMapping("")
-    @Override
     public BodyData<AccountDto.AccountApiResponse> create(@RequestBody AccountDto.AccountApiRequest request) {
         accountService.save(request);
         return null;
     }
 
     @ApiOperation(value = "회원 일기", notes = "회원을 가져온다")
-    @Override
 //    @GetMapping
     public BodyData<AccountDto.AccountApiResponse> read(Long id) {
         try {
@@ -50,7 +48,6 @@ public class AccountApiController implements ControllerCrudInterface<AccountApiR
     }
 
     @ApiOperation(value = "회원 갱신", notes = "회원을 갱신한다.")
-    @Override
     @PutMapping
     public BodyData<AccountDto.AccountApiResponse> update(@RequestBody AccountDto.AccountApiRequest request) {
         try{
@@ -61,7 +58,6 @@ public class AccountApiController implements ControllerCrudInterface<AccountApiR
     }
 
     @ApiOperation(value = "회원 삭제", notes = "회원을 삭제한다.")
-    @Override
     @DeleteMapping
     public BodyData delete(Long id) {
         try{

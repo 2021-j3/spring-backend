@@ -16,20 +16,18 @@ import javax.persistence.EntityNotFoundException;
 @RestController
 @RequestMapping("/api/Product")
 @AllArgsConstructor
-public class ProductApiController implements ControllerCrudInterface<ProductApiRequest, ProductApiResponse> {
+public class ProductApiController {
     private final ProductService productService;
 
     @ApiOperation(value = "제품 추가", notes="제품를 추가한다")
     @PostMapping("")
-    @Override
-    public BodyData<ProductApiResponse> create(@RequestBody ProductApiRequest request) {
+        public BodyData<ProductApiResponse> create(@RequestBody ProductApiRequest request) {
         productService.save(request);
         return null;
     }
 
     @ApiOperation(value = "제품 일기", notes = "제품를 가져온다")
-    @Override
-    @GetMapping
+        @GetMapping
     public BodyData<ProductApiResponse> read(Long id) {
         try {
             return BodyData.OK(productService.findOne(id));
@@ -39,8 +37,7 @@ public class ProductApiController implements ControllerCrudInterface<ProductApiR
     }
 
     @ApiOperation(value = "제품 갱신", notes = "제품를 갱신한다.")
-    @Override
-    @PutMapping
+        @PutMapping
     public BodyData<ProductApiResponse> update(@RequestBody ProductApiRequest request) {
         try{
             return BodyData.OK(productService.update(request));
@@ -50,8 +47,7 @@ public class ProductApiController implements ControllerCrudInterface<ProductApiR
     }
 
     @ApiOperation(value = "제품 삭제", notes = "제품를 삭제한다.")
-    @Override
-    @DeleteMapping
+        @DeleteMapping
     public BodyData delete(Long id) {
         try{
             productService.remove(id);

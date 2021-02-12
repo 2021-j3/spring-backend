@@ -13,33 +13,29 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/payments")
 @AllArgsConstructor
-public class PaymentApiController implements ControllerCrudInterface<PaymentDto.PaymentApiRequest, PaymentDto.PaymentApiResponse> {
+public class PaymentApiController {
 
     @ApiOperation(value = "결제 POST", notes = "결제를 한다.")
     @PostMapping("")
-    @Override
-    public BodyData<PaymentDto.PaymentApiResponse> create(@RequestBody PaymentDto.PaymentApiRequest request) {
+        public BodyData<PaymentDto.PaymentApiResponse> create(@RequestBody PaymentDto.PaymentApiRequest request) {
         return null;
     }
 
     @ApiOperation(value = "결제 GET", notes = "결제를 확인한다.")
     @GetMapping("")
-    @Override
-    public BodyData<PaymentDto.PaymentApiResponse> read(Long id) {
+        public BodyData<PaymentDto.PaymentApiResponse> read(Long id) {
         return null;
     }
 
     @ApiOperation(value = "결제 PUT", notes = "결제를 수정한다.")
     @PutMapping("")
-    @Override
-    public BodyData<PaymentDto.PaymentApiResponse> update(@RequestBody PaymentDto.PaymentApiRequest request) {
+        public BodyData<PaymentDto.PaymentApiResponse> update(@RequestBody PaymentDto.PaymentApiRequest request) {
         return null;
     }
 
     @ApiOperation(value = "결제 DELETE", notes = "결제를 삭제한다.")
     @DeleteMapping("")
-    @Override
-    public BodyData delete(Long id) {
+        public BodyData delete(Long id) {
         return null;
     }
 }

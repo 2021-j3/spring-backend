@@ -20,7 +20,7 @@ import javax.persistence.EntityNotFoundException;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class AccountApiLogicService implements ServiceCrudInterface<AccountApiRequest, AccountApiResponse> {
+public class AccountApiLogicService {
 
     // 1. request data
     // 2. account 생성
@@ -32,8 +32,7 @@ public class AccountApiLogicService implements ServiceCrudInterface<AccountApiRe
     private final AccountMapper accountMapper;
 
 
-    @Override
-    public AccountApiResponse save(AccountApiRequest request) {
+        public AccountApiResponse save(AccountApiRequest request) {
         // 새로운 유저 타입은 무조건 user 로 고정 ( 혹은 다른 로직 수행 )
         request.setAccountType(AccountType.USER);
 
@@ -45,8 +44,7 @@ public class AccountApiLogicService implements ServiceCrudInterface<AccountApiRe
         return accountMapper.toDto(account);
     }
 
-    @Override
-    public AccountApiResponse findOne(Long id) {
+        public AccountApiResponse findOne(Long id) {
         // 1. id -> repository getOne / getById
         Account accountFromDB = accountRepository.findById(id)
                 .orElseThrow(EntityNotFoundException::new);
@@ -59,8 +57,7 @@ public class AccountApiLogicService implements ServiceCrudInterface<AccountApiRe
         return response(account);
     }
 
-    @Override
-//    public BodyData<AccountApiResponse> update(BodyData<AccountApiRequest> request) {
+    //    public BodyData<AccountApiResponse> update(BodyData<AccountApiRequest> request) {
     public AccountApiResponse update(AccountApiRequest request) {
         // 1. repository에서 찾기
         Account accountFromDB = accountRepository.findById(request.getAccountId())
@@ -73,8 +70,7 @@ public class AccountApiLogicService implements ServiceCrudInterface<AccountApiRe
         return accountMapper.toDto(accountFromDB);
     }
 
-    @Override
-    public void remove(Long id) {
+        public void remove(Long id) {
        accountRepository.deleteById(id);
     }
 

@@ -20,7 +20,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/api/orders")
 @AllArgsConstructor
-public class OrderApiController implements ControllerCrudInterface<OrderDto.OrderApiRequest, OrderDto.OrderApiResponse> {
+public class OrderApiController {
     private final OrderService orderService;
     private final ProductService productService;
     private final AccountService accountService;
@@ -35,29 +35,25 @@ public class OrderApiController implements ControllerCrudInterface<OrderDto.Orde
 
     @ApiOperation(value = "Order 추가", notes = "Order를 추가한다.")
     @PostMapping("")
-    @Override
-    public BodyData<OrderDto.OrderApiResponse> create(@RequestBody OrderDto.OrderApiRequest request) {
+        public BodyData<OrderDto.OrderApiResponse> create(@RequestBody OrderDto.OrderApiRequest request) {
         return null;
     }
 
     @ApiOperation(value = "Order 조회", notes = "Order를 조회한다.")
     @GetMapping("")
-    @Override
-    public BodyData<OrderDto.OrderApiResponse> read(Long id) {
+        public BodyData<OrderDto.OrderApiResponse> read(Long id) {
         return null;
     }
 
     @ApiOperation(value = "Order 수정", notes = "Order를 수정한다.")
     @PutMapping("")
-    @Override
-    public BodyData<OrderDto.OrderApiResponse> update(@RequestBody OrderDto.OrderApiRequest request) {
+        public BodyData<OrderDto.OrderApiResponse> update(@RequestBody OrderDto.OrderApiRequest request) {
         return null;
     }
 
     @ApiOperation(value = "Order 삭제", notes = "Order를 삭제한다.")
     @DeleteMapping("")
-    @Override
-    public BodyData delete(Long id) {
+        public BodyData delete(Long id) {
         return null;
     }
 

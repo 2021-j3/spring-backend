@@ -13,33 +13,29 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/categories")
 @AllArgsConstructor
-public class CategoryApiController implements ControllerCrudInterface<CartDto.CartApiRequest, CartDto.CartApiResponse> {
+public class CategoryApiController {
 
     @ApiOperation(value = "카테고리 POST", notes = "카테고리를 한다.")
     @PostMapping("")
-    @Override
-    public BodyData<CartDto.CartApiResponse> create(@RequestBody CartDto.CartApiRequest request) {
+        public BodyData<CartDto.CartApiResponse> create(@RequestBody CartDto.CartApiRequest request) {
         return null;
     }
 
     @ApiOperation(value = "카테고리 GET", notes = "카테고리를 확인한다.")
     @GetMapping("")
-    @Override
-    public BodyData<CartDto.CartApiResponse> read(Long id) {
+        public BodyData<CartDto.CartApiResponse> read(Long id) {
         return null;
     }
 
     @ApiOperation(value = "카테고리 PUT", notes = "카테고리를 수정한다.")
     @PutMapping("")
-    @Override
-    public BodyData<CartDto.CartApiResponse> update(@RequestBody CartDto.CartApiRequest request) {
+        public BodyData<CartDto.CartApiResponse> update(@RequestBody CartDto.CartApiRequest request) {
         return null;
     }
     
     @ApiOperation(value = "카테고리 DELETE", notes = "카테고리를 삭제한다.")
     @DeleteMapping("")
-    @Override
-    public BodyData delete(Long id) {
+        public BodyData delete(Long id) {
         return null;
     }
 }

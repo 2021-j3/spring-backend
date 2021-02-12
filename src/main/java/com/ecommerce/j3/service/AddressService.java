@@ -15,19 +15,17 @@ import javax.transaction.Transactional;
 //@Transactional(readOnly = true)
 @Transactional
 @RequiredArgsConstructor
-public class AddressService implements ServiceCrudInterface<AddressApiRequest, AddressApiResponse>{
+public class AddressService {
     private final AddressRepository addressRepository;
     private final AddressMapper addressMapper;
 
-    @Override
-    public AddressApiResponse save(AddressApiRequest request){
+        public AddressApiResponse save(AddressApiRequest request){
         Address address = addressMapper.toEntity(request);
         addressRepository.save(address);
         return addressMapper.toDto(address);
     }
 
-    @Override
-    public AddressApiResponse update(AddressApiRequest request) {
+        public AddressApiResponse update(AddressApiRequest request) {
         Address addressFromDB = addressRepository.findById(request.getAddressId())
                 .orElseThrow(EntityNotFoundException::new);
         addressMapper.updateFromDto(addressFromDB, request);
@@ -35,15 +33,13 @@ public class AddressService implements ServiceCrudInterface<AddressApiRequest, A
         return addressMapper.toDto(addressFromDB);
     }
 
-    @Override
-    public AddressApiResponse findOne(Long addressId){
+        public AddressApiResponse findOne(Long addressId){
         Address addressFromDB = addressRepository.findById(addressId)
                 .orElseThrow(EntityNotFoundException::new);
         return addressMapper.toDto(addressFromDB);
     }
 
-    @Override
-    public void remove(Long id) {
+        public void remove(Long id) {
         addressRepository.deleteById(id);
     }
 }

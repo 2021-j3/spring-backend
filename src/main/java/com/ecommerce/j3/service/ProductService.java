@@ -16,19 +16,17 @@ import java.util.List;
 //@Transactional(readOnly = true)
 @Transactional
 @RequiredArgsConstructor
-public class ProductService implements ServiceCrudInterface<ProductApiRequest, ProductApiResponse>{
+public class ProductService {
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
 
-    @Override
-    public ProductApiResponse save(ProductApiRequest request){
+        public ProductApiResponse save(ProductApiRequest request){
         Product product = productMapper.toEntity(request);
         productRepository.save(product);
         return productMapper.toDto(product);
     }
 
-    @Override
-    public ProductApiResponse update(ProductApiRequest request) {
+        public ProductApiResponse update(ProductApiRequest request) {
         Product productFromDB = productRepository.findById(request.getProductId())
                 .orElseThrow(EntityNotFoundException::new);
         productMapper.updateFromDto(productFromDB, request);
@@ -36,15 +34,13 @@ public class ProductService implements ServiceCrudInterface<ProductApiRequest, P
         return productMapper.toDto(productFromDB);
     }
 
-    @Override
-    public ProductApiResponse findOne(Long productId){
+        public ProductApiResponse findOne(Long productId){
         Product productFromDB = productRepository.findById(productId)
                 .orElseThrow(EntityNotFoundException::new);
         return productMapper.toDto(productFromDB);
     }
 
-    @Override
-    public void remove(Long id) {
+        public void remove(Long id) {
         productRepository.deleteById(id);
     }
     //////////////////////////////////////////////////////////////////////////

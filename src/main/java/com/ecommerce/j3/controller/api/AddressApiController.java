@@ -16,19 +16,17 @@ import javax.persistence.EntityNotFoundException;
 @RestController
 @RequestMapping("/api/Address")
 @AllArgsConstructor
-public class AddressApiController implements ControllerCrudInterface<AddressApiRequest, AddressApiResponse> {
+public class AddressApiController{
     private final AddressService addressService;
 
     @ApiOperation(value = "주소 추가", notes="주소를 추가한다")
     @PostMapping("")
-    @Override
     public BodyData<AddressApiResponse> create(@RequestBody AddressApiRequest request) {
         addressService.save(request);
         return null;
     }
 
     @ApiOperation(value = "주소 일기", notes = "주소를 가져온다")
-    @Override
     @GetMapping
     public BodyData<AddressApiResponse> read(Long id) {
         try {
@@ -39,7 +37,6 @@ public class AddressApiController implements ControllerCrudInterface<AddressApiR
     }
 
     @ApiOperation(value = "주소 갱신", notes = "주소를 갱신한다.")
-    @Override
     @PutMapping
     public BodyData<AddressApiResponse> update(@RequestBody AddressApiRequest request) {
         try{
@@ -50,7 +47,6 @@ public class AddressApiController implements ControllerCrudInterface<AddressApiR
     }
 
     @ApiOperation(value = "주소 삭제", notes = "주소를 삭제한다.")
-    @Override
     @DeleteMapping
     public BodyData delete(Long id) {
         try{
