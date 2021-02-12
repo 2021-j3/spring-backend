@@ -24,7 +24,7 @@ public class CartService {
     public CartDto.CartApiResponse save(CartDto.CartApiRequest request){
         Cart cart = cartMapper.toEntity(request);
         cartRepository.save(cart);
-        return cartMapper.toDto(cart);
+        return cartMapper.toApiResponseDto(cart);
     }
 
     public Cart save(Cart cart){

@@ -3,13 +3,11 @@ package com.ecommerce.j3.controller.api;
 import com.ecommerce.j3.domain.entity.Cart;
 import com.ecommerce.j3.domain.entity.CartItem;
 import com.ecommerce.j3.service.CartService;
-import org.springframework.beans.NullValueInNestedPathException;
 import org.springframework.expression.ExpressionException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/carts")

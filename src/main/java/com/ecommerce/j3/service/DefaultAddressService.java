@@ -1,7 +1,6 @@
 package com.ecommerce.j3.service;
 
 import com.ecommerce.j3.controller.dto.AccountDto;
-import com.ecommerce.j3.domain.entity.Account;
 import com.ecommerce.j3.domain.entity.Address;
 import com.ecommerce.j3.domain.mapper.AddressMapper;
 import com.ecommerce.j3.controller.dto.AddressDto;

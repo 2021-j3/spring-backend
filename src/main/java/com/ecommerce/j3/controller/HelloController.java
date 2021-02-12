@@ -1,4 +1,4 @@
-package com.ecommerce.j3.controller.api;
+package com.ecommerce.j3.controller;
 
 import org.hibernate.mapping.Map;
 import org.springframework.http.*;

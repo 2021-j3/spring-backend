@@ -2,6 +2,7 @@ package com.ecommerce.j3.domain.mapper;
 
 import com.ecommerce.j3.controller.dto.OrderItemDto.OrderItemApiRequest;
 import com.ecommerce.j3.controller.dto.OrderItemDto.OrderItemApiResponse;
+import com.ecommerce.j3.domain.entity.Order;
 import com.ecommerce.j3.domain.entity.OrderItem;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -17,7 +18,7 @@ public abstract class OrderItemMapper implements DefaultMapper<OrderItem, OrderI
     public abstract OrderItem toEntity(OrderItemApiRequest dto);
 
     @Override
-    public abstract OrderItemApiResponse toDto(OrderItem cart);
+    public abstract OrderItemApiResponse toApiResponseDto(OrderItem cart);
 
     @Override
     public void updateFromDto(@MappingTarget OrderItem entity, OrderItemApiRequest dto){

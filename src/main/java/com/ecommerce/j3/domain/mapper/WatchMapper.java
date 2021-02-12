@@ -2,6 +2,7 @@ package com.ecommerce.j3.domain.mapper;
 
 import com.ecommerce.j3.controller.dto.WatchDto.WatchApiRequest;
 import com.ecommerce.j3.controller.dto.WatchDto.WatchApiResponse;
+import com.ecommerce.j3.domain.entity.Order;
 import com.ecommerce.j3.domain.entity.Watch;
 import org.mapstruct.*;
 
@@ -14,7 +15,7 @@ public abstract class WatchMapper implements DefaultMapper<Watch, WatchApiReques
     public abstract Watch toEntity(WatchApiRequest dto);
 
     @Override
-    public abstract WatchApiResponse toDto(Watch entity);
+    public abstract WatchApiResponse toApiResponseDto(Watch entity);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     public abstract void updateFromDto(@MappingTarget Watch entity, WatchApiRequest dto);

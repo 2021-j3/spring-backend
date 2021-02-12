@@ -1,6 +1,4 @@
-package com.ecommerce.j3.domain.mapper;
-
-import com.ecommerce.j3.domain.entity.Order;
+package com.ecommerce.j3.controller.dto;
 
 public interface DefaultMapper<E, Req, Res> {
     public E toEntity(Req dto);

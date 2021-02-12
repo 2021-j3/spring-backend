@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class WatchService {
+public class WatchApiLogicService {
     private final WatchRepository watchRepository;
     private final WatchMapper watchMapper;
 
@@ -25,7 +25,7 @@ public class WatchService {
                 request.getProductId(),
                 request.getRecentWatch(),
                 request.getWatchCount());
-        return watchMapper.toDto(watch);
+        return watchMapper.toApiResponseDto(watch);
     }
     public Watch save(Watch watch){
         watchRepository.save(watch);

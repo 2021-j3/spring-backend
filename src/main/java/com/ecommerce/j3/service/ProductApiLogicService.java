@@ -16,7 +16,7 @@ import java.util.List;
 //@Transactional(readOnly = true)
 @Transactional
 @RequiredArgsConstructor
-public class ProductService implements ServiceCrudInterface<ProductApiRequest, ProductApiResponse>{
+public class ProductApiLogicService implements ServiceCrudInterface<ProductApiRequest, ProductApiResponse>{
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
 
@@ -24,7 +24,7 @@ public class ProductService implements ServiceCrudInterface<ProductApiRequest, P
     public ProductApiResponse save(ProductApiRequest request){
         Product product = productMapper.toEntity(request);
         productRepository.save(product);
-        return productMapper.toDto(product);
+        return productMapper.toApiResponseDto(product);
     }
 
     @Override
@@ -33,14 +33,14 @@ public class ProductService implements ServiceCrudInterface<ProductApiRequest, P
                 .orElseThrow(EntityNotFoundException::new);
         productMapper.updateFromDto(productFromDB, request);
         productRepository.save(productFromDB);
-        return productMapper.toDto(productFromDB);
+        return productMapper.toApiResponseDto(productFromDB);
     }
 
     @Override
     public ProductApiResponse findOne(Long productId){
         Product productFromDB = productRepository.findById(productId)
                 .orElseThrow(EntityNotFoundException::new);
-        return productMapper.toDto(productFromDB);
+        return productMapper.toApiResponseDto(productFromDB);
     }
 
     @Override

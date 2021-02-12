@@ -1,5 +1,6 @@
 package com.ecommerce.j3.service;
 
+import com.ecommerce.j3.controller.dto.AccountDto;
 import com.ecommerce.j3.controller.dto.AccountDto.AccountApiRequest;
 import com.ecommerce.j3.controller.dto.AccountDto.AccountApiResponse;
 import com.ecommerce.j3.controller.dto.BodyData;
@@ -31,18 +32,23 @@ public class AccountApiLogicService implements ServiceCrudInterface<AccountApiRe
     private final ProductRepository productRepository;
     private final AccountMapper accountMapper;
 
-
     @Override
     public AccountApiResponse save(AccountApiRequest request) {
         // 새로운 유저 타입은 무조건 user 로 고정 ( 혹은 다른 로직 수행 )
-        request.setAccountType(AccountType.USER);
+        request.builder()
+                .accountType(AccountType.USER)
+                .build();
 
-        // 1. account 로 변환
+        // 1. request -> entity
         Account account = accountMapper.toEntity(request);
-        // 2. repository 에 저장
+
+//        Stream<Account> stm = account.stream().
+
+        // 2. entity -> repository 에 저장
         accountRepository.save(account);
+
         // 3. 생성된 데이터 -> return AccountApiResponse
-        return accountMapper.toDto(account);
+        return (AccountApiResponse) accountMapper.toApiResponseDto(account);
     }
 
     @Override
@@ -51,7 +57,7 @@ public class AccountApiLogicService implements ServiceCrudInterface<AccountApiRe
         Account accountFromDB = accountRepository.findById(id)
                 .orElseThrow(EntityNotFoundException::new);
         // 2. return account -> accountApiResponse
-        return accountMapper.toDto(accountFromDB);
+        return accountMapper.toApiResponseDto(accountFromDB);
     }
 
     public BodyData<AccountApiResponse> readByEmail(String email) {
@@ -66,11 +72,15 @@ public class AccountApiLogicService implements ServiceCrudInterface<AccountApiRe
         Account accountFromDB = accountRepository.findById(request.getAccountId())
                 .orElseThrow(EntityNotFoundException::new);
         // 2, mapper로 request에 존재하는 경우 해당 항목을 업데이트
+        System.out.println("accountFromDB: " + accountFromDB.getLastName());
+
         accountMapper.updateFromDto(accountFromDB, request);
         // 3. 수정된 accountFromDB를 repository에 저장
         accountRepository.save(accountFromDB);
+
+        System.out.println("accountRepository: " + accountRepository.findAll());
         // 4. 수정된 accountFromDB를 response로 바꾸어 리턴
-        return accountMapper.toDto(accountFromDB);
+        return accountMapper.toApiResponseDto(accountFromDB);
     }
 
     @Override
@@ -79,7 +89,7 @@ public class AccountApiLogicService implements ServiceCrudInterface<AccountApiRe
     }
 
     private BodyData<AccountApiResponse> response(Account account) {
-        AccountApiResponse response = accountMapper.toDto(account);
+        AccountApiResponse response = accountMapper.toApiResponseDto(account);
         return BodyData.OK(response);
     }
 

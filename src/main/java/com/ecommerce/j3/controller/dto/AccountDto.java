@@ -1,10 +1,15 @@
 package com.ecommerce.j3.controller.dto;
 
-
+import com.ecommerce.j3.domain.entity.Account;
 import com.ecommerce.j3.domain.entity.AccountType;
 import com.ecommerce.j3.domain.entity.GenderType;
+import com.ecommerce.j3.domain.mapper.CommonMapper;
+import com.ecommerce.j3.domain.mapper.DefaultMapper;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.mapstruct.Mapper;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.ReportingPolicy;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
@@ -17,11 +22,9 @@ public class AccountDto {
     /**
      * 기본 crud request
      */
-    @Getter
-    @Setter
+    @Getter @Builder
     @NoArgsConstructor
     @AllArgsConstructor
-    @Builder
     public static class AccountApiRequest{
         private Long accountId;
 
@@ -55,7 +58,7 @@ public class AccountDto {
     @NoArgsConstructor
     @AllArgsConstructor
     @Builder
-    public static class AccountApiResponse {
+    public static class AccountApiResponse{
 
 //    private Long accountId;
 
@@ -156,4 +159,5 @@ public class AccountDto {
             this.lastName = lastName;
         }
     }
+
 }

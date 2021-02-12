@@ -1,27 +1,27 @@
 package com.ecommerce.j3.domain.mapper;
 
-import com.ecommerce.j3.controller.dto.CartItemDto.CartItemApiRequest;
-import com.ecommerce.j3.controller.dto.CartItemDto.CartItemApiResponse;
 import com.ecommerce.j3.domain.entity.CartItem;
+import com.ecommerce.j3.controller.dto.CartItemDto;
+import com.ecommerce.j3.domain.entity.Order;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.ReportingPolicy;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, uses = {CommonMapper.class})
-public abstract class CartItemMapper implements DefaultMapper<CartItem, CartItemApiRequest, CartItemApiResponse> {
+public abstract class CartItemMapper implements DefaultMapper<CartItem, CartItemDto.CartItemApiRequest, CartItemDto.CartItemApiResponse> {
 
     @Mapping(source = "productId", target = "product")
     @Mapping(source = "cartId", target = "cart")
     @Override
-    public abstract CartItem toEntity(CartItemApiRequest dto);
+    public abstract CartItem toEntity(CartItemDto.CartItemApiRequest dto);
 
     @Override
-    public abstract CartItemApiResponse toDto(CartItem cart);
+    public abstract CartItemDto.CartItemApiResponse toApiResponseDto(CartItem cart);
 
 
     @Override
-    public void updateFromDto(@MappingTarget CartItem entity, CartItemApiRequest dto){
+    public void updateFromDto(@MappingTarget CartItem entity, CartItemDto.CartItemApiRequest dto){
         if (dto == null) return;
 
         CartItem db = entity;

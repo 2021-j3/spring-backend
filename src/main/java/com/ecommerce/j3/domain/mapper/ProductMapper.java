@@ -1,5 +1,6 @@
 package com.ecommerce.j3.domain.mapper;
 
+import com.ecommerce.j3.domain.entity.Order;
 import com.ecommerce.j3.domain.entity.Product;
 import com.ecommerce.j3.controller.dto.ProductDto.ProductApiRequest;
 import com.ecommerce.j3.controller.dto.ProductDto.ProductApiResponse;
@@ -15,7 +16,7 @@ public abstract class ProductMapper implements DefaultMapper<Product, ProductApi
     public abstract Product toEntity(ProductApiRequest dto);
 
     @Override
-    public abstract ProductApiResponse toDto(Product entity);
+    public abstract ProductApiResponse toApiResponseDto(Product entity);
 
     @Override
     public void updateFromDto(@MappingTarget Product entity, ProductApiRequest dto){

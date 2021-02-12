@@ -1,6 +1,10 @@
 package com.ecommerce.j3.service;
 
-import com.ecommerce.j3.domain.entity.*;
+import com.ecommerce.j3.controller.dto.AccountDto;
+import com.ecommerce.j3.domain.entity.Account;
+import com.ecommerce.j3.domain.entity.AccountType;
+import com.ecommerce.j3.domain.entity.Order;
+import com.ecommerce.j3.domain.entity.OrderItem;
 import com.ecommerce.j3.domain.mapper.AccountMapper;
 import com.ecommerce.j3.controller.dto.AccountDto.AccountApiRequest;
 import com.ecommerce.j3.controller.dto.AccountDto.AccountApiResponse;
@@ -13,7 +17,6 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -68,20 +71,20 @@ public class AccountService implements UserDetailsService {
         return accountRepository.findByEmail(email).orElseThrow(()->new RuntimeException("cannot find"));
     }
 
-    public AccountApiResponse store(AccountApiRequest accountInfo){
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); // Bean 에 등록된 인코더불러오기
-        accountInfo.setPasswordHash(passwordEncoder.encode(accountInfo.getPasswordHash())); // 해시처리
-        accountInfo.setAccountType(AccountType.USER); // 웹 페이지에서 처음 생성 시 무조건 user
-        Account account = accountMapper.toEntity(accountInfo); // dto -> entity
-        accountRepository.save(account);
-        return accountMapper.toDto(account);
-    }
+//    public AccountApiResponse store(AccountApiRequest accountInfo){
+//        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); // Bean 에 등록된 인코더불러오기
+//        accountInfo.setPasswordHash(passwordEncoder.encode(accountInfo.getPasswordHash())); // 해시처리
+//        accountInfo.setAccountType(AccountType.USER); // 웹 페이지에서 처음 생성 시 무조건 user
+//        Account account = accountMapper.toEntity(accountInfo); // dto -> entity
+//        accountRepository.save(account);
+//        return accountMapper.toDto(account);
+//    }
 
     public AccountApiResponse findById(Long accountId){
         Account account = accountRepository
                 .findById(accountId)
                 .orElseThrow(()->new UsernameNotFoundException("다음 정보로 Account를 찾을 수 없습니다: accountId=" + accountId.toString()));
-        return accountMapper.toDto(account);
+        return accountMapper.toApiResponseDto(account);
     }
 
     public AccountApiResponse update(AccountApiRequest accountInfo){
@@ -89,7 +92,7 @@ public class AccountService implements UserDetailsService {
 //                .findByEmail(accountInfo.getEmail()).orElseThrow(()->new UsernameNotFoundException("DB에서 유저가 삭제됬습니다"));
         accountMapper.updateFromDto(accountFromDB, accountInfo);
         accountRepository.save(accountFromDB);
-        return accountMapper.toDto(accountFromDB);
+        return accountMapper.toApiResponseDto(accountFromDB);
     }
 
     public void delete(AccountApiRequest accountInfo){

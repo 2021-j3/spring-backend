@@ -22,7 +22,6 @@ import java.util.List;
 @Accessors(chain = true)
 //@Table (name = "ACCOUNT", schema = "SHOP")
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
-
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

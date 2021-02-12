@@ -3,6 +3,7 @@ package com.ecommerce.j3.domain.mapper;
 import com.ecommerce.j3.domain.entity.Address;
 import com.ecommerce.j3.controller.dto.AddressDto.AddressApiRequest;
 import com.ecommerce.j3.controller.dto.AddressDto.AddressApiResponse;
+import com.ecommerce.j3.domain.entity.Order;
 import org.mapstruct.*;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, uses = {CommonMapper.class})
@@ -13,7 +14,7 @@ public abstract class AddressMapper implements DefaultMapper<Address, AddressApi
     public abstract Address toEntity(AddressApiRequest addressRequest);
 
     @Override
-    public abstract AddressApiResponse toDto(Address address);
+    public abstract AddressApiResponse toApiResponseDto(Address address);
 
 
     @Override

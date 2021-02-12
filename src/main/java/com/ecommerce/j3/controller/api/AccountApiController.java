@@ -13,6 +13,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
@@ -24,23 +26,36 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/api/accounts")
 @AllArgsConstructor
-public class AccountApiController implements ControllerCrudInterface<AccountApiRequest, AccountApiResponse> {
+public class AccountApiController {
     private final AccountApiLogicService accountService;
     private final CartService cartService;
     private final AccountRepository accountRepository;
     private final AccountMapper accountMapper;
 
+//    @ApiOperation(value = "회원 추가", notes="회원을 추가한다")
+//    @PostMapping("")
+//    public ResponseEntity<AccountDto.AccountApiResponse> createFor(@RequestBody AccountDto.AccountApiRequest request) {
+//        accountService.save(request);
+//        return null;
+//    }
+
     @ApiOperation(value = "회원 추가", notes="회원을 추가한다")
-    @PostMapping("")
-    @Override
+    @PostMapping("{get}")
+    public ResponseEntity<AccountDto.AccountApiResponse> getCreate(@RequestBody AccountDto.AccountApiRequest request) {
+        accountService.save(request);
+        return null;
+    }
+
+
+    @ApiOperation(value = "회원 추가", notes="회원을 추가한다")
+    @PostMapping("{test}")
     public BodyData<AccountDto.AccountApiResponse> create(@RequestBody AccountDto.AccountApiRequest request) {
         accountService.save(request);
         return null;
     }
 
     @ApiOperation(value = "회원 일기", notes = "회원을 가져온다")
-    @Override
-//    @GetMapping
+    @GetMapping("{id}")
     public BodyData<AccountDto.AccountApiResponse> read(Long id) {
         try {
             return BodyData.OK(accountService.findOne(id));
@@ -50,19 +65,17 @@ public class AccountApiController implements ControllerCrudInterface<AccountApiR
     }
 
     @ApiOperation(value = "회원 갱신", notes = "회원을 갱신한다.")
-    @Override
-    @PutMapping
-    public BodyData<AccountDto.AccountApiResponse> update(@RequestBody AccountDto.AccountApiRequest request) {
+    @PutMapping("{id}")
+    public ResponseEntity<AccountDto.AccountApiResponse> update(@RequestBody AccountDto.AccountApiRequest request) {
         try{
-            return BodyData.OK(accountService.update(request));
+            return new ResponseEntity<AccountDto.AccountApiResponse>(accountService.update(request),HttpStatus.OK);
         }catch (EntityNotFoundException e){
-            return BodyData.ERROR("데이터가 없습니다");
+            return new ResponseEntity(HttpStatus.FORBIDDEN);
         }
     }
 
     @ApiOperation(value = "회원 삭제", notes = "회원을 삭제한다.")
-    @Override
-    @DeleteMapping
+    @DeleteMapping("{id}")
     public BodyData delete(Long id) {
         try{
             accountService.remove(id);
@@ -73,7 +86,7 @@ public class AccountApiController implements ControllerCrudInterface<AccountApiR
     }
 
     //////////////////// 서비스 로직 ////////////////////
-    @GetMapping("/api/accounts")
+//    @GetMapping("/api/accounts")
     public BodyData<AccountApiResponse> showAccount(@RequestBody @Valid CreateAccountRequest request) {
 
      /* MultiValueMap<String,String> responseHeaders = new LinkedMultiValueMap<>();
@@ -86,7 +99,7 @@ public class AccountApiController implements ControllerCrudInterface<AccountApiR
     }
 
 
-    @PostMapping("/api/accounts")
+//    @PostMapping("/api/accounts")
     public CreateAccountResponse saveAccount(@RequestBody @Valid CreateAccountRequest request) {
 //        Account account = Account.builder()
 //                .email(request.getEmail())
@@ -103,7 +116,7 @@ public class AccountApiController implements ControllerCrudInterface<AccountApiR
         return accountMapper.toCreateAccountResponse(account);
     }
 
-    @PutMapping("/api/accounts")
+//    @PutMapping("/api/accounts")
     public CreateAccountResponse updateAccount(@RequestBody @Valid UpdateAccountRequest request) {
 //        Account accountFromDB = accountRepository.findByEmail(request.getEmail()).orElseThrow(() -> new RuntimeException("cannot find"));
 //        AccountApiRequest fullRequest = accountMapper.toDto(request);

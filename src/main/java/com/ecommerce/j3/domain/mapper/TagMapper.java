@@ -2,6 +2,7 @@ package com.ecommerce.j3.domain.mapper;
 
 import com.ecommerce.j3.controller.dto.TagDto.TagApiRequest;
 import com.ecommerce.j3.controller.dto.TagDto.TagApiResponse;
+import com.ecommerce.j3.domain.entity.Order;
 import com.ecommerce.j3.domain.entity.Tag;
 import org.mapstruct.*;
 
@@ -12,7 +13,7 @@ public abstract class TagMapper implements DefaultMapper<Tag, TagApiRequest, Tag
     public abstract Tag toEntity(TagApiRequest dto);
 
     @Override
-    public abstract TagApiResponse toDto(Tag entity);
+    public abstract TagApiResponse toApiResponseDto(Tag entity);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     public abstract void updateFromDto(@MappingTarget Tag entity, TagApiRequest dto);

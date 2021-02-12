@@ -1,7 +1,5 @@
 package com.ecommerce.j3.domain.mapper;
 
-import com.ecommerce.j3.domain.mapper.PhoneNumber;
-
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 

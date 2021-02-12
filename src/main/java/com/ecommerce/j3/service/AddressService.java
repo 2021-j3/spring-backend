@@ -23,7 +23,7 @@ public class AddressService implements ServiceCrudInterface<AddressApiRequest, A
     public AddressApiResponse save(AddressApiRequest request){
         Address address = addressMapper.toEntity(request);
         addressRepository.save(address);
-        return addressMapper.toDto(address);
+        return addressMapper.toApiResponseDto(address);
     }
 
     @Override
@@ -32,14 +32,14 @@ public class AddressService implements ServiceCrudInterface<AddressApiRequest, A
                 .orElseThrow(EntityNotFoundException::new);
         addressMapper.updateFromDto(addressFromDB, request);
         addressRepository.save(addressFromDB);
-        return addressMapper.toDto(addressFromDB);
+        return addressMapper.toApiResponseDto(addressFromDB);
     }
 
     @Override
     public AddressApiResponse findOne(Long addressId){
         Address addressFromDB = addressRepository.findById(addressId)
                 .orElseThrow(EntityNotFoundException::new);
-        return addressMapper.toDto(addressFromDB);
+        return addressMapper.toApiResponseDto(addressFromDB);
     }
 
     @Override

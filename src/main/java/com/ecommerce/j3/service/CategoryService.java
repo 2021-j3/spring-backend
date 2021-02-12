@@ -2,11 +2,9 @@ package com.ecommerce.j3.service;
 
 import com.ecommerce.j3.controller.dto.CategoryDto;
 import com.ecommerce.j3.domain.entity.Category;
-import com.ecommerce.j3.domain.entity.Category;
 import com.ecommerce.j3.domain.mapper.CategoryMapper;
 import com.ecommerce.j3.repository.CategoryRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,7 +19,7 @@ public class CategoryService {
     public CategoryDto.CategoryApiResponse save(CategoryDto.CategoryApiRequest request){
         Category category = categoryMapper.toEntity(request);
         categoryRepository.save(category);
-        return categoryMapper.toDto(category);
+        return categoryMapper.toApiResponseDto(category);
     }
 
     public Category save(Category category){

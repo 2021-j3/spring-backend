@@ -1,5 +1,6 @@
 package com.ecommerce.j3.domain.mapper;
 
+import com.ecommerce.j3.domain.entity.Order;
 import com.ecommerce.j3.domain.entity.Suggestion;
 import com.ecommerce.j3.controller.dto.SuggestionDto.SuggestionApiRequest;
 import com.ecommerce.j3.controller.dto.SuggestionDto.SuggestionApiResponse;
@@ -14,7 +15,7 @@ public abstract class SuggestionMapper implements DefaultMapper<Suggestion, Sugg
     public abstract Suggestion toEntity(SuggestionApiRequest dto);
 
     @Override
-    public abstract SuggestionApiResponse toDto(Suggestion entity);
+    public abstract SuggestionApiResponse toApiResponseDto(Suggestion entity);
 
     @Override
     public void updateFromDto(@MappingTarget Suggestion entity, SuggestionApiRequest dto){
