@@ -17,7 +17,7 @@ public abstract class CartItemMapper implements DefaultMapper<CartItem, CartItem
     public abstract CartItem toEntity(CartItemDto.CartItemApiRequest dto);
 
     @Override
-    public abstract CartItemDto.CartItemApiResponse toApiResponseDto(CartItem cart);
+    public abstract CartItemDto.CartItemApiResponse toApiResponse(CartItem cart);
 
 
     @Override

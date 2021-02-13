@@ -10,52 +10,39 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
-import java.util.List;
 
 @Service
-//@Transactional(readOnly = true)
 @Transactional
 @RequiredArgsConstructor
-public class ProductApiLogicService implements ServiceCrudInterface<ProductApiRequest, ProductApiResponse>{
+public class ProductApiLogicService {
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
 
-    @Override
-    public ProductApiResponse save(ProductApiRequest request){
+    public ProductApiResponse saveProduct(ProductApiRequest request) {
         Product product = productMapper.toEntity(request);
         productRepository.save(product);
-        return productMapper.toApiResponseDto(product);
+        return productMapper.toApiResponse(product);
     }
 
-    @Override
-    public ProductApiResponse update(ProductApiRequest request) {
-        Product productFromDB = productRepository.findById(request.getProductId())
-                .orElseThrow(EntityNotFoundException::new);
+    public ProductApiResponse updateProduct(ProductApiRequest request) {
+        Product productFromDB = findById(request.getProductId());
         productMapper.updateFromDto(productFromDB, request);
         productRepository.save(productFromDB);
-        return productMapper.toApiResponseDto(productFromDB);
+        return productMapper.toApiResponse(productFromDB);
     }
 
-    @Override
-    public ProductApiResponse findOne(Long productId){
-        Product productFromDB = productRepository.findById(productId)
-                .orElseThrow(EntityNotFoundException::new);
-        return productMapper.toApiResponseDto(productFromDB);
+    public ProductApiResponse findProduct(Long productId) {
+        Product productFromDB = findById(productId);
+        return productMapper.toApiResponse(productFromDB);
     }
 
-    @Override
-    public void remove(Long id) {
+    public void removeProduct(Long id) {
         productRepository.deleteById(id);
     }
-    //////////////////////////////////////////////////////////////////////////
 
-    public List<Product> findProducts(){
-        return productRepository.findAll();
+    // 패키지 한정자, service패키지 내에서만 접근 가능
+    Product findById(Long id) {
+        return productRepository.findById(id)
+                .orElseThrow(EntityNotFoundException::new);
     }
-
-
-/*
-    public void remove(Product products){
-        productsRepository.delete(products);
-    }*/
 }

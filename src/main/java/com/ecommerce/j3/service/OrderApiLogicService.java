@@ -1,7 +1,6 @@
 package com.ecommerce.j3.service;
 
 import com.ecommerce.j3.controller.dto.OrderDto;
-import com.ecommerce.j3.domain.entity.Account;
 import com.ecommerce.j3.domain.entity.Order;
 import com.ecommerce.j3.domain.mapper.OrderMapper;
 import com.ecommerce.j3.repository.AccountRepository;
@@ -24,7 +23,7 @@ public class OrderApiLogicService {
     private final AccountRepository accountRepository;
     private final OrderMapper orderMapper;
 
-    public OrderDto.OrderApiResponse updateService(OrderDto.OrderApiRequest request){
+    public OrderDto.OrderApiResponse updateService(OrderDto.OrderApiRequest request) {
 //        if (accountRepository.getOne(request.getAccountId()) == null){
 //            new ResponseEntity(HttpStatus.FORBIDDEN);
 //            return null;
@@ -32,11 +31,11 @@ public class OrderApiLogicService {
 
         Order orderFromDB = orderRepository
                 .findById(request.getOrdersId())
-                .orElseThrow(()->new EntityNotFoundException());
+                .orElseThrow(() -> new EntityNotFoundException());
 
         Order updateDB = orderMapper.updateFromDto(orderFromDB, request);
         orderRepository.save(updateDB);
-        return orderMapper.toApiResponseDto(updateDB);
+        return orderMapper.toApiResponse(updateDB);
 
     }
 
@@ -44,17 +43,17 @@ public class OrderApiLogicService {
         // 1. id -> repository getOne / getById
         Order orderFromDB = orderRepository
                 .findById(id)
-                .orElseThrow(()->new EntityNotFoundException());
+                .orElseThrow(() -> new EntityNotFoundException());
 
         // 2. return account -> accountApiResponse
-        return orderMapper.toApiResponseDto(orderFromDB);
+        return orderMapper.toApiResponse(orderFromDB);
     }
 
     public OrderDto.OrderApiResponse saveService(OrderDto.OrderApiRequest request) {
         Order order = orderMapper.toEntity(request);
 
         orderRepository.save(order);
-        return orderMapper.toApiResponseDto(order);
+        return orderMapper.toApiResponse(order);
     }
 
 

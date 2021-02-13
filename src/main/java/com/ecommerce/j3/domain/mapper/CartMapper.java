@@ -15,7 +15,7 @@ public abstract class CartMapper implements DefaultMapper<Cart, CartApiRequest, 
     public abstract Cart toEntity(CartApiRequest dto);
 
     @Override
-    public abstract CartApiResponse toApiResponseDto(Cart entity);
+    public abstract CartApiResponse toApiResponse(Cart entity);
 
     @Override
     public Cart updateFromDto(@MappingTarget Cart entity, CartApiRequest dto){

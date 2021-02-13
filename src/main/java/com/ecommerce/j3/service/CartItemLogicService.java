@@ -12,14 +12,14 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class CartItemService {
+public class CartItemLogicService {
     private final CartItemRepository cartItemsRepository;
     private final CartItemMapper cartItemMapper;
 
     public CartItemDto.CartItemApiResponse save(CartItemDto.CartItemApiRequest request){
         CartItem cartItem = cartItemMapper.toEntity(request);
         cartItemsRepository.save(cartItem);
-        return cartItemMapper.toApiResponseDto(cartItem);
+        return cartItemMapper.toApiResponse(cartItem);
     }
     public CartItem save(CartItem cartItems){
         cartItemsRepository.save(cartItems);

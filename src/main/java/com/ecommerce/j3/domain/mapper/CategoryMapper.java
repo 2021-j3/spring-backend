@@ -17,7 +17,7 @@ public abstract class CategoryMapper implements DefaultMapper<Category, Category
     public abstract Category toEntity(CategoryApiRequest dto);
 
     @Override
-    public abstract CategoryApiResponse toApiResponseDto(Category cart);
+    public abstract CategoryApiResponse toApiResponse(Category cart);
 
     @Override
     public Category updateFromDto(@MappingTarget Category entity, CategoryApiRequest dto){

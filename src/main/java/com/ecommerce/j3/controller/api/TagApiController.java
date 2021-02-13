@@ -14,33 +14,29 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/tags")
 @AllArgsConstructor
-public class TagApiController implements ControllerCrudInterface<TagDto.TagApiRequest, TagDto.TagApiResponse> {
+public class TagApiController {
 
     @ApiOperation(value = "태그 POST", notes = "태그를 생성한다.")
     @PostMapping("")
-    @Override
-    public BodyData<TagDto.TagApiResponse> create(@RequestBody TagDto.TagApiRequest request) {
+        public BodyData<TagDto.TagApiResponse> create(@RequestBody TagDto.TagApiRequest request) {
         return null;
     }
 
     @ApiOperation(value = "태그 GET", notes = "태그를 불러온다.")
     @GetMapping("")
-    @Override
-    public BodyData<TagDto.TagApiResponse> read(Long id) {
+        public BodyData<TagDto.TagApiResponse> read(Long id) {
         return null;
     }
 
     @ApiOperation(value = "태그 PUT", notes = "태그를 수정한다.")
     @PutMapping("")
-    @Override
-    public BodyData<TagDto.TagApiResponse> update(@RequestBody TagDto.TagApiRequest request) {
+        public BodyData<TagDto.TagApiResponse> update(@RequestBody TagDto.TagApiRequest request) {
         return null;
     }
 
     @ApiOperation(value = "태그 DELETE", notes = "태그를 삭제한다.")
     @DeleteMapping("")
-    @Override
-    public BodyData delete(Long id) {
+        public BodyData delete(Long id) {
         return null;
     }
 }

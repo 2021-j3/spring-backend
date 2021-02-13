@@ -40,20 +40,18 @@
 //}
  package com.ecommerce.j3.config;
 
- import com.ecommerce.j3.service.AccountService;
  import lombok.AllArgsConstructor;
- import org.springframework.beans.factory.annotation.Autowired;
- import org.springframework.context.annotation.Bean;
- import org.springframework.context.annotation.Configuration;
- import org.springframework.security.authentication.AuthenticationManager;
- import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
- import org.springframework.security.config.annotation.web.builders.HttpSecurity;
- import org.springframework.security.config.annotation.web.builders.WebSecurity;
- import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
- import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
- import org.springframework.security.config.http.SessionCreationPolicy;
- import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
- import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 // import org.springframework.session.web.http.HeaderHttpSessionStrategy;
 // import org.springframework.session.web.http.HttpSessionStrategy;
 
@@ -61,7 +59,7 @@
  @EnableWebSecurity
  @AllArgsConstructor
  public class SecurityConfig extends WebSecurityConfigurerAdapter {
-     AccountService accountService;
+//     AccountService accountService;
 
      @Bean // 시스템 공용으로 등록
      public PasswordEncoder passwordEncoder(){return new BCryptPasswordEncoder();}
@@ -74,7 +72,7 @@
 
      @Override
      public void configure(AuthenticationManagerBuilder auth) throws Exception{
-         auth.userDetailsService(accountService).passwordEncoder(passwordEncoder());
+//         auth.userDetailsService(accountService).passwordEncoder(passwordEncoder());
      }
 //     @Bean
 //     public HttpSessionStrategy httpSessionStrategy() {

@@ -19,7 +19,7 @@ public abstract class PaymentMapper implements DefaultMapper<Payment, PaymentApi
     public abstract Payment toEntity(PaymentApiRequest dto);
 
     @Override
-    public abstract PaymentApiResponse toApiResponseDto(Payment entity);
+    public abstract PaymentApiResponse toApiResponse(Payment entity);
 
     @Override
     public Payment updateFromDto(@MappingTarget Payment entity, PaymentApiRequest dto) {

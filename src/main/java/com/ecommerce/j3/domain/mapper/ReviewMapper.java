@@ -16,7 +16,7 @@ public abstract class ReviewMapper implements DefaultMapper<Review, ReviewApiReq
     public abstract Review toEntity(ReviewApiRequest dto);
 
     @Override
-    public abstract ReviewApiResponse toApiResponseDto(Review entity);
+    public abstract ReviewApiResponse toApiResponse(Review entity);
 
     @Override
     public Review updateFromDto(@MappingTarget Review entity, ReviewApiRequest dto){

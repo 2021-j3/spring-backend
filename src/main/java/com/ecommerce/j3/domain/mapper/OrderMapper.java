@@ -17,7 +17,7 @@ public abstract class OrderMapper implements DefaultMapper<Order, OrderDto.Order
 
 
     @Override
-    public abstract OrderDto.OrderApiResponse toApiResponseDto(Order order);
+    public abstract OrderDto.OrderApiResponse toApiResponse(Order order);
 
     @Override
     public Order updateFromDto(@MappingTarget Order entity, OrderDto.OrderApiRequest dto) {

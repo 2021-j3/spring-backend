@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class CartService {
+public class CartApiLogicService {
     private final CartRepository cartRepository;  // final 은 entity 를 한번만 declare 하게 해줌.
     private final AccountRepository accountRepository;
     private final ProductRepository productRepository;
@@ -24,7 +24,7 @@ public class CartService {
     public CartDto.CartApiResponse save(CartDto.CartApiRequest request){
         Cart cart = cartMapper.toEntity(request);
         cartRepository.save(cart);
-        return cartMapper.toApiResponseDto(cart);
+        return cartMapper.toApiResponse(cart);
     }
 
     public Cart save(Cart cart){

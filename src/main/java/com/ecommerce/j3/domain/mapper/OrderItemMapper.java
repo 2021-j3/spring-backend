@@ -18,7 +18,7 @@ public abstract class OrderItemMapper implements DefaultMapper<OrderItem, OrderI
     public abstract OrderItem toEntity(OrderItemApiRequest dto);
 
     @Override
-    public abstract OrderItemApiResponse toApiResponseDto(OrderItem cart);
+    public abstract OrderItemApiResponse toApiResponse(OrderItem cart);
 
     @Override
     public OrderItem updateFromDto(@MappingTarget OrderItem entity, OrderItemApiRequest dto){

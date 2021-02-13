@@ -13,7 +13,7 @@ public abstract class TagMapper implements DefaultMapper<Tag, TagApiRequest, Tag
     public abstract Tag toEntity(TagApiRequest dto);
 
     @Override
-    public abstract TagApiResponse toApiResponseDto(Tag entity);
+    public abstract TagApiResponse toApiResponse(Tag entity);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     public abstract Tag updateFromDto(@MappingTarget Tag entity, TagApiRequest dto);

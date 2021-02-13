@@ -16,45 +16,41 @@ import javax.persistence.EntityNotFoundException;
 @RestController
 @RequestMapping("/api/Product")
 @AllArgsConstructor
-public class ProductApiController implements ControllerCrudInterface<ProductApiRequest, ProductApiResponse> {
+public class ProductApiController {
     private final ProductApiLogicService productApiLogicService;
 
     @ApiOperation(value = "제품 추가", notes="제품를 추가한다")
     @PostMapping("")
-    @Override
-    public BodyData<ProductApiResponse> create(@RequestBody ProductApiRequest request) {
-        productApiLogicService.save(request);
+        public BodyData<ProductApiResponse> create(@RequestBody ProductApiRequest request) {
+        productApiLogicService.saveProduct(request);
         return null;
     }
 
     @ApiOperation(value = "제품 일기", notes = "제품를 가져온다")
-    @Override
-    @GetMapping
+        @GetMapping
     public BodyData<ProductApiResponse> read(Long id) {
         try {
-            return BodyData.OK(productApiLogicService.findOne(id));
+            return BodyData.OK(productApiLogicService.findProduct(id));
         }catch (EntityNotFoundException e){
             return BodyData.ERROR("데이터가 없습니다");
         }
     }
 
     @ApiOperation(value = "제품 갱신", notes = "제품를 갱신한다.")
-    @Override
-    @PutMapping
+        @PutMapping
     public BodyData<ProductApiResponse> update(@RequestBody ProductApiRequest request) {
         try{
-            return BodyData.OK(productApiLogicService.update(request));
+            return BodyData.OK(productApiLogicService.updateProduct(request));
         }catch (EntityNotFoundException e){
             return BodyData.ERROR("데이터가 없습니다");
         }
     }
 
     @ApiOperation(value = "제품 삭제", notes = "제품를 삭제한다.")
-    @Override
-    @DeleteMapping
+        @DeleteMapping
     public BodyData delete(Long id) {
         try{
-            productApiLogicService.remove(id);
+            productApiLogicService.removeProduct(id);
             return BodyData.OK();
         }catch (EntityNotFoundException e){
             return BodyData.ERROR("데이터가 없습니다");

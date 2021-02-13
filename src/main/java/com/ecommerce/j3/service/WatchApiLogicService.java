@@ -1,59 +1,60 @@
 package com.ecommerce.j3.service;
 
-import com.ecommerce.j3.controller.dto.WatchDto;
-import com.ecommerce.j3.domain.entity.Account;
+import com.ecommerce.j3.controller.dto.WatchDto.WatchApiRequest;
+import com.ecommerce.j3.controller.dto.WatchDto.WatchApiResponse;
 import com.ecommerce.j3.domain.entity.Watch;
 import com.ecommerce.j3.domain.mapper.WatchMapper;
 import com.ecommerce.j3.repository.WatchRepository;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
 
 @Service
-@AllArgsConstructor
+@Transactional
+@RequiredArgsConstructor
 public class WatchApiLogicService {
     private final WatchRepository watchRepository;
     private final WatchMapper watchMapper;
 
-    public WatchDto.WatchApiResponse save(WatchDto.WatchApiRequest request){
+    public WatchApiResponse saveWatch(WatchApiRequest request) {
         Watch watch = watchMapper.toEntity(request);
         Long id = watchRepository.save(
                 request.getWatchId(),
                 request.getAccountId(),
-                request.getProductId(),
+                request.getWatchId(),
                 request.getRecentWatch(),
                 request.getWatchCount());
-        return watchMapper.toApiResponseDto(watch);
-    }
-    public Watch save(Watch watch){
-        watchRepository.save(watch);
-        return watch;
+        return watchMapper.toApiResponse(watch);
     }
 
-    public Watch update(Watch watch){
-        watchRepository.save(watch);
-        return watch;
+//    public WatchApiResponse saveWatch(WatchApiRequest request) {
+//        Watch watch = watchMapper.toEntity(request);
+//        watchRepository.save(watch);
+//        return watchMapper.toApiResponse(watch);
+//    }
+
+    public WatchApiResponse updateWatch(WatchApiRequest request) {
+        Watch watchFromDB = findById(request.getWatchId());
+        watchMapper.updateFromDto(watchFromDB, request);
+        watchRepository.save(watchFromDB);
+        return watchMapper.toApiResponse(watchFromDB);
     }
 
-    public int increase(Watch watch){
-//        watch.setWatchCount(watch.getWatchCount() + 1);
-        update(watch);
-        return watch.getWatchCount();
+    public WatchApiResponse findWatch(Long watchId) {
+        Watch watchFromDB = findById(watchId);
+        return watchMapper.toApiResponse(watchFromDB);
     }
 
-    public Optional<Watch> findOne(Long watchId){
-        return watchRepository.findById(watchId);
+    public void removeWatch(Long id) {
+        watchRepository.deleteById(id);
     }
 
-    public List<Watch> findByAccount(Account account){return watchRepository.findByAccount(account);}
-
-    public List<Watch> findAll(){
-        return watchRepository.findAll();
-    }
-
-    public void remove(Watch watch){
-        watchRepository.delete(watch);
+    // 패키지 한정자, service패키지 내에서만 접근 가능
+    Watch findById(Long id) {
+        return watchRepository.findById(id)
+                .orElseThrow(EntityNotFoundException::new);
     }
 }
+

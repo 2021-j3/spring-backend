@@ -16,7 +16,7 @@ public abstract class ProductMapper implements DefaultMapper<Product, ProductApi
     public abstract Product toEntity(ProductApiRequest dto);
 
     @Override
-    public abstract ProductApiResponse toApiResponseDto(Product entity);
+    public abstract ProductApiResponse toApiResponse(Product entity);
 
     @Override
     public Product updateFromDto(@MappingTarget Product entity, ProductApiRequest dto){

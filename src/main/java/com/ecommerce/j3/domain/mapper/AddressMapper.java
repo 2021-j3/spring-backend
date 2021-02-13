@@ -14,7 +14,7 @@ public abstract class AddressMapper implements DefaultMapper<Address, AddressApi
     public abstract Address toEntity(AddressApiRequest addressRequest);
 
     @Override
-    public abstract AddressApiResponse toApiResponseDto(Address address);
+    public abstract AddressApiResponse toApiResponse(Address address);
 
 
     @Override

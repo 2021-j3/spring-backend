@@ -14,33 +14,29 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/suggestions")
 @AllArgsConstructor
-public class SuggestionApiController implements ControllerCrudInterface<SuggestionDto.SuggestionApiRequest, SuggestionDto.SuggestionApiResponse> {
+public class SuggestionApiController {
 
     @ApiOperation(value = "추천 POST", notes = "추천를 생성한다.")
     @PostMapping("")
-    @Override
-    public BodyData<SuggestionDto.SuggestionApiResponse> create(@RequestBody SuggestionDto.SuggestionApiRequest request) {
+        public BodyData<SuggestionDto.SuggestionApiResponse> create(@RequestBody SuggestionDto.SuggestionApiRequest request) {
         return null;
     }
 
     @ApiOperation(value = "추천 GET", notes = "추천를 불러온다.")
     @GetMapping("")
-    @Override
-    public BodyData<SuggestionDto.SuggestionApiResponse> read(Long id) {
+        public BodyData<SuggestionDto.SuggestionApiResponse> read(Long id) {
         return null;
     }
 
     @ApiOperation(value = "추천 PUT", notes = "추천를 수정한다.")
     @PutMapping("")
-    @Override
-    public BodyData<SuggestionDto.SuggestionApiResponse> update(@RequestBody SuggestionDto.SuggestionApiRequest request) {
+        public BodyData<SuggestionDto.SuggestionApiResponse> update(@RequestBody SuggestionDto.SuggestionApiRequest request) {
         return null;
     }
 
     @ApiOperation(value = "추천 DELETE", notes = "추천를 삭제한다.")
     @DeleteMapping("")
-    @Override
-    public BodyData delete(Long id) {
+        public BodyData delete(Long id) {
         return null;
     }
 }

@@ -14,7 +14,7 @@ public abstract class AccountMapper implements DefaultMapper<Account, AccountDto
     public abstract Account toEntity(AccountDto.AccountApiRequest dto);
 
     @Override
-    public abstract AccountDto.AccountApiResponse toApiResponseDto(Account entity);
+    public abstract AccountDto.AccountApiResponse toApiResponse(Account entity);
 
     public abstract AccountDto.AccountApiRequest toRequestDto(AccountDto.UpdateAccountRequest dtoWithSomeField);
     public abstract AccountDto.AccountApiRequest toRequestDto(AccountDto.CreateAccountRequest dtoWithSomeField);

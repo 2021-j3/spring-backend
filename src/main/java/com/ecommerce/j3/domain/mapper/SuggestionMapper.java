@@ -15,7 +15,7 @@ public abstract class SuggestionMapper implements DefaultMapper<Suggestion, Sugg
     public abstract Suggestion toEntity(SuggestionApiRequest dto);
 
     @Override
-    public abstract SuggestionApiResponse toApiResponseDto(Suggestion entity);
+    public abstract SuggestionApiResponse toApiResponse(Suggestion entity);
 
     @Override
     public Suggestion updateFromDto(@MappingTarget Suggestion entity, SuggestionApiRequest dto){

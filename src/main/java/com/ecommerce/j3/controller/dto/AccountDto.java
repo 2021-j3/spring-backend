@@ -1,15 +1,10 @@
 package com.ecommerce.j3.controller.dto;
 
-import com.ecommerce.j3.domain.entity.Account;
 import com.ecommerce.j3.domain.entity.AccountType;
+import com.ecommerce.j3.domain.entity.Address;
 import com.ecommerce.j3.domain.entity.GenderType;
-import com.ecommerce.j3.domain.mapper.CommonMapper;
-import com.ecommerce.j3.domain.mapper.DefaultMapper;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
-import org.mapstruct.Mapper;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.ReportingPolicy;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
@@ -51,6 +46,8 @@ public class AccountDto {
         @Column(columnDefinition = "ENUM('USER','SELLER','ADMIN')")
         @Enumerated(EnumType.STRING)
         private AccountType accountType;
+
+        private Address defaultAddress;
     }
 
     @Getter
