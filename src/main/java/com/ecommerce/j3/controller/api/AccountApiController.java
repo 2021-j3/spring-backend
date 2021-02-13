@@ -8,11 +8,13 @@ import com.ecommerce.j3.domain.entity.Account;
 import com.ecommerce.j3.domain.mapper.AccountMapper;
 import com.ecommerce.j3.repository.AccountRepository;
 import com.ecommerce.j3.service.AccountApiLogicService;
-import com.ecommerce.j3.service.CartService;
+import com.ecommerce.j3.service.CartApiLogicService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
@@ -24,52 +26,67 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/api/accounts")
 @AllArgsConstructor
-public class AccountApiController{
-    private final AccountApiLogicService accountService;
-    private final CartService cartService;
+public class AccountApiController {
+    private final AccountApiLogicService accountApiLogicService;
+    private final CartApiLogicService cartService;
     private final AccountRepository accountRepository;
     private final AccountMapper accountMapper;
 
-    @ApiOperation(value = "회원 추가", notes="회원을 추가한다")
+//    @ApiOperation(value = "회원 추가", notes="회원을 추가한다")
+//    @PostMapping("")
+//    public ResponseEntity<AccountDto.AccountApiResponse> createFor(@RequestBody AccountDto.AccountApiRequest request) {
+//        accountService.save(request);
+//        return null;
+//    }
+
+    @ApiOperation(value = "회원 추가", notes = "회원을 추가한다")
+    @PostMapping("{get}")
+    public ResponseEntity<AccountDto.AccountApiResponse> getCreate(@RequestBody AccountDto.AccountApiRequest request) {
+        accountApiLogicService.saveAccount(request);
+        return null;
+    }
+
+
+    @ApiOperation(value = "회원 추가", notes = "회원을 추가한다")
     @PostMapping("")
     public BodyData<AccountDto.AccountApiResponse> create(@RequestBody AccountDto.AccountApiRequest request) {
-        accountService.save(request);
+        accountApiLogicService.saveAccount(request);
         return null;
     }
 
     @ApiOperation(value = "회원 일기", notes = "회원을 가져온다")
-//    @GetMapping
+    @GetMapping("{id}")
     public BodyData<AccountDto.AccountApiResponse> read(Long id) {
         try {
-            return BodyData.OK(accountService.findOne(id));
-        }catch (EntityNotFoundException e){
+            return BodyData.OK(accountApiLogicService.findAccount(id));
+        } catch (EntityNotFoundException e) {
             return BodyData.ERROR("데이터가 없습니다");
         }
     }
 
     @ApiOperation(value = "회원 갱신", notes = "회원을 갱신한다.")
-    @PutMapping
-    public BodyData<AccountDto.AccountApiResponse> update(@RequestBody AccountDto.AccountApiRequest request) {
-        try{
-            return BodyData.OK(accountService.update(request));
-        }catch (EntityNotFoundException e){
-            return BodyData.ERROR("데이터가 없습니다");
+    @PutMapping("{id}")
+    public ResponseEntity<AccountDto.AccountApiResponse> update(@RequestBody AccountDto.AccountApiRequest request) {
+        try {
+            return new ResponseEntity<AccountDto.AccountApiResponse>(accountApiLogicService.updateAccount(request), HttpStatus.OK);
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity(HttpStatus.FORBIDDEN);
         }
     }
 
     @ApiOperation(value = "회원 삭제", notes = "회원을 삭제한다.")
-    @DeleteMapping
+    @DeleteMapping("{id}")
     public BodyData delete(Long id) {
-        try{
-            accountService.remove(id);
+        try {
+            accountApiLogicService.removeAccount(id);
             return BodyData.OK();
-        }catch (EntityNotFoundException e){
+        } catch (EntityNotFoundException e) {
             return BodyData.ERROR("데이터가 없습니다");
         }
     }
 
     //////////////////// 서비스 로직 ////////////////////
-    @GetMapping("/api/accounts")
+//    @GetMapping("/api/accounts")
     public BodyData<AccountApiResponse> showAccount(@RequestBody @Valid CreateAccountRequest request) {
 
      /* MultiValueMap<String,String> responseHeaders = new LinkedMultiValueMap<>();
@@ -77,12 +94,12 @@ public class AccountApiController{
       responseHeaders.add("TOKEN", "0443");
     return new ResponseEntity<String>(String.valueOf(new ReadAccountResponse(account.getAccountId(),account.getFirstName(),account.getLastName())), responseHeaders, HttpStatus.OK);
 */
-        return accountService.readByEmail(request.getEmail());
+        return BodyData.OK(accountApiLogicService.findAccountByEmail(request.getEmail()));
 
     }
 
 
-    @PostMapping("/api/accounts")
+    //    @PostMapping("/api/accounts")
     public CreateAccountResponse saveAccount(@RequestBody @Valid CreateAccountRequest request) {
 //        Account account = Account.builder()
 //                .email(request.getEmail())
@@ -99,7 +116,7 @@ public class AccountApiController{
         return accountMapper.toCreateAccountResponse(account);
     }
 
-    @PutMapping("/api/accounts")
+    //    @PutMapping("/api/accounts")
     public CreateAccountResponse updateAccount(@RequestBody @Valid UpdateAccountRequest request) {
 //        Account accountFromDB = accountRepository.findByEmail(request.getEmail()).orElseThrow(() -> new RuntimeException("cannot find"));
 //        AccountApiRequest fullRequest = accountMapper.toDto(request);

@@ -3,7 +3,7 @@ package com.ecommerce.j3.controller.api;
 
 import com.ecommerce.j3.controller.dto.BodyData;
 import com.ecommerce.j3.controller.dto.ReviewDto;
-import com.ecommerce.j3.service.ReviewService;
+import com.ecommerce.j3.service.ReviewApiLogicService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/reviews")
 @AllArgsConstructor
 public class ReviewApiController {
-    private final ReviewService reviewService;
+    private final ReviewApiLogicService reviewService;
 
     @ApiOperation(value = "리뷰 POST", notes = "리뷰를 생성한다.")
     @PostMapping("")
         public BodyData<ReviewDto.ReviewApiResponse> create(@RequestBody ReviewDto.ReviewApiRequest request) {
-        return BodyData.OK(reviewService.save(request));
+        return BodyData.OK(reviewService.saveReview(request));
     }
 
     @ApiOperation(value = "리뷰 GET", notes = "리뷰를 불러온다.")

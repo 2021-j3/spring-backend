@@ -1,5 +1,6 @@
 package com.ecommerce.j3.domain.mapper;
 
+import com.ecommerce.j3.domain.entity.Order;
 import com.ecommerce.j3.domain.entity.Suggestion;
 import com.ecommerce.j3.controller.dto.SuggestionDto.SuggestionApiRequest;
 import com.ecommerce.j3.controller.dto.SuggestionDto.SuggestionApiResponse;
@@ -14,11 +15,13 @@ public abstract class SuggestionMapper implements DefaultMapper<Suggestion, Sugg
     public abstract Suggestion toEntity(SuggestionApiRequest dto);
 
     @Override
-    public abstract SuggestionApiResponse toDto(Suggestion entity);
+    public abstract SuggestionApiResponse toApiResponse(Suggestion entity);
 
     @Override
-    public void updateFromDto(@MappingTarget Suggestion entity, SuggestionApiRequest dto){
-        if (dto == null) return;
+    public Suggestion updateFromDto(@MappingTarget Suggestion entity, SuggestionApiRequest dto){
+        if (dto == null) return null;
         // TODO: 구현 해야함, account mapper 참조
+
+        return null;
     }
 }

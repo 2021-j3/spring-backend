@@ -3,7 +3,7 @@ package com.ecommerce.j3.controller.api;
 
 import com.ecommerce.j3.controller.dto.BodyData;
 import com.ecommerce.j3.controller.dto.WatchDto;
-import com.ecommerce.j3.service.WatchService;
+import com.ecommerce.j3.service.WatchApiLogicService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/watchs")
 @AllArgsConstructor
 public class WatchApiController {
-    private final WatchService watchService;
+    private final WatchApiLogicService watchApiLogicService;
 
     @ApiOperation(value = "최근본항목 POST", notes = "최근본항목를 생성한다.")
     @PostMapping("")
         public BodyData<WatchDto.WatchApiResponse> create(@RequestBody WatchDto.WatchApiRequest request) {
-        WatchDto.WatchApiResponse response = watchService.save(request);
+        WatchDto.WatchApiResponse response = watchApiLogicService.saveWatch(request);
         return BodyData.OK(response);
     }
 

@@ -3,6 +3,7 @@ package com.ecommerce.j3.domain.mapper;
 import com.ecommerce.j3.domain.entity.Cart;
 import com.ecommerce.j3.controller.dto.CartDto.CartApiRequest;
 import com.ecommerce.j3.controller.dto.CartDto.CartApiResponse;
+import com.ecommerce.j3.domain.entity.Order;
 import org.mapstruct.*;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, uses = {CommonMapper.class})
@@ -14,11 +15,11 @@ public abstract class CartMapper implements DefaultMapper<Cart, CartApiRequest, 
     public abstract Cart toEntity(CartApiRequest dto);
 
     @Override
-    public abstract CartApiResponse toDto(Cart entity);
+    public abstract CartApiResponse toApiResponse(Cart entity);
 
     @Override
-    public void updateFromDto(@MappingTarget Cart entity, CartApiRequest dto){
-        if (dto == null) return;
+    public Cart updateFromDto(@MappingTarget Cart entity, CartApiRequest dto){
+        if (dto == null) return null;
         // TODO: 구현 해야함, account mapper 참조
         Cart db = entity;
         Cart req = toEntity(dto);
@@ -47,5 +48,6 @@ public abstract class CartMapper implements DefaultMapper<Cart, CartApiRequest, 
                 .zipCode(req.getZipCode() != null ? req.getZipCode() : db.getZipCode())
                 .content(req.getContent() != "" ? req.getContent() : db.getContent())
                 .build();
+        return entity;
     }
 }

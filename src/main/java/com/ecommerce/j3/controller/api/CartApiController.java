@@ -3,7 +3,7 @@ package com.ecommerce.j3.controller.api;
 
 import com.ecommerce.j3.controller.dto.BodyData;
 import com.ecommerce.j3.controller.dto.CartDto;
-import com.ecommerce.j3.service.CartService;
+import com.ecommerce.j3.service.CartApiLogicService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/carts")
 @AllArgsConstructor
 public class CartApiController {
-    private final CartService cartService;
+    private final CartApiLogicService cartService;
 
     @ApiOperation(value = "카트 추가", notes = "카트를 추가한다.")
     @PostMapping

@@ -78,6 +78,7 @@ public class Order {
     private String content;
 
     @CreationTimestamp
+    @Column(updatable=false)
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
@@ -89,36 +90,36 @@ public class Order {
         //account.getOrders().add(this);
     }
 
-    public void addOrderItem(OrderItem orderItem){
-        orderItems.add(orderItem);
-        orderItem.setOrder(this);
-    }
-
-    //** 생성 메서드 **//
-    public  Order (Account account) {
-      this.account = account;
-    }
-
-    //** 비즈니스 로직 **//
-    // 주문 취소
-    public void cancel(){
-//        this.setStatus((short)2);
-        this.setStatus(OrderStatus.CANCEL);
-        for(OrderItem orderItem:orderItems){
-            orderItem.cancel();
-        }
-    }
-
-    //  주문 조회
-    public Integer getGrandTotal(){
-        Integer totalprice  = 0;
-        for(OrderItem orderItem: orderItems){
-            grandTotal += orderItem.getTotalPrice();
-        }
-        return totalprice;
-    }
-
-    public void setStatus(OrderStatus status){
-        this.status = status;
-    }
+//    public void addOrderItem(OrderItem orderItem){
+//        orderItems.add(orderItem);
+//        orderItem.setOrder(this);
+//    }
+//
+//    //** 생성 메서드 **//
+//    public  Order (Account account) {
+//      this.account = account;
+//    }
+//
+//    //** 비즈니스 로직 **//
+//    // 주문 취소
+//    public void cancel(){
+////        this.setStatus((short)2);
+//        this.setStatus(OrderStatus.CANCEL);
+//        for(OrderItem orderItem:orderItems){
+//            orderItem.cancel();
+//        }
+//    }
+//
+//    //  주문 조회
+//    public Integer getGrandTotal(){
+//        Integer totalPrice  = 0;
+//        for(OrderItem orderItem: orderItems){
+//            grandTotal += orderItem.getTotalPrice();
+//        }
+//        return totalPrice;
+//    }
+//
+//    public void setStatus(OrderStatus status){
+//        this.status = status;
+//    }
 }

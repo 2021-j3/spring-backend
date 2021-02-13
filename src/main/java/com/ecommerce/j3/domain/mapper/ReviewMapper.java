@@ -1,5 +1,6 @@
 package com.ecommerce.j3.domain.mapper;
 
+import com.ecommerce.j3.domain.entity.Order;
 import com.ecommerce.j3.domain.entity.Review;
 import com.ecommerce.j3.controller.dto.ReviewDto.ReviewApiRequest;
 import com.ecommerce.j3.controller.dto.ReviewDto.ReviewApiResponse;
@@ -15,11 +16,13 @@ public abstract class ReviewMapper implements DefaultMapper<Review, ReviewApiReq
     public abstract Review toEntity(ReviewApiRequest dto);
 
     @Override
-    public abstract ReviewApiResponse toDto(Review entity);
+    public abstract ReviewApiResponse toApiResponse(Review entity);
 
     @Override
-    public void updateFromDto(@MappingTarget Review entity, ReviewApiRequest dto){
-        if (dto == null) return;
+    public Review updateFromDto(@MappingTarget Review entity, ReviewApiRequest dto){
+        if (dto == null) return null;
         // TODO: 구현 해야함, account mapper 참조
+
+        return null;
     }
 }

@@ -15,31 +15,35 @@ import javax.transaction.Transactional;
 //@Transactional(readOnly = true)
 @Transactional
 @RequiredArgsConstructor
-public class AddressService {
+public class AddressApiLogicService {
     private final AddressRepository addressRepository;
     private final AddressMapper addressMapper;
 
-        public AddressApiResponse save(AddressApiRequest request){
+        public AddressApiResponse saveAddress(AddressApiRequest request){
         Address address = addressMapper.toEntity(request);
         addressRepository.save(address);
-        return addressMapper.toDto(address);
+        return addressMapper.toApiResponse(address);
     }
 
-        public AddressApiResponse update(AddressApiRequest request) {
-        Address addressFromDB = addressRepository.findById(request.getAddressId())
-                .orElseThrow(EntityNotFoundException::new);
+        public AddressApiResponse updateAddress(AddressApiRequest request) {
+        Address addressFromDB = findById(request.getAddressId());
         addressMapper.updateFromDto(addressFromDB, request);
         addressRepository.save(addressFromDB);
-        return addressMapper.toDto(addressFromDB);
+        return addressMapper.toApiResponse(addressFromDB);
     }
 
-        public AddressApiResponse findOne(Long addressId){
-        Address addressFromDB = addressRepository.findById(addressId)
-                .orElseThrow(EntityNotFoundException::new);
-        return addressMapper.toDto(addressFromDB);
+        public AddressApiResponse findAddress(Long addressId){
+        Address addressFromDB = findById(addressId);
+        return addressMapper.toApiResponse(addressFromDB);
     }
 
-        public void remove(Long id) {
+        public void removeAddress(Long id) {
         addressRepository.deleteById(id);
     }
+
+        // 패키지 한정자, service패키지 내에서만 접근 가능
+        Address findById(Long id){
+            return addressRepository.findById(id)
+                    .orElseThrow(EntityNotFoundException::new);
+        }
 }

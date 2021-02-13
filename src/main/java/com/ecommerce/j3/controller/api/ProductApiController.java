@@ -4,7 +4,7 @@ package com.ecommerce.j3.controller.api;
 import com.ecommerce.j3.controller.dto.BodyData;
 import com.ecommerce.j3.controller.dto.ProductDto.ProductApiRequest;
 import com.ecommerce.j3.controller.dto.ProductDto.ProductApiResponse;
-import com.ecommerce.j3.service.ProductService;
+import com.ecommerce.j3.service.ProductApiLogicService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
@@ -17,12 +17,12 @@ import javax.persistence.EntityNotFoundException;
 @RequestMapping("/api/Product")
 @AllArgsConstructor
 public class ProductApiController {
-    private final ProductService productService;
+    private final ProductApiLogicService productApiLogicService;
 
     @ApiOperation(value = "제품 추가", notes="제품를 추가한다")
     @PostMapping("")
         public BodyData<ProductApiResponse> create(@RequestBody ProductApiRequest request) {
-        productService.save(request);
+        productApiLogicService.saveProduct(request);
         return null;
     }
 
@@ -30,7 +30,7 @@ public class ProductApiController {
         @GetMapping
     public BodyData<ProductApiResponse> read(Long id) {
         try {
-            return BodyData.OK(productService.findOne(id));
+            return BodyData.OK(productApiLogicService.findProduct(id));
         }catch (EntityNotFoundException e){
             return BodyData.ERROR("데이터가 없습니다");
         }
@@ -40,7 +40,7 @@ public class ProductApiController {
         @PutMapping
     public BodyData<ProductApiResponse> update(@RequestBody ProductApiRequest request) {
         try{
-            return BodyData.OK(productService.update(request));
+            return BodyData.OK(productApiLogicService.updateProduct(request));
         }catch (EntityNotFoundException e){
             return BodyData.ERROR("데이터가 없습니다");
         }
@@ -50,7 +50,7 @@ public class ProductApiController {
         @DeleteMapping
     public BodyData delete(Long id) {
         try{
-            productService.remove(id);
+            productApiLogicService.removeProduct(id);
             return BodyData.OK();
         }catch (EntityNotFoundException e){
             return BodyData.ERROR("데이터가 없습니다");

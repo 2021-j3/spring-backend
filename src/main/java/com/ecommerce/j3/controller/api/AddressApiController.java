@@ -4,7 +4,7 @@ package com.ecommerce.j3.controller.api;
 import com.ecommerce.j3.controller.dto.BodyData;
 import com.ecommerce.j3.controller.dto.AddressDto.AddressApiRequest;
 import com.ecommerce.j3.controller.dto.AddressDto.AddressApiResponse;
-import com.ecommerce.j3.service.AddressService;
+import com.ecommerce.j3.service.AddressApiLogicService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
@@ -17,12 +17,12 @@ import javax.persistence.EntityNotFoundException;
 @RequestMapping("/api/Address")
 @AllArgsConstructor
 public class AddressApiController{
-    private final AddressService addressService;
+    private final AddressApiLogicService addressService;
 
     @ApiOperation(value = "주소 추가", notes="주소를 추가한다")
     @PostMapping("")
     public BodyData<AddressApiResponse> create(@RequestBody AddressApiRequest request) {
-        addressService.save(request);
+        addressService.saveAddress(request);
         return null;
     }
 
@@ -30,7 +30,7 @@ public class AddressApiController{
     @GetMapping
     public BodyData<AddressApiResponse> read(Long id) {
         try {
-            return BodyData.OK(addressService.findOne(id));
+            return BodyData.OK(addressService.findAddress(id));
         }catch (EntityNotFoundException e){
             return BodyData.ERROR("데이터가 없습니다");
         }
@@ -40,7 +40,7 @@ public class AddressApiController{
     @PutMapping
     public BodyData<AddressApiResponse> update(@RequestBody AddressApiRequest request) {
         try{
-            return BodyData.OK(addressService.update(request));
+            return BodyData.OK(addressService.updateAddress(request));
         }catch (EntityNotFoundException e){
             return BodyData.ERROR("데이터가 없습니다");
         }
@@ -50,7 +50,7 @@ public class AddressApiController{
     @DeleteMapping
     public BodyData delete(Long id) {
         try{
-            addressService.remove(id);
+            addressService.removeAddress(id);
             return BodyData.OK();
         }catch (EntityNotFoundException e){
             return BodyData.ERROR("데이터가 없습니다");

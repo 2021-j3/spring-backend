@@ -3,6 +3,7 @@ package com.ecommerce.j3.domain.mapper;
 
 import com.ecommerce.j3.controller.dto.PaymentDto.PaymentApiRequest;
 import com.ecommerce.j3.controller.dto.PaymentDto.PaymentApiResponse;
+import com.ecommerce.j3.domain.entity.Order;
 import com.ecommerce.j3.domain.entity.Payment;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -18,11 +19,13 @@ public abstract class PaymentMapper implements DefaultMapper<Payment, PaymentApi
     public abstract Payment toEntity(PaymentApiRequest dto);
 
     @Override
-    public abstract PaymentApiResponse toDto(Payment entity);
+    public abstract PaymentApiResponse toApiResponse(Payment entity);
 
     @Override
-    public void updateFromDto(@MappingTarget Payment entity, PaymentApiRequest dto) {
-        if (dto == null) return;
+    public Payment updateFromDto(@MappingTarget Payment entity, PaymentApiRequest dto) {
+        if (dto == null) return null;
         // TODO: 구현 해야함, account mapper 참조
+
+        return null;
     }
 }
