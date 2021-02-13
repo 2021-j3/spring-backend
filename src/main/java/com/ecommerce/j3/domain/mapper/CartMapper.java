@@ -18,8 +18,8 @@ public abstract class CartMapper implements DefaultMapper<Cart, CartApiRequest, 
     public abstract CartApiResponse toApiResponseDto(Cart entity);
 
     @Override
-    public void updateFromDto(@MappingTarget Cart entity, CartApiRequest dto){
-        if (dto == null) return;
+    public Cart updateFromDto(@MappingTarget Cart entity, CartApiRequest dto){
+        if (dto == null) return null;
         // TODO: 구현 해야함, account mapper 참조
         Cart db = entity;
         Cart req = toEntity(dto);
@@ -48,5 +48,6 @@ public abstract class CartMapper implements DefaultMapper<Cart, CartApiRequest, 
                 .zipCode(req.getZipCode() != null ? req.getZipCode() : db.getZipCode())
                 .content(req.getContent() != "" ? req.getContent() : db.getContent())
                 .build();
+        return entity;
     }
 }

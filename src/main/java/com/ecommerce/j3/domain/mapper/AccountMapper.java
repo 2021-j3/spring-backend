@@ -21,8 +21,8 @@ public abstract class AccountMapper implements DefaultMapper<Account, AccountDto
     public abstract AccountDto.CreateAccountResponse toCreateAccountResponse(Account account);
 
     @Override
-    public void updateFromDto(@MappingTarget Account entity, AccountDto.AccountApiRequest dto){
-        if (dto == null) return;
+    public Account updateFromDto(@MappingTarget Account entity, AccountDto.AccountApiRequest dto){
+        if (dto == null) return null;
         Account db = entity;
         entity = Account.builder()
                 // db 값만 존재
@@ -41,5 +41,6 @@ public abstract class AccountMapper implements DefaultMapper<Account, AccountDto
                 .birthday(dto.getBirthday())
                 .phoneNumber(dto.getPhoneNumber())
                 .build();
+        return entity;
     }
 }

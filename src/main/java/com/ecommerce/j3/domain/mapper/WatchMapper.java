@@ -18,7 +18,7 @@ public abstract class WatchMapper implements DefaultMapper<Watch, WatchApiReques
     public abstract WatchApiResponse toApiResponseDto(Watch entity);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    public abstract void updateFromDto(@MappingTarget Watch entity, WatchApiRequest dto);
+    public abstract Watch updateFromDto(@MappingTarget Watch entity, WatchApiRequest dto);
 
     @AfterMapping
     protected void afterUpdateFromDto(@MappingTarget Watch entity, WatchApiRequest dto) {

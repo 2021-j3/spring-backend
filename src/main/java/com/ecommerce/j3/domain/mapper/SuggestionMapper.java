@@ -18,8 +18,10 @@ public abstract class SuggestionMapper implements DefaultMapper<Suggestion, Sugg
     public abstract SuggestionApiResponse toApiResponseDto(Suggestion entity);
 
     @Override
-    public void updateFromDto(@MappingTarget Suggestion entity, SuggestionApiRequest dto){
-        if (dto == null) return;
+    public Suggestion updateFromDto(@MappingTarget Suggestion entity, SuggestionApiRequest dto){
+        if (dto == null) return null;
         // TODO: 구현 해야함, account mapper 참조
+
+        return null;
     }
 }

@@ -19,8 +19,10 @@ public abstract class ProductMapper implements DefaultMapper<Product, ProductApi
     public abstract ProductApiResponse toApiResponseDto(Product entity);
 
     @Override
-    public void updateFromDto(@MappingTarget Product entity, ProductApiRequest dto){
-        if (dto == null) return;
+    public Product updateFromDto(@MappingTarget Product entity, ProductApiRequest dto){
+        if (dto == null) return null;
         // TODO: 구현 해야함, account mapper 참조
+
+        return null;
     }
 }

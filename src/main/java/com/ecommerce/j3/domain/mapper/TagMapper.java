@@ -16,7 +16,7 @@ public abstract class TagMapper implements DefaultMapper<Tag, TagApiRequest, Tag
     public abstract TagApiResponse toApiResponseDto(Tag entity);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    public abstract void updateFromDto(@MappingTarget Tag entity, TagApiRequest dto);
+    public abstract Tag updateFromDto(@MappingTarget Tag entity, TagApiRequest dto);
 
     @AfterMapping
     protected void afterUpdateFromDto(@MappingTarget Tag entity, TagApiRequest dto) {

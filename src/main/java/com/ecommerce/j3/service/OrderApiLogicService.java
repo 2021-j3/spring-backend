@@ -1,6 +1,7 @@
 package com.ecommerce.j3.service;
 
 import com.ecommerce.j3.controller.dto.OrderDto;
+import com.ecommerce.j3.domain.entity.Account;
 import com.ecommerce.j3.domain.entity.Order;
 import com.ecommerce.j3.domain.mapper.OrderMapper;
 import com.ecommerce.j3.repository.AccountRepository;
@@ -33,9 +34,9 @@ public class OrderApiLogicService {
                 .findById(request.getOrdersId())
                 .orElseThrow(()->new EntityNotFoundException());
 
-        orderMapper.updateFromDto(orderFromDB, request);
-        orderRepository.save(orderFromDB);
-        return orderMapper.toApiResponseDto(orderFromDB);
+        Order updateDB = orderMapper.updateFromDto(orderFromDB, request);
+        orderRepository.save(updateDB);
+        return orderMapper.toApiResponseDto(updateDB);
 
     }
 

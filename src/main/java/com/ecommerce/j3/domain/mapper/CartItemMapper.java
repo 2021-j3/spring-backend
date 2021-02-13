@@ -21,8 +21,8 @@ public abstract class CartItemMapper implements DefaultMapper<CartItem, CartItem
 
 
     @Override
-    public void updateFromDto(@MappingTarget CartItem entity, CartItemDto.CartItemApiRequest dto){
-        if (dto == null) return;
+    public CartItem updateFromDto(@MappingTarget CartItem entity, CartItemDto.CartItemApiRequest dto){
+        if (dto == null) return null;
 
         CartItem db = entity;
         CartItem req = toEntity(dto);
@@ -40,5 +40,6 @@ public abstract class CartItemMapper implements DefaultMapper<CartItem, CartItem
                 // 업데이트에 상관없이 갱신되는 값
                 .updatedAt(db.getUpdatedAt())
                 .build();
+        return entity;
     }
 }

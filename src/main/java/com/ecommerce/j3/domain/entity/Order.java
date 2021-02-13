@@ -78,6 +78,7 @@ public class Order {
     private String content;
 
     @CreationTimestamp
+    @Column(updatable=false)
     private LocalDateTime createdAt;
 
     @UpdateTimestamp

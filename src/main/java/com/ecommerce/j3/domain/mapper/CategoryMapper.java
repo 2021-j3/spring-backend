@@ -20,8 +20,10 @@ public abstract class CategoryMapper implements DefaultMapper<Category, Category
     public abstract CategoryApiResponse toApiResponseDto(Category cart);
 
     @Override
-    public void updateFromDto(@MappingTarget Category entity, CategoryApiRequest dto){
-        if (dto == null) return;
+    public Category updateFromDto(@MappingTarget Category entity, CategoryApiRequest dto){
+        if (dto == null) return null;
         // TODO: 구현 해야함, account mapper 참조
+        return null;
+
     }
 }

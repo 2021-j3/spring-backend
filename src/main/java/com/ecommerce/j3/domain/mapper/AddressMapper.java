@@ -18,8 +18,8 @@ public abstract class AddressMapper implements DefaultMapper<Address, AddressApi
 
 
     @Override
-    public void updateFromDto(@MappingTarget Address entity, AddressApiRequest dto) {
-        if (dto == null) return;
+    public Address updateFromDto(@MappingTarget Address entity, AddressApiRequest dto) {
+        if (dto == null) return null;
 
         Address db = entity;
         // Address req = toEntity(dto);
@@ -34,5 +34,6 @@ public abstract class AddressMapper implements DefaultMapper<Address, AddressApi
                 .country(dto.getCountry() != null ? dto.getCountry() : db.getCountry())
                 .zipCode(dto.getZipCode() != null ? dto.getZipCode() : db.getZipCode())
                 .build();
+        return entity;
     }
 }

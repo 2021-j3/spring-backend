@@ -22,8 +22,10 @@ public abstract class PaymentMapper implements DefaultMapper<Payment, PaymentApi
     public abstract PaymentApiResponse toApiResponseDto(Payment entity);
 
     @Override
-    public void updateFromDto(@MappingTarget Payment entity, PaymentApiRequest dto) {
-        if (dto == null) return;
+    public Payment updateFromDto(@MappingTarget Payment entity, PaymentApiRequest dto) {
+        if (dto == null) return null;
         // TODO: 구현 해야함, account mapper 참조
+
+        return null;
     }
 }
