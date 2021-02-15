@@ -1,4 +1,4 @@
-/**
+/** 2021-02-15 penguin418
  * spring security 에서 token 로그인을 사용하기 위해 사용
  * 현재 버전(2021-02-15)은 session에도 로그인 정보를 저장하므로, SecurityConfig.class 에서
  * SessionCreationPolicy.NEVER 를 SessionCreationPolicy.ALWAYS 로 바꿔주면 csrf문제가 없으므로 주석처리해도 됨

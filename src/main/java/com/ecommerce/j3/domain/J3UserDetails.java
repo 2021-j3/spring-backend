@@ -16,16 +16,16 @@ import java.util.List;
 @Setter
 public class J3UserDetails extends User {
 
-    private Long id;
+    private Long accountId;
 
     public J3UserDetails(Account account){
         super(account.getEmail(),
                 account.getPasswordHash(),
                 authorities(account.getAccountType()));
-        this.id = account.getAccountId();
+        this.accountId = account.getAccountId();
     }
 
-    /**
+    /** 2021-02-15 penguin418
      * Account의 유저타입을 spring security 에서 권한 이름으로 요구하는 ROLE_~ 로 변환하는 메소드
      * @param accountType { AccountType }
      * @return authorities { GrantedAuthority }

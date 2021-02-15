@@ -2,11 +2,13 @@ package com.ecommerce.j3.service;
 
 import com.ecommerce.j3.controller.dto.AccountDto.AccountApiRequest;
 import com.ecommerce.j3.controller.dto.AccountDto.AccountApiResponse;
+import com.ecommerce.j3.controller.dto.AccountDto.AccountLoginResponse;
 import com.ecommerce.j3.domain.J3UserDetails;
 import com.ecommerce.j3.domain.entity.Account;
 import com.ecommerce.j3.domain.entity.AccountType;
 import com.ecommerce.j3.domain.mapper.AccountMapper;
 import com.ecommerce.j3.repository.AccountRepository;
+import com.ecommerce.j3.util.JwtTokenUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -21,10 +23,9 @@ import javax.persistence.EntityNotFoundException;
 @Transactional
 @RequiredArgsConstructor  // final 변수만 처리.
 public class AccountApiLogicService implements UserDetailsService {
-
-
     private final AccountRepository accountRepository;
     private final AccountMapper accountMapper;
+    private final JwtTokenUtil jwtTokenUtil;
 
     public AccountApiResponse saveAccount(AccountApiRequest accountApiRequest) {
         // 검사
@@ -59,10 +60,20 @@ public class AccountApiLogicService implements UserDetailsService {
         accountRepository.deleteById(accountId);
     }
 
-    /**
+    public AccountLoginResponse Login(String email){
+        J3UserDetails user = loadUserByUsername(email);
+        return AccountLoginResponse.builder()
+                .username(user.getUsername())
+                .authorities(user.getAuthorities())
+                .token(jwtTokenUtil.issue(user))
+                .build();
+    }
+
+
+    /** 2021-02-15 penguin418
      * 실제 인증을 담당하는 AuthenticationManager 를 생성해주는 AuthenticationManagerBuilder 클래스에서 사용하는 UserDetail 인터페이스
      * @param email { username } 사용자 식별에 사용되는 유저이름, 여기서는 이메일을 사용
-     * @return { UserDetails }
+     * @return { UserDetails } 이메일, accountId, 권한이 담겨있음
      * @throws UsernameNotFoundException
      */
     @Override

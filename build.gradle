@@ -57,13 +57,19 @@ dependencies {
 
 	// test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
 	// url mapping
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
 	// security
-	compileOnly 'org.springframework.session:spring-session:1.3.2.RELEASE'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
+	// security - session
+	compileOnly 'org.springframework.session:spring-session:1.3.2.RELEASE'
 //	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
 	testImplementation 'org.springframework.security:spring-security-test'
+	// security - jwt
+	compileOnly 'io.jsonwebtoken:jjwt:0.9.1'
+
 
 	// DTO
 	implementation 'javax.validation:validation-api'
