@@ -28,7 +28,7 @@ public class Cart {
     @JoinColumn(name = "account_id")
     private Account account;
 
-    @OneToMany(mappedBy="cart",cascade = CascadeType.PERSIST)    // 01-18 Megan
+    @OneToMany(fetch = FetchType.LAZY,mappedBy="cart",cascade = CascadeType.ALL, orphanRemoval = true)    // 02-15 Megan
     private List<CartItem> cartItems;
 
     private String sessionId;
@@ -79,4 +79,15 @@ public class Cart {
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+    public static Cart createCart(Account account){
+        Cart cart = new Cart();
+        cart.account = account;
+        cart.email = account.getEmail();
+        cart.firstName = account.getFirstName();
+        cart.lastName = account.getLastName();
+        cart.phoneNumber = account.getPhoneNumber();
+
+        return cart;
+    }
 }
