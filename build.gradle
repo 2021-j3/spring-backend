@@ -60,8 +60,7 @@ dependencies {
 	// url mapping
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	// security
-//	implementation 'org.springframework.session:spring-session-core'
-//	implementation group: 'org.springframework.session', name: 'spring-session', version: '1.0.1.RELEASE'
+	compileOnly 'org.springframework.session:spring-session:1.3.2.RELEASE'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 //	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
 	testImplementation 'org.springframework.security:spring-security-test'

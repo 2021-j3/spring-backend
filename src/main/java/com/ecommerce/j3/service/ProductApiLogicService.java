@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -44,5 +46,9 @@ public class ProductApiLogicService {
     Product findById(Long id) {
         return productRepository.findById(id)
                 .orElseThrow(EntityNotFoundException::new);
+    }
+
+    public List<ProductApiResponse> findAllProduct() {
+        return productRepository.findAll().stream().map(productMapper::toApiResponse).collect(Collectors.toList());
     }
 }
