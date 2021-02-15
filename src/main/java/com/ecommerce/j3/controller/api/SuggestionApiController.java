@@ -23,8 +23,8 @@ public class SuggestionApiController {
     }
 
     @ApiOperation(value = "추천 GET", notes = "추천를 불러온다.")
-    @GetMapping("")
-        public BodyData<SuggestionDto.SuggestionApiResponse> read(Long id) {
+    @GetMapping("{id}")
+        public BodyData<SuggestionDto.SuggestionApiResponse> read(@PathVariable("id") Long id) {
         return null;
     }
 
@@ -35,8 +35,8 @@ public class SuggestionApiController {
     }
 
     @ApiOperation(value = "추천 DELETE", notes = "추천를 삭제한다.")
-    @DeleteMapping("")
-        public BodyData delete(Long id) {
+    @DeleteMapping("{id}")
+        public BodyData delete(@PathVariable("id") Long id) {
         return null;
     }
 }

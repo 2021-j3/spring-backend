@@ -26,8 +26,8 @@ public class WatchApiController {
     }
 
     @ApiOperation(value = "최근본항목 GET", notes = "최근본항목를 불러온다.")
-    @GetMapping("")
-        public BodyData<WatchDto.WatchApiResponse> read(Long id) {
+    @GetMapping("{id}")
+        public BodyData<WatchDto.WatchApiResponse> read(@PathVariable("id") Long id) {
         return null;
     }
 
@@ -38,8 +38,8 @@ public class WatchApiController {
     }
 
     @ApiOperation(value = "최근본항목 DELETE", notes = "최근본항목를 삭제한다.")
-    @DeleteMapping("")
-        public BodyData delete(Long id) {
+    @DeleteMapping("{id}")
+        public BodyData delete(@PathVariable("id") Long id) {
         return null;
     }
 }

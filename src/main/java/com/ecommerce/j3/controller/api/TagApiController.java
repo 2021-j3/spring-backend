@@ -23,8 +23,8 @@ public class TagApiController {
     }
 
     @ApiOperation(value = "태그 GET", notes = "태그를 불러온다.")
-    @GetMapping("")
-        public BodyData<TagDto.TagApiResponse> read(Long id) {
+    @GetMapping("{id}")
+        public BodyData<TagDto.TagApiResponse> read(@PathVariable("id") Long id) {
         return null;
     }
 
@@ -35,8 +35,8 @@ public class TagApiController {
     }
 
     @ApiOperation(value = "태그 DELETE", notes = "태그를 삭제한다.")
-    @DeleteMapping("")
-        public BodyData delete(Long id) {
+    @DeleteMapping("{id}")
+        public BodyData delete(@PathVariable("id") Long id) {
         return null;
     }
 }

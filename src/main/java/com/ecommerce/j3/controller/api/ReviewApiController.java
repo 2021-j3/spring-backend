@@ -25,8 +25,8 @@ public class ReviewApiController {
     }
 
     @ApiOperation(value = "리뷰 GET", notes = "리뷰를 불러온다.")
-    @GetMapping("")
-        public BodyData<ReviewDto.ReviewApiResponse> read(Long id) {
+    @GetMapping("{id}")
+        public BodyData<ReviewDto.ReviewApiResponse> read(@PathVariable("id") Long id) {
         return null;
     }
 
@@ -37,8 +37,8 @@ public class ReviewApiController {
     }
 
     @ApiOperation(value = "리뷰 DELETE", notes = "리뷰를 삭제한다.")
-    @DeleteMapping("")
-        public BodyData delete(Long id) {
+    @DeleteMapping("{id}")
+        public BodyData delete(@PathVariable("id") Long id) {
         return null;
     }
 }

@@ -23,7 +23,7 @@ public class CategoryApiController {
 
     @ApiOperation(value = "카테고리 GET", notes = "카테고리를 확인한다.")
     @GetMapping("")
-        public BodyData<CartDto.CartApiResponse> read(Long id) {
+        public BodyData<CartDto.CartApiResponse> read(@PathVariable("id") Long id) {
         return null;
     }
 
@@ -35,7 +35,7 @@ public class CategoryApiController {
     
     @ApiOperation(value = "카테고리 DELETE", notes = "카테고리를 삭제한다.")
     @DeleteMapping("")
-        public BodyData delete(Long id) {
+        public BodyData delete(@PathVariable("id") Long id) {
         return null;
     }
 }

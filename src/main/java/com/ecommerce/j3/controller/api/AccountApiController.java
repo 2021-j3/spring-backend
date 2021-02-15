@@ -67,13 +67,13 @@ public class AccountApiController {
         try {
             return new ResponseEntity<AccountDto.AccountApiResponse>(accountApiLogicService.updateAccount(request), HttpStatus.OK);
         } catch (EntityNotFoundException e) {
-            return new ResponseEntity(HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
 
     @ApiOperation(value = "회원 삭제", notes = "회원을 삭제한다.")
     @DeleteMapping("{id}")
-    public BodyData delete(Long id) {
+    public BodyData delete(@PathVariable("id") Long id) {
         try {
             accountApiLogicService.removeAccount(id);
             return BodyData.OK();

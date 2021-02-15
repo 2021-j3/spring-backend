@@ -48,7 +48,7 @@ public class ProductApiController {
 
     @ApiOperation(value = "제품 갱신", notes = "제품를 갱신한다.")
     @PutMapping("/api/products/{id}")
-    public BodyData<ProductApiResponse> update(@RequestBody ProductApiRequest request) {
+    public BodyData<ProductApiResponse> update(@PathVariable("id") Long id, @RequestBody ProductApiRequest request) {
         try {
             return BodyData.OK(productApiLogicService.updateProduct(request));
         } catch (EntityNotFoundException e) {
@@ -57,8 +57,8 @@ public class ProductApiController {
     }
 
     @ApiOperation(value = "제품 삭제", notes = "제품를 삭제한다.")
-    @DeleteMapping("/api/products")
-    public BodyData delete(Long id) {
+    @DeleteMapping("/api/products/{id}")
+    public BodyData delete(@PathVariable("id") Long id) {
         try {
             productApiLogicService.removeProduct(id);
             return BodyData.OK();
