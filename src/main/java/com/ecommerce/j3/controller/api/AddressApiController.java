@@ -28,7 +28,7 @@ public class AddressApiController{
 
     @ApiOperation(value = "주소 일기", notes = "주소를 가져온다")
     @GetMapping
-    public BodyData<AddressApiResponse> read(Long id) {
+    public BodyData<AddressApiResponse> read(@PathVariable("id") Long id) {
         try {
             return BodyData.OK(addressService.findAddress(id));
         }catch (EntityNotFoundException e){
@@ -48,7 +48,7 @@ public class AddressApiController{
 
     @ApiOperation(value = "주소 삭제", notes = "주소를 삭제한다.")
     @DeleteMapping
-    public BodyData delete(Long id) {
+    public BodyData delete(@PathVariable("id") Long id) {
         try{
             addressService.removeAddress(id);
             return BodyData.OK();

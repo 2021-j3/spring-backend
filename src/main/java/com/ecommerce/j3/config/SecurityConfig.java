@@ -1,48 +1,11 @@
-//package com.ecommerce.j3.config;
-//
-//import org.springframework.context.annotation.Configuration;
-//import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-//import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-//import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-//
-//@Configuration
-//@EnableWebSecurity
-//public class SecurityConfig extends WebSecurityConfigurerAdapter {
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http
-//                .headers()
-//                .cacheControl()
-//                .and()
-//                .frameOptions()
-//                .and()
-//                .contentTypeOptions()
-//                .and()
-//                .httpStrictTransportSecurity()
-//                .maxAgeInSeconds(31536000)
-//                .includeSubDomains(true);
-//        http
-//                .headers()
-//                .contentSecurityPolicy("default-src 'self';")
-//                .and()
-//                .contentSecurityPolicy("font-src 'self' https://use.typekit.net;")
-//                .and()
-//                .contentSecurityPolicy(" img-src 'self' https://p.typekit.net https://media.vlpt.us;");
-//        http
-//                .requiresChannel()
-//                .anyRequest()
-//                .requiresSecure();
-//        http
-//                .csrf()
-//                .ignoringAntMatchers("/project","/mail");
-//    }
-//
-//}
- package com.ecommerce.j3.config;
+package com.ecommerce.j3.config;
 
- import lombok.AllArgsConstructor;
+import com.ecommerce.j3.filters.JwtTokenFilter;
+import com.ecommerce.j3.service.AccountApiLogicService;
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -52,60 +15,86 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-// import org.springframework.session.web.http.HeaderHttpSessionStrategy;
-// import org.springframework.session.web.http.HttpSessionStrategy;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.session.web.http.HeaderHttpSessionStrategy;
+import org.springframework.session.web.http.HttpSessionStrategy;
 
- @Configuration
- @EnableWebSecurity
- @AllArgsConstructor
- public class SecurityConfig extends WebSecurityConfigurerAdapter {
-//     AccountService accountService;
+@Configuration
+@EnableWebSecurity
+@AllArgsConstructor
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    private final AccountApiLogicService accountService;
+    private final JwtTokenFilter jwtTokenFilter;
 
-     @Bean // 시스템 공용으로 등록
-     public PasswordEncoder passwordEncoder(){return new BCryptPasswordEncoder();}
+    /**
+     * 공용 password encoder 등록
+     * @return
+     */
+    @Bean
+    public PasswordEncoder passwordEncoder(){return new BCryptPasswordEncoder();}
 
-     @Bean
-     @Override
-     public AuthenticationManager authenticationManagerBean() throws Exception {
-         return super.authenticationManagerBean();
-     }
+    /**
+     * Spring 에서 기본으로 제공하는 인증객체를 등록
+     * @return
+     * @throws Exception
+     */
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
 
-     @Override
-     public void configure(AuthenticationManagerBuilder auth) throws Exception{
-//         auth.userDetailsService(accountService).passwordEncoder(passwordEncoder());
-     }
-//     @Bean
-//     public HttpSessionStrategy httpSessionStrategy() {
-//         return new HeaderHttpSessionStrategy();
-//     }
+    /**
+     * 공용 httpSessionStrategy 등록, x-auth-token 삽입
+     * @return { HeaderHttpSessionStrategy } configure 에서 정의한 HeaderHttpSessionStrategy
+     */
+    @Bean
+    public HttpSessionStrategy httpSessionStrategy() {
+        return new HeaderHttpSessionStrategy();
+    }
 
-     @Override
-     public void configure(WebSecurity webSecurity){
-         // static 디렉터리
-         webSecurity.ignoring().antMatchers("/css/**", "/js/**", "/img/**", "/lib/**");
-     }
+    /**
+     * custom userdetailservice (AccountApiLogicService)를 사용하므로
+     * AuthenticationManagerBuilder에 해당 클래스를 주입
+     * @param auth
+     * @throws Exception
+     */
+    @Override
+    public void configure(AuthenticationManagerBuilder auth) throws Exception{
+        auth.userDetailsService(accountService).passwordEncoder(passwordEncoder());
+    }
 
-     @Override
-     protected void configure(HttpSecurity http) throws Exception {
-         http.csrf().disable()
-                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.NEVER)
-                 .and()
-                 .authorizeRequests()
-                 .antMatchers("/admin/**").hasAuthority("ADMIN")
-                 .antMatchers("/seller/**").hasAuthority("SELLER")
-                 .antMatchers("/user/**").hasAuthority("USER")
-                 .antMatchers("/**").permitAll()
-                 .and()
- //            .formLogin()
- //                .loginPage("/auth/login")
- //                .defaultSuccessUrl("/")
- //                .permitAll()
- //                .and()
-             .logout()
- //                .logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout"))
-                 .logoutSuccessUrl("/")
-                 .invalidateHttpSession(true)
-                 .and()
-                 .exceptionHandling().accessDeniedPage("/auth/denied");
-     }
- }
+    @Override
+    public void configure(WebSecurity webSecurity){
+        // static 디렉터리
+        webSecurity.ignoring()
+                .antMatchers("/css/**", "/js/**", "/img/**", "/lib/**")
+                .antMatchers("/v2/api-docs",
+                        "/configuration/ui",
+                        "/swagger-resources/**",
+                        "/configuration/security",
+                        "/swagger-ui.html",
+                        "/webjars/**");
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable()
+                // 스프링 세션을 사용,
+
+                .authorizeRequests()
+                .antMatchers("/api/accounts/login").permitAll()
+                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                .antMatchers("/api/accounts/test").hasAuthority("ROLE_USER")
+                .antMatchers("/**").permitAll()
+                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .logout()
+                //                .logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout"))
+                .logoutSuccessUrl("/")
+                .invalidateHttpSession(true)
+                .and()
+                .exceptionHandling().accessDeniedPage("/auth/denied");
+        http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
+    }
+}

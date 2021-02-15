@@ -45,29 +45,26 @@ public class PaymentApiController{
             }
         } catch (EntityNotFoundException e) {
             log.info("createOrder Exception: {}", e);
-            return new ResponseEntity(HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
         return null;
     }
 //
 //    @ApiOperation(value = "결제 GET", notes = "결제를 확인한다.")
-//    @GetMapping("")
-//    @Override
-//    public BodyData<PaymentDto.PaymentApiResponse> read(Long id) {
+//    @GetMapping("{id}")
+//    public BodyData<PaymentDto.PaymentApiResponse> read(@PathVariable("id") Long id) {
 //        return null;
 //    }
 //
 //    @ApiOperation(value = "결제 PUT", notes = "결제를 수정한다.")
 //    @PutMapping("")
-//    @Override
 //    public BodyData<PaymentDto.PaymentApiResponse> update(@RequestBody PaymentDto.PaymentApiRequest request) {
 //        return null;
 //    }
 //
 //    @ApiOperation(value = "결제 DELETE", notes = "결제를 삭제한다.")
-//    @DeleteMapping("")
-//    @Override
-//    public BodyData delete(Long id) {
+//    @DeleteMapping("{id}")
+//    public BodyData delete(@PathVariable("id") Long id) {
 //        return null;
 //    }
 }

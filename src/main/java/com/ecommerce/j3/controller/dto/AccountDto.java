@@ -6,12 +6,14 @@ import com.ecommerce.j3.domain.entity.GenderType;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.Column;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Collection;
 
 public class AccountDto {
     /**
@@ -48,6 +50,9 @@ public class AccountDto {
         private AccountType accountType;
 
         private Address defaultAddress;
+
+        public void setAccountType(AccountType accountType){this.accountType=accountType;}
+        public void setPasswordHash(String passwordHash){this.passwordHash=passwordHash;}
     }
 
     @Getter
@@ -157,4 +162,14 @@ public class AccountDto {
         }
     }
 
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public static class AccountLoginResponse{
+        private String username;
+        private Collection<? extends GrantedAuthority> authorities;
+        private String token;
+    }
 }
