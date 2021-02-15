@@ -3,10 +3,7 @@ package com.ecommerce.j3.controller.dto;
 
 import com.ecommerce.j3.domain.entity.Cart;
 import com.ecommerce.j3.domain.entity.Product;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -45,6 +42,33 @@ public class CartItemDto {
         private String content;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
+    }
+    @Data
+    public static class createCartItemApiRequest{
+        private Integer quantity;
+        private long productid;
+    }
+    @Data
+    public static class createCartItemApiResponse {
+        private Long carItemId;
+
+        public createCartItemApiResponse(long id) {
+
+            this.carItemId = id;
+
+        }
+    }
+
+    @Data
+    public static class deleteCartItemApiResponse {
+        private Long cartItemId;
+
+        public deleteCartItemApiResponse(long id) {
+
+            this.cartItemId = id;
+
+        }
+
     }
 
 }

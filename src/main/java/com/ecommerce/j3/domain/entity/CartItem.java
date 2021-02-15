@@ -47,4 +47,14 @@ public class CartItem {
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+    public static CartItem createCartItem(Cart cart,Integer quantity, Product product){
+        CartItem cartItem = new CartItem();
+        cartItem.cart = cart;
+        cartItem.product = product;
+        cartItem.price = product.getPrice();
+        cartItem.quantity = quantity;
+
+        return cartItem;
+    }
 }
