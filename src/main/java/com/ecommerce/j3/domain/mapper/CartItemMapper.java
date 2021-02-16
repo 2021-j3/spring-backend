@@ -22,7 +22,7 @@ public abstract class CartItemMapper implements DefaultMapper<CartItem, CartItem
 
     @Override
     public CartItem updateFromDto(@MappingTarget CartItem entity, CartItemDto.CartItemApiRequest dto){
-        if (dto == null) return null;
+        if (dto == null) return entity;
 
         CartItem db = entity;
         CartItem req = toEntity(dto);

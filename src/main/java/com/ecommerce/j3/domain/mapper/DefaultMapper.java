@@ -5,5 +5,5 @@ public interface DefaultMapper<E, Req, Res> {
 
     public Res toApiResponse(E entity);
 
-    public <T> T updateFromDto(E entity, Req dto);
+    public E updateFromDto(E entity, Req dto);
 }

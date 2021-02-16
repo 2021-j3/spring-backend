@@ -19,7 +19,7 @@ public abstract class CartMapper implements DefaultMapper<Cart, CartApiRequest, 
 
     @Override
     public Cart updateFromDto(@MappingTarget Cart entity, CartApiRequest dto){
-        if (dto == null) return null;
+        if (dto == null) return entity;
         // TODO: 구현 해야함, account mapper 참조
         Cart db = entity;
         Cart req = toEntity(dto);

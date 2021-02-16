@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 @Transactional
@@ -40,9 +41,13 @@ public class CategoryApiLogicService {
         categoryRepository.deleteById(id);
     }
 
-    // 패키지 한정자, service패키지 내에서만 접근 가능
+    // 패키지 한정자, service 패키지 내에서만 접근 가능
     Category findById(Long id) {
         return categoryRepository.findById(id)
                 .orElseThrow(EntityNotFoundException::new);
+    }
+
+    List<Category> findByIds(List<Long> ids){
+        return  ids == null ? null : categoryRepository.findByCategoryIdIn(ids);
     }
 }

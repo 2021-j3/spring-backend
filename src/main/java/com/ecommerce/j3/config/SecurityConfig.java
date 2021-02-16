@@ -80,8 +80,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
-                // 스프링 세션을 사용,
-
                 .authorizeRequests()
                 .antMatchers("/api/accounts/login").permitAll()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()

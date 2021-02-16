@@ -70,6 +70,8 @@ dependencies {
 	// security - jwt
 	compileOnly 'io.jsonwebtoken:jjwt:0.9.1'
 
+	// jpa - metamodel
+	compileOnly 'org.hibernate:hibernate-jpamodelgen:5.3.7.Final'
 
 	// DTO
 	implementation 'javax.validation:validation-api'
@@ -82,4 +84,14 @@ dependencies {
 
 test {
 	useJUnitPlatform()
+}
+tasks.withType(JavaCompile) {
+	options.annotationProcessorGeneratedSourcesDirectory = file("src/generated/java")
+}
+sourceSets {
+	generated {
+		java {
+			srcDirs = ['src/generated/java']
+		}
+	}
 }

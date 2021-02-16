@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 @Transactional
@@ -44,5 +45,8 @@ public class TagApiLogicService {
     Tag findById(Long id) {
         return tagRepository.findById(id)
                 .orElseThrow(EntityNotFoundException::new);
+    }
+    List<Tag> findByIds(List<Long> ids){
+        return ids == null ? null : tagRepository.findByTagIdIn(ids);
     }
 }

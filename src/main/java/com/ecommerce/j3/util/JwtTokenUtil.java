@@ -52,6 +52,11 @@ public class JwtTokenUtil {
                 .compact();
     }
 
+    /**
+     * 이메일을 획득하는 메소드, filter 레이어에서는 사용 금지
+     * @param token { String  } 토큰
+     * @return
+     */
     public String getEmailFromToken(String token) {
         Claims claim = Jwts.parser()
                 .setSigningKey(SECRET_KEY)

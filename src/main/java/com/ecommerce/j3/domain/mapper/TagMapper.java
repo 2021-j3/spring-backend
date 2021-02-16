@@ -16,10 +16,13 @@ public abstract class TagMapper implements DefaultMapper<Tag, TagApiRequest, Tag
     public abstract TagApiResponse toApiResponse(Tag entity);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    public abstract Tag updateFromDto(@MappingTarget Tag entity, TagApiRequest dto);
-
-    @AfterMapping
-    protected void afterUpdateFromDto(@MappingTarget Tag entity, TagApiRequest dto) {
-        // TODO: 구현 해야함, account mapper 참조
+    public Tag updateFromDto(@MappingTarget Tag entity, TagApiRequest dto){
+        if(dto == null) return entity;
+        return Tag.builder()
+                .tagId(entity.getTagId())
+                .title(dto.getTitle())
+                .metaTitle(dto.getMetaTitle())
+                .slug(dto.getSlug())
+                .build();
     }
 }

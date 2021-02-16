@@ -22,7 +22,7 @@ public abstract class AccountMapper implements DefaultMapper<Account, AccountDto
 
     @Override
     public Account updateFromDto(@MappingTarget Account entity, AccountDto.AccountApiRequest dto){
-        if (dto == null) return null;
+        if (dto == null) return entity;
         Account db = entity;
         entity = Account.builder()
                 // db 값만 존재
