@@ -17,10 +17,14 @@ public abstract class WatchMapper implements DefaultMapper<Watch, WatchApiReques
     public abstract WatchApiResponse toApiResponse(Watch entity);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    public abstract Watch updateFromDto(@MappingTarget Watch entity, WatchApiRequest dto);
-
-    @AfterMapping
-    protected void afterUpdateFromDto(@MappingTarget Watch entity, WatchApiRequest dto) {
-        // TODO: 구현 해야함, account mapper 참조
+    public Watch updateFromDto(@MappingTarget Watch entity, WatchApiRequest dto){
+        if (dto == null) return entity;
+        return Watch.builder()
+                .watchId(entity.getWatchId())
+                .product(entity.getProduct())
+                .account(entity.getAccount())
+                .watchCount(dto.getWatchCount())
+                .recentWatch(dto.getRecentWatch())
+                .build();
     }
 }

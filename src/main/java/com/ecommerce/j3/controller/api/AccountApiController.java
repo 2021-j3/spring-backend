@@ -90,6 +90,7 @@ public class AccountApiController {
      * @param loginRequest { dto } email 과 password 필드를 가진 request
      * @return { ResponseEntity }
      */
+    @ApiOperation(value = "회원 로그인", notes = "회원 로그인한다.")
     @PostMapping("/login")
     public ResponseEntity<AccountLoginResponse> login(@RequestBody LoginRequest loginRequest) {
         String email = loginRequest.getEmail();
@@ -124,45 +125,5 @@ public class AccountApiController {
         System.out.println(userDetails.getAccountId()); // accountId가 출력됩니다
         System.out.println(userDetails.getAuthorities()); // 'ROLE_' + ACCOUNT_TYPE 이 출력됩니다
         return ResponseEntity.ok(new AccountLoginResponse(userDetails.getUsername(), userDetails.getAuthorities(), userDetails.getAccountId().toString()));
-    }
-
-    //    @GetMapping("/api/accounts")
-    public BodyData<AccountApiResponse> showAccount(@RequestBody @Valid CreateAccountRequest request) {
-
-     /* MultiValueMap<String,String> responseHeaders = new LinkedMultiValueMap<>();
-       responseHeaders.add("AUTHCODE","20210122");  // Sample Test for setting a BodyData.
-      responseHeaders.add("TOKEN", "0443");
-    return new ResponseEntity<String>(String.valueOf(new ReadAccountResponse(account.getAccountId(),account.getFirstName(),account.getLastName())), responseHeaders, HttpStatus.OK);
-*/
-        return BodyData.OK(accountApiLogicService.findAccountByEmail(request.getEmail()));
-    }
-
-
-    //    @PostMapping("/api/accounts")
-    public CreateAccountResponse saveAccount(@RequestBody @Valid CreateAccountRequest request) {
-//        Account account = Account.builder()
-//                .email(request.getEmail())
-//                .passwordHash(request.getPassword())
-//                .lastName(request.getLastname())
-//                .firstName(request.getFirstname())
-//                .gender(request.getGender())
-//                .accountType(request.getAccounttype())
-//                .build();
-//        Long id = accountService.save(request);
-//        return new CreateAccountResponse(id, account.getRegisteredAt(), account.getFirstName(), account.getLastName());
-        Account account = accountMapper.toEntity(accountMapper.toRequestDto(request));
-        accountRepository.save(account);
-        return accountMapper.toCreateAccountResponse(account);
-    }
-
-    //    @PutMapping("/api/accounts")
-    public CreateAccountResponse updateAccount(@RequestBody @Valid UpdateAccountRequest request) {
-//        Account accountFromDB = accountRepository.findByEmail(request.getEmail()).orElseThrow(() -> new RuntimeException("cannot find"));
-//        AccountApiRequest fullRequest = accountMapper.toDto(request);
-//        accountMapper.updateFromDto(accountFromDB, fullRequest);
-//        accountService.save(accountFromDB);   // 준영속 컨텍스트 핸들링
-//
-//        return new CreateAccountResponse(accountFromDB.getAccountId(), accountFromDB.getRegisteredAt(), accountFromDB.getFirstName(), accountFromDB.getLastName());
-        return null;
     }
 }

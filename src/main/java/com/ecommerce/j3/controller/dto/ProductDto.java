@@ -7,6 +7,7 @@ import com.ecommerce.j3.domain.entity.Tag;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 public class ProductDto {
@@ -66,4 +67,13 @@ public class ProductDto {
         private Set<Tag> tags;
     }
 
+    @Data
+    @AllArgsConstructor @Builder
+    public static class SearchCondition{
+        private String query;
+        private Integer minPrice;
+        private Integer maxPrice;
+        private List<Long> categoryIds;
+        private List<Long> tagIds;
+    }
 }

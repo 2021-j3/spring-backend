@@ -9,6 +9,8 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.ReportingPolicy;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, uses = {CommonMapper.class})
 public abstract class CategoryMapper implements DefaultMapper<Category, CategoryApiRequest, CategoryApiResponse> {
 
@@ -21,9 +23,16 @@ public abstract class CategoryMapper implements DefaultMapper<Category, Category
 
     @Override
     public Category updateFromDto(@MappingTarget Category entity, CategoryApiRequest dto){
-        if (dto == null) return null;
-        // TODO: 구현 해야함, account mapper 참조
-        return null;
+        if (dto == null) return entity;
 
+        Category req = toEntity(dto);
+        return Category.builder()
+                .categoryId(entity.getCategoryId())
+                .parent(req.getParent())
+                .title(req.getTitle())
+                .metaTitle(req.getMetaTitle())
+                .slug(req.getSlug())
+                .content(req.getContent())
+                .build();
     }
 }

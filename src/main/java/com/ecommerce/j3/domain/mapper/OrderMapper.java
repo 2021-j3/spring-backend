@@ -21,7 +21,7 @@ public abstract class OrderMapper implements DefaultMapper<Order, OrderDto.Order
 
     @Override
     public Order updateFromDto(@MappingTarget Order entity, OrderDto.OrderApiRequest dto) {
-        if (dto == null) return null;
+        if (dto == null) return entity;
         Order db = entity;
         Order req = toEntity(dto);
         entity = Order.builder()

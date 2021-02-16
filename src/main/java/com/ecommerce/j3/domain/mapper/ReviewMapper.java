@@ -20,9 +20,17 @@ public abstract class ReviewMapper implements DefaultMapper<Review, ReviewApiReq
 
     @Override
     public Review updateFromDto(@MappingTarget Review entity, ReviewApiRequest dto){
-        if (dto == null) return null;
-        // TODO: 구현 해야함, account mapper 참조
-
-        return null;
+        if (dto == null) return entity;
+        Review req = toEntity(dto);
+        return Review.builder()
+                .reviewId(entity.getReviewId())
+                .parent(entity.getParent())
+                .orderItem(entity.getOrderItem())
+                .account(entity.getAccount())
+                .rate(req.getRate())
+                .title(req.getTitle())
+                .content(req.getContent())
+                .createdAt(entity.getCreatedAt())
+                .build();
     }
 }

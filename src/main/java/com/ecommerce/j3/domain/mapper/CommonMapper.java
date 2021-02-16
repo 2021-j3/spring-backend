@@ -43,13 +43,8 @@ public class CommonMapper {
     }
 
     List<CartItem> mapIdsToCartItems(List<Long> cartItemIds) {
-        if (cartItemIds == null)
-            return null;
-        List<CartItem> cartItems = new ArrayList<>();
-        for (Long cartItemId : cartItemIds) {
-            cartItems.add(cartItemRepository.findById(cartItemId).orElse(null));
-        }
-        return cartItems;
+        if (cartItemIds == null) return null;
+        return cartItemRepository.getByCartItemIdIn(cartItemIds);
     }
 
     Category mapIdToCategory(Long categoryId) {
@@ -65,14 +60,8 @@ public class CommonMapper {
     }
 
     List<OrderItem> mapIdsToOrderItems(List<Long> orderItemIds) {
-        if (orderItemIds == null)
-            return null;
-        // TODO: 더 괜찮은 구현 필요
-        List<OrderItem> orderItems = new ArrayList<>();
-        for (Long orderItemId : orderItemIds) {
-            orderItems.add(orderItemRepository.findById(orderItemId).orElse(null));
-        }
-        return orderItems;
+        if (orderItemIds == null) return null;
+        return orderItemRepository.getByOrderItemIdIn(orderItemIds);
     }
 
     Product mapIdToProduct(Long productId) {
@@ -84,22 +73,12 @@ public class CommonMapper {
     }
 
     Set<Category> mapIdsToCategorySet(Set<Long> categoryIds){
-        if (categoryIds == null)
-            return null;
-        Set<Category> categories = new HashSet<>();
-        for(Long categoryId : categoryIds){
-            categories.add(categoryRepository.findById(categoryId).orElse(null));
-        }
-        return categories;
+        if (categoryIds == null) return null;
+        return categoryRepository.getByCategoryIdIn(categoryIds);
     }
 
     Set<Tag> mapIdsToTagSet(Set<Long> tagIds){
-        if (tagIds == null)
-            return null;
-        Set<Tag> tags = new HashSet<>();
-        for(Long tagId : tagIds){
-            tags.add(tagRepository.findById(tagId).orElse(null));
-        }
-        return tags;
+        if (tagIds == null) return null;
+        return tagRepository.getByTagIdIn(tagIds);
     }
 }

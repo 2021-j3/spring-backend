@@ -19,7 +19,7 @@ public abstract class AddressMapper implements DefaultMapper<Address, AddressApi
 
     @Override
     public Address updateFromDto(@MappingTarget Address entity, AddressApiRequest dto) {
-        if (dto == null) return null;
+        if (dto == null) return entity;
 
         Address db = entity;
         // Address req = toEntity(dto);
