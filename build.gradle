@@ -85,13 +85,14 @@ dependencies {
 test {
 	useJUnitPlatform()
 }
-tasks.withType(JavaCompile) {
-	options.annotationProcessorGeneratedSourcesDirectory = file("src/generated/java")
-}
-sourceSets {
-	generated {
-		java {
-			srcDirs = ['src/generated/java']
-		}
-	}
-}
+// 사용중입니다
+//tasks.withType(JavaCompile) {
+//	options.annotationProcessorGeneratedSourcesDirectory = file("src/generated/java")
+//}
+//sourceSets {
+//	generated {
+//		java {
+//			srcDirs = ['src/generated/java']
+//		}
+//	}
+//}
