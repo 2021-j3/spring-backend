@@ -9,6 +9,7 @@ import com.ecommerce.j3.domain.mapper.ProductMapper;
 import com.ecommerce.j3.repository.ProductRepository;
 import com.ecommerce.j3.repository.ProductSpecs;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -64,7 +65,7 @@ public class ProductApiLogicService {
      * @param searchCondition { SearchCondition } query, minPrice, maxPrice, cats, tags 모두 null 가능
      * @return List<ProductApiResponse>
      */
-    public List<ProductApiResponse> searchProducts(SearchCondition searchCondition){
+    public List<ProductApiResponse> searchProducts(SearchCondition searchCondition, Pageable pageable){
         Specification<Product> productSpecs = Specification.where(null);
         productSpecs = productSpecs
                 .and(ProductSpecs.withKeywords(searchCondition.getQuery()))
@@ -72,7 +73,7 @@ public class ProductApiLogicService {
                 .and(ProductSpecs.toPrice(searchCondition.getMaxPrice()))
                 .and(ProductSpecs.fromCategories(categoryApiLogicService.findByIds(searchCondition.getCategoryIds())))
                 .and(ProductSpecs.fromTags(tagApiLogicService.findByIds(searchCondition.getTagIds())));
-        return productRepository.findAll(productSpecs)
+        return productRepository.findAll(productSpecs, pageable).getContent()
                 .stream().map(productMapper::toApiResponse).collect(Collectors.toList());
     }
 
