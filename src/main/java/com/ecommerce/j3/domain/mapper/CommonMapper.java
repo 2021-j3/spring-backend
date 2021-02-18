@@ -81,4 +81,9 @@ public class CommonMapper {
         if (tagIds == null) return null;
         return tagRepository.getByTagIdIn(tagIds);
     }
+
+    Long mapCategoryToCategoryId(Category category){
+        if(category == null) return null;
+        else return category.getCategoryId();
+    }
 }

@@ -6,6 +6,8 @@ import com.ecommerce.j3.controller.dto.ProductDto.ProductApiRequest;
 import com.ecommerce.j3.controller.dto.ProductDto.ProductApiResponse;
 import com.ecommerce.j3.controller.dto.ProductDto.SearchCondition;
 import com.ecommerce.j3.service.ProductApiLogicService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
@@ -41,7 +43,7 @@ public class ProductApiController {
             @RequestParam(value = "maxPrice", required = false) Integer maxPrice,
             @RequestParam(value = "categories", required = false) List<Long> categories,
             @RequestParam(value = "tags", required = false) List<Long> tags,
-            @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
+            @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
             @RequestParam(value = "size", required = false, defaultValue = "100") Integer size,
             @RequestParam(value = "order", required = false, defaultValue = "ASC") String order,
             @RequestParam(value = "by", required = false, defaultValue = "productId") String by) {
@@ -51,11 +53,12 @@ public class ProductApiController {
                 .maxPrice(maxPrice)
                 .categoryIds(categories)
                 .tagIds(tags).build();
-        // 2021-02-17 페이지네이션 추가
+        // 2021-02-18 페이지네이션 처리
+        page = page < 0 ? 0 : page == 0 ? page : page-1;
         final Stream<String> allowed_criteria = Arrays.stream(new String[]{"productId", "title", "price", "createdAt"});
         Pageable pageable = PageRequest.of(page, size, Sort.by(
                 order.equals("ASC") ? Sort.Direction.ASC : Sort.Direction.DESC,
-                allowed_criteria.anyMatch(by::equals) ? by : "product_id"));
+                allowed_criteria.anyMatch(by::equals) ? by : "product_id")); // 2021-02-18 필드 이름 문제 해결
         List<ProductApiResponse> productApiResponses = productApiLogicService.searchProducts(searchCondition, pageable);
         return ResponseEntity.ok(productApiResponses);
     }

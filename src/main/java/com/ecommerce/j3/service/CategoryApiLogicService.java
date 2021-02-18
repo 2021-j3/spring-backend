@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -35,6 +36,11 @@ public class CategoryApiLogicService {
     public CategoryApiResponse findCategory(Long categoryId) {
         Category categoryFromDB = findById(categoryId);
         return categoryMapper.toApiResponse(categoryFromDB);
+    }
+
+    public List<CategoryApiResponse> findAllCategory() {
+        List<Category> categoryFromDB = categoryRepository.findAll();
+        return categoryFromDB.stream().map(categoryMapper::toApiResponse).collect(Collectors.toList());
     }
 
     public void removeCategory(Long id) {

@@ -27,7 +27,7 @@ public class CategoryDto {
     @AllArgsConstructor
     public static class CategoryApiResponse {
         private Long categoryId;
-        private Category parent;
+        private Long parentId;
         private String title;
         private String metaTitle;
         private String slug;
