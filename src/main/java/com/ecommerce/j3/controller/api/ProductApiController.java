@@ -46,24 +46,20 @@ public class ProductApiController {
             @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
             @RequestParam(value = "size", required = false, defaultValue = "100") Integer size,
             @RequestParam(value = "order", required = false, defaultValue = "ASC") String order,
-            @RequestParam(value = "by", required = false, defaultValue = "productId") String by) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        System.out.println(query + " " + minPrice + " " + maxPrice + " " + categories + " " + tags + " " + page + " " + size + " " + order + " " + by);
+            @RequestParam(value = "by", required = false, defaultValue = "productId") String by) {
         SearchCondition searchCondition = SearchCondition.builder()
                 .query(query)
                 .minPrice(minPrice)
                 .maxPrice(maxPrice)
                 .categoryIds(categories)
                 .tagIds(tags).build();
-        // 2021-02-17 페이지네이션 추가
-        if (page != 0)
-            page -= 1;
+        // 2021-02-18 페이지네이션 처리
+        page = page < 0 ? 0 : page == 0 ? page : page-1;
         final Stream<String> allowed_criteria = Arrays.stream(new String[]{"productId", "title", "price", "createdAt"});
         Pageable pageable = PageRequest.of(page, size, Sort.by(
                 order.equals("ASC") ? Sort.Direction.ASC : Sort.Direction.DESC,
-                allowed_criteria.anyMatch(by::equals) ? by : "productId"));
+                allowed_criteria.anyMatch(by::equals) ? by : "product_id")); // 2021-02-18 필드 이름 문제 해결
         List<ProductApiResponse> productApiResponses = productApiLogicService.searchProducts(searchCondition, pageable);
-//        System.out.println(mapper.writeValueAsString(productApiResponses));
         return ResponseEntity.ok(productApiResponses);
     }
 
