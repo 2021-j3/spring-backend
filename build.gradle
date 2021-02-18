@@ -82,10 +82,10 @@ dependencies {
 
 }
 
-test {
-	useJUnitPlatform()
-}
-// 사용중입니다
+//test {
+//	useJUnitPlatform()
+//}
+
 //tasks.withType(JavaCompile) {
 //	options.annotationProcessorGeneratedSourcesDirectory = file("src/generated/java")
 //}
