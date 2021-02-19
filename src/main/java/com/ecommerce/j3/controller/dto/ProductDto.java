@@ -69,6 +69,13 @@ public class ProductDto {
 
     @Data
     @AllArgsConstructor @Builder
+    public static class ProductApiResponsePage{
+        Long total;
+        List<ProductApiResponse> contents;
+    }
+
+    @Data
+    @AllArgsConstructor @Builder
     public static class SearchCondition{
         private String query;
         private Integer minPrice;

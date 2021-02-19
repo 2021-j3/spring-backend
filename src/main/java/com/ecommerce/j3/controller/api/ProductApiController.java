@@ -2,9 +2,11 @@ package com.ecommerce.j3.controller.api;
 
 
 import com.ecommerce.j3.controller.dto.BodyData;
+import com.ecommerce.j3.controller.dto.ProductDto;
 import com.ecommerce.j3.controller.dto.ProductDto.ProductApiRequest;
 import com.ecommerce.j3.controller.dto.ProductDto.ProductApiResponse;
 import com.ecommerce.j3.controller.dto.ProductDto.SearchCondition;
+import com.ecommerce.j3.controller.dto.ProductDto.ProductApiResponsePage;
 import com.ecommerce.j3.service.ProductApiLogicService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -37,7 +39,7 @@ public class ProductApiController {
 
     @ApiOperation(value = "제품 읽기1", notes = "조건에 맞는 제품을 가져온다")
     @GetMapping("/api/products")
-    public ResponseEntity<List<ProductApiResponse>> searchProduct(
+    public ResponseEntity<ProductApiResponsePage> searchProduct(
             @RequestParam(value = "query", required = false) String query,
             @RequestParam(value = "minPrice", required = false) Integer minPrice,
             @RequestParam(value = "maxPrice", required = false) Integer maxPrice,
@@ -58,9 +60,8 @@ public class ProductApiController {
         final Stream<String> allowed_criteria = Arrays.stream(new String[]{"productId", "title", "price", "createdAt"});
         Pageable pageable = PageRequest.of(page, size, Sort.by(
                 order.equals("ASC") ? Sort.Direction.ASC : Sort.Direction.DESC,
-                allowed_criteria.anyMatch(by::equals) ? by : "product_id")); // 2021-02-18 필드 이름 문제 해결
-        List<ProductApiResponse> productApiResponses = productApiLogicService.searchProducts(searchCondition, pageable);
-        return ResponseEntity.ok(productApiResponses);
+                allowed_criteria.anyMatch(by::equals) ? by : "productId")); // 2021-02-18 필드 이름 문제 해결
+        return ResponseEntity.ok(productApiLogicService.searchProducts(searchCondition, pageable));
     }
 
     @ApiOperation(value = "제품 읽기2", notes = "제품를 가져온다")

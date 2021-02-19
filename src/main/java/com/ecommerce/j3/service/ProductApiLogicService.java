@@ -3,12 +3,14 @@ package com.ecommerce.j3.service;
 import com.ecommerce.j3.controller.dto.ProductDto.ProductApiRequest;
 import com.ecommerce.j3.controller.dto.ProductDto.ProductApiResponse;
 import com.ecommerce.j3.controller.dto.ProductDto.SearchCondition;
+import com.ecommerce.j3.controller.dto.ProductDto.ProductApiResponsePage;
 import com.ecommerce.j3.domain.entity.Product;
 import com.ecommerce.j3.domain.mapper.CommonMapper;
 import com.ecommerce.j3.domain.mapper.ProductMapper;
 import com.ecommerce.j3.repository.ProductRepository;
 import com.ecommerce.j3.repository.ProductSpecs;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -29,6 +31,7 @@ public class ProductApiLogicService {
 
     /**
      * 제품 추가
+     *
      * @param request { ProductApiRequest } 필수 필드가 모두 채워진 request
      * @return ProductApiResponse
      */
@@ -40,6 +43,7 @@ public class ProductApiLogicService {
 
     /**
      * 제품 갱신
+     *
      * @param request { ProductApiRequest } 필수 필드 + id 필드가 모두 채워진 request
      * @return ProductApiResponse
      */
@@ -52,6 +56,7 @@ public class ProductApiLogicService {
 
     /**
      * 제품 검색
+     *
      * @param productId { Long } 검색할 id
      * @return ProductApiResponse
      */
@@ -62,10 +67,11 @@ public class ProductApiLogicService {
 
     /**
      * 제품 검색
+     *
      * @param searchCondition { SearchCondition } query, minPrice, maxPrice, cats, tags 모두 null 가능
      * @return List<ProductApiResponse>
      */
-    public List<ProductApiResponse> searchProducts(SearchCondition searchCondition, Pageable pageable){
+    public ProductApiResponsePage searchProducts(SearchCondition searchCondition, Pageable pageable) {
         Specification<Product> productSpecs = Specification.where(null);
         productSpecs = productSpecs
                 .and(ProductSpecs.withKeywords(searchCondition.getQuery()))
@@ -73,12 +79,18 @@ public class ProductApiLogicService {
                 .and(ProductSpecs.toPrice(searchCondition.getMaxPrice()))
                 .and(ProductSpecs.fromCategories(categoryApiLogicService.findByIds(searchCondition.getCategoryIds())))
                 .and(ProductSpecs.fromTags(tagApiLogicService.findByIds(searchCondition.getTagIds())));
-        return productRepository.findAll(productSpecs, pageable).getContent()
-                .stream().map(productMapper::toApiResponse).collect(Collectors.toList());
+        Page<Product> pages = productRepository.findAll(productSpecs, pageable);
+        List<ProductApiResponse> contents = pages.getContent().stream().map(productMapper::toApiResponse).collect(Collectors.toList());
+        ProductApiResponsePage page = ProductApiResponsePage.builder()
+                .total(pages.getTotalElements())
+                .contents(contents)
+                .build();
+        return page;
     }
 
     /**
      * 제품 삭제
+     *
      * @param id { Long }  삭제할 id
      */
     public void removeProduct(Long id) {
@@ -90,7 +102,7 @@ public class ProductApiLogicService {
         return productRepository.findAll().stream().map(productMapper::toApiResponse).collect(Collectors.toList());
     }
 
-    Product findById(Long productId){
+    Product findById(Long productId) {
         return productRepository.findById(productId).orElseThrow(EntityNotFoundException::new);
     }
 }
