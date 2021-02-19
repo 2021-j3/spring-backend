@@ -71,7 +71,7 @@ dependencies {
 	compileOnly 'io.jsonwebtoken:jjwt:0.9.1'
 
 	// jpa - metamodel
-	compileOnly 'org.hibernate:hibernate-jpamodelgen:5.3.7.Final'
+//	compileOnly 'org.hibernate:hibernate-jpamodelgen:5.3.7.Final'
 
 	// DTO
 	implementation 'javax.validation:validation-api'
