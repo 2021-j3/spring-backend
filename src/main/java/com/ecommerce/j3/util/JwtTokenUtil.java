@@ -1,22 +1,14 @@
 package com.ecommerce.j3.util;
 
-import antlr.StringUtils;
-import com.ecommerce.j3.controller.dto.AccountDto.AccountLoginResponse;
 import com.ecommerce.j3.domain.J3UserDetails;
 import io.jsonwebtoken.*;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 
-@Slf4j
 @Component
 public class JwtTokenUtil {
     @Value("jwt.token.secret")
@@ -72,15 +64,15 @@ public class JwtTokenUtil {
                 Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token);
                 return true;
             } catch (SignatureException e) {
-                log.error("Invalid JWT signature");
+                throw new SignatureException("Invalid JWT signature");
             } catch (MalformedJwtException e) {
-                log.error("Invalid JWT token", e);
+                throw new MalformedJwtException("Invalid JWT token", e);
             } catch (ExpiredJwtException e) {
-                log.error("Expired JWT token", e);
+                throw new RuntimeException("Expired JWT token", e);
             } catch (UnsupportedJwtException e) {
-                log.error("Unsupported JWT token", e);
+                throw new UnsupportedJwtException("Unsupported JWT token", e);
             } catch (IllegalArgumentException e) {
-                log.error("JWT claims string is empty.", e);
+                throw new IllegalArgumentException("JWT claims string is empty.", e);
             }
         }
         return false;

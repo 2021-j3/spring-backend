@@ -4,11 +4,5 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-public
-class J3ApplicationTests {
-
-	@Test
-	void contextLoads() {
-	}
-
+public class J3ApplicationTests {
 }
