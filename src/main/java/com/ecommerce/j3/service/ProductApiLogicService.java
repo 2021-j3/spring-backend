@@ -31,14 +31,16 @@ public class ProductApiLogicService {
 
     /**
      * 제품 추가
-     *
+     * slug는 repository에서 담당함
      * @param request { ProductApiRequest } 필수 필드가 모두 채워진 request
      * @return ProductApiResponse
      */
     public ProductApiResponse saveProduct(ProductApiRequest request) {
         Product product = productMapper.toEntity(request);
-        productRepository.save(product);
-        return productMapper.toApiResponse(product);
+        Long id = productRepository.insert(product);
+        ProductApiResponse response =  productMapper.toApiResponse(product);
+        response.setProductId(id);
+        return response;
     }
 
     /**

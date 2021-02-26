@@ -20,7 +20,7 @@ public class ReviewApiController {
 
     @ApiOperation(value = "리뷰 POST", notes = "리뷰를 생성한다.")
     @PostMapping("")
-        public BodyData<ReviewDto.ReviewApiResponse> create(@RequestBody ReviewDto.ReviewApiRequest request) {
+    public BodyData<ReviewDto.ReviewApiResponse> create(@RequestBody ReviewDto.ReviewApiRequest request) {
         return BodyData.OK(reviewService.saveReview(request));
     }
 

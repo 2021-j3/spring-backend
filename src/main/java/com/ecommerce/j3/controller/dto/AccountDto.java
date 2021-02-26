@@ -1,5 +1,6 @@
 package com.ecommerce.j3.controller.dto;
 
+import com.ecommerce.j3.domain.J3UserDetails;
 import com.ecommerce.j3.domain.entity.AccountType;
 import com.ecommerce.j3.domain.entity.Address;
 import com.ecommerce.j3.domain.entity.GenderType;
@@ -19,14 +20,16 @@ public class AccountDto {
     /**
      * 기본 crud request
      */
-    @Getter @Builder
+    @Getter
+    @Builder
+    @Setter
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class AccountApiRequest{
+    public static class AccountApiRequest {
         private Long accountId;
 
         private String email;
-        private String passwordHash;
+        private String password;
         private String firstName;
         private String lastName;
 
@@ -50,9 +53,6 @@ public class AccountDto {
         private AccountType accountType;
 
         private Address defaultAddress;
-
-        public void setAccountType(AccountType accountType){this.accountType=accountType;}
-        public void setPasswordHash(String passwordHash){this.passwordHash=passwordHash;}
     }
 
     @Getter
@@ -60,17 +60,14 @@ public class AccountDto {
     @NoArgsConstructor
     @AllArgsConstructor
     @Builder
-    public static class AccountApiResponse{
+    public static class AccountApiResponse {
 
 //    private Long accountId;
 
         private String email;
 
-        // 암호화 처리 필요
-        private String passwordHash;
-
-//    private String firstName;
-//    private String lastName;
+        private String firstName;
+        private String lastName;
 //
 //    private GenderType gender;
 //
@@ -81,16 +78,30 @@ public class AccountDto {
 //    @CreationTimestamp
 //    private LocalDateTime registeredAt;
 
-        private LocalDateTime lastLogin;
+//        private LocalDateTime lastLogin;
 
         @Enumerated(EnumType.STRING)
         private AccountType accountType;
+
+        private Address defaultAddress;
+    }
+
+    /**
+     * 2021-02-15 penguin418
+     * 로그인 정용으로 사용
+     **/
+    @Data
+    public static class LoginRequest {
+        private String email;
+        private String password;
     }
 
     @Data
-    public static class LoginRequest{
-        private String email;
-        private String password;
+    @AllArgsConstructor
+    public static class AccountLoginResponse {
+        private String username;
+        private Collection<? extends GrantedAuthority> authorities;
+        private String token;
     }
 
     @Data
@@ -116,21 +127,6 @@ public class AccountDto {
     }
 
     @Data
-    public static class ReadAccountResponse {
-
-        private Long id;
-        private String firstName;
-        private String lastName;
-
-        public ReadAccountResponse(Long id, String firstName, String lastName) { /* Constructor */
-            this.id = id;
-            this.firstName = firstName;
-            this.lastName = lastName;
-
-        }
-    }
-
-    @Data
     public static class CreateAccountResponse {
 
         private Long id;
@@ -144,32 +140,5 @@ public class AccountDto {
             this.firstName = firstName;
             this.lastName = lastName;
         }
-    }
-
-    @Data
-    public static class UpdateAccountResponse {
-
-        private Long id;
-        private LocalDateTime dateTime;
-        private String firstName;
-        private String lastName;
-
-        public UpdateAccountResponse(Long id, LocalDateTime dateTime, String firstName, String lastName) {
-            this.id = id;
-            this.dateTime = dateTime;
-            this.firstName = firstName;
-            this.lastName = lastName;
-        }
-    }
-
-    @Getter
-    @Setter
-    @NoArgsConstructor
-    @AllArgsConstructor
-    @Builder
-    public static class AccountLoginResponse{
-        private String username;
-        private Collection<? extends GrantedAuthority> authorities;
-        private String token;
     }
 }

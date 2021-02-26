@@ -33,14 +33,14 @@ public class CartItem {
 
     private Integer price;
 
-    private Integer discountRate;
+    private Integer discountPrice;
 
     private Integer quantity;
 
     private Integer active;
 
     @Column(columnDefinition = "TEXT")
-    private String content;
+    private String content; // outOfStock: Bool
 
     @CreationTimestamp
     private LocalDateTime createdAt;

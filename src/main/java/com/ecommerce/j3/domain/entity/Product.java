@@ -45,7 +45,8 @@ public class Product {
 
     private Integer price;
 
-    private Integer discountRate;
+    // 할인된 가격( !! 할인된 결과가 아님 )
+    private Integer discountPrice;
 
     private Integer quantity;
 

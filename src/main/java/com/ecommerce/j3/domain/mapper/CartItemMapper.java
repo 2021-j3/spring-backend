@@ -33,7 +33,7 @@ public abstract class CartItemMapper implements DefaultMapper<CartItem, CartItem
                 .cart(req.getCart() != null ? req.getCart() : db.getCart())
                 .sku(dto.getSku() != null ? dto.getSku() : db.getSku())
                 .price(dto.getPrice() != null ? dto.getPrice() : db.getPrice())
-                .discountRate(dto.getDiscountRate() != null ? dto.getDiscountRate() : db.getDiscountRate())
+                .discountPrice(dto.getDiscountPrice() != null ? dto.getDiscountPrice() : db.getDiscountPrice())
                 .quantity(dto.getQuantity() != null ? dto.getQuantity() : db.getQuantity())
                 .active(dto.getActive() != null ? dto.getActive() : db.getActive())
                 .content(dto.getContent() != null ? dto.getContent() : db.getContent())

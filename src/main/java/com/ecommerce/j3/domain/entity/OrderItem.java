@@ -35,7 +35,7 @@ public class OrderItem {
 
     private Integer price;
 
-    private Integer discountRate;
+    private Integer discountPrice;
 
     private Integer quantity;
 
@@ -55,7 +55,7 @@ public class OrderItem {
             .price(price)
             .quantity(quantity)
             .content("d")
-            .discountRate(11).build();
+            .discountPrice(11).build();
         product.removeQuantity(quantity);
 
         return orderItem;

@@ -8,7 +8,11 @@ import java.util.List;
 import java.util.Set;
 
 @Repository
-public interface CategoryRepository extends JpaRepository<Category, Long> {
+public interface CategoryRepository extends JpaRepository<Category, Long>, CategoryRepositoryCustom {
     List<Category> findByCategoryIdIn(List<Long> categoryIds);
     Set<Category> getByCategoryIdIn(Set<Long> categoryIds);
+
+    public default void deleteById(Long id){
+        deleteByIdCustom(id);
+    }
 }

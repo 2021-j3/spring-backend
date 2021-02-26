@@ -1,6 +1,8 @@
 package com.ecommerce.j3.controller.api;
 
 
+import com.ecommerce.j3.controller.ErrorMessage;
+import com.ecommerce.j3.controller.ErrorType;
 import com.ecommerce.j3.controller.dto.AccountDto;
 import com.ecommerce.j3.controller.dto.AccountDto.*;
 import com.ecommerce.j3.controller.dto.BodyData;
@@ -17,6 +19,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,10 +28,15 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
+import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.Set;
 
 
 @Api(tags = {"01. Account"})
@@ -84,6 +92,13 @@ public class AccountApiController {
 
     //////////////////// 서비스 로직 ////////////////////
 
+    @ApiOperation(value = "회원 등록", notes = "회원을 등록한다")
+    @PostMapping("/register")
+    public ResponseEntity<AccountApiResponse> register(@RequestBody AccountApiRequest request) {
+        AccountApiResponse response = accountApiLogicService.saveAccount(request);
+        return ResponseEntity.ok(response);
+    }
+
     /** 2021-02-15 penguin418
      * 로그인
      * session 을 사용하므로,
@@ -110,20 +125,33 @@ public class AccountApiController {
         }
     }
 
-    /** 2021-02-15 penguin418
-     * 로그인한 유저로부터 api 호출이 되었을때, authentication 에서 id 가 출력되는 지 확인하는 api
-     * 방법: /api/accounts/login 의 response에서 token 을 복사하여 /api/accounts/test 헤더의 x-auth-token 으로 추가
-     * @param authentication { Authentication } getPrincipal() 를 통해서 userDetail 객체를 얻을 수 있음
-     * @return { ResponseEntity }
-     * @throws JsonProcessingException { Exception } objectMapper에서 발생
+    /**
+     * 로기인된 유저의 정보를 불러온다
+     * @param authentication
+     * @return
      */
-    @GetMapping("/test")
-    public ResponseEntity<AccountLoginResponse> testInformation(Authentication authentication) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
+    @GetMapping("/my")
+    public ResponseEntity<AccountApiResponse> getMyAccount(Authentication authentication){
         J3UserDetails userDetails = (J3UserDetails)authentication.getPrincipal();
-        System.out.println(userDetails.getUsername()); // email 이 출력됩니다
-        System.out.println(userDetails.getAccountId()); // accountId가 출력됩니다
-        System.out.println(userDetails.getAuthorities()); // 'ROLE_' + ACCOUNT_TYPE 이 출력됩니다
-        return ResponseEntity.ok(new AccountLoginResponse(userDetails.getUsername(), userDetails.getAuthorities(), userDetails.getAccountId().toString()));
+        AccountApiResponse account = accountApiLogicService.findAccountByEmail(userDetails.getUsername());
+        return ResponseEntity.ok(account);
+    }
+
+    // 회원가입 문제
+    @ResponseStatus(code = HttpStatus.CONFLICT)
+    @ExceptionHandler(EntityExistsException.class)
+    public ErrorMessage entityExistException(Exception e){
+        String message = e.getMessage();
+        if (message.split("\\s")[1].equals("이메일"))
+            return new ErrorMessage(ErrorType.EmailExists);
+        else
+            return new ErrorMessage(ErrorType.PhoneNumberExists);
+    }
+
+    // 로그인 문제
+    @ResponseStatus(value = HttpStatus.NOT_FOUND)
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ErrorMessage entityNotFoundException(Exception e){
+        return new ErrorMessage(ErrorType.AccountNotFound);
     }
 }

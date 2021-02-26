@@ -18,7 +18,7 @@ public class CartItemDto {
         private Long cartId;
         private String sku;
         private Integer price;
-        private Integer discountRate;
+        private Integer discountPrice;
         private Integer quantity;
         private Integer active;
         private String content;
@@ -36,7 +36,7 @@ public class CartItemDto {
         private Cart cart;
         private String sku;
         private Integer price;
-        private Integer discountRate;
+        private Integer discountPrice;
         private Integer quantity;
         private Integer active;
         private String content;
