@@ -12,7 +12,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.ReportingPolicy;
-
+import org.springframework.security.core.parameters.P;
 
 
 import java.time.LocalDateTime;
@@ -20,50 +20,22 @@ import java.util.List;
 
 public class OrderDto {
 
-//    @Getter @Builder
-//    @NoArgsConstructor
-//    @AllArgsConstructor
-//    public static class PayInfo {
-//        private Integer itemPriceTotal;
-//        private Integer itemDiscount;
-//        private Integer tax;
-//        private Integer shipping;
-//        private Integer userDiscount;
-//        private Integer grandTotal;
-//    }
-//
-//    @Getter @Builder
-//    @NoArgsConstructor
-//    @AllArgsConstructor
-//    public static class UserInfo{
-//        private String firstName;
-//        private String lastName;
-//        private String phoneNumber;
-//        private String email;
-//        private String roadAddress;
-//        private String address;
-//        private String city;
-//        private String province;
-//        private String country;
-//        private Integer zipCode;
-//    }
-
-    @Getter @Builder
+    @Getter @Builder @Setter
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class OrderApiRequest {
-        private Long ordersId;
-        private Long accountId;
-        public List<Long> orderItemIds;
-        private String sessionId;
-        private String token;
-        private OrderStatus status;
+    public static class PayInfo {
         private Integer itemPriceTotal;
         private Integer itemDiscount;
         private Integer tax;
         private Integer shipping;
         private Integer userDiscount;
         private Integer grandTotal;
+    }
+
+    @Getter @Builder @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class UserInfo{
         private String firstName;
         private String lastName;
         private String phoneNumber;
@@ -74,6 +46,37 @@ public class OrderDto {
         private String province;
         private String country;
         private Integer zipCode;
+    }
+
+    @Getter @Builder @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class OrderApiRequest {
+        private Long ordersId;
+        private Long accountId;
+        public List<Long> orderItemIds;
+        private String sessionId;
+        private String token;
+        private OrderStatus status;
+        private PayInfo payInfo;
+        private UserInfo userInfo;
+
+//        private Integer itemPriceTotal;
+//        private Integer itemDiscount;
+//        private Integer tax;
+//        private Integer shipping;
+//        private Integer userDiscount;
+//        private Integer grandTotal;
+//        private String firstName;
+//        private String lastName;
+//        private String phoneNumber;
+//        private String email;
+//        private String roadAddress;
+//        private String address;
+//        private String city;
+//        private String province;
+//        private String country;
+//        private Integer zipCode;
         private String content;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
@@ -89,22 +92,25 @@ public class OrderDto {
         private String sessionId;
         private String token;
         private OrderStatus status;
-        private Integer itemPriceTotal;
-        private Integer itemDiscount;
-        private Integer tax;
-        private Integer shipping;
-        private Integer userDiscount;
-        private Integer grandTotal;
-        private String firstName;
-        private String lastName;
-        private String phoneNumber;
-        private String email;
-        private String roadAddress;
-        private String address;
-        private String city;
-        private String province;
-        private String country;
-        private Integer zipCode;
+        private PayInfo payInfo;
+        private UserInfo userInfo;
+
+//        private Integer itemPriceTotal;
+//        private Integer itemDiscount;
+//        private Integer tax;
+//        private Integer shipping;
+//        private Integer userDiscount;
+//        private Integer grandTotal;
+//        private String firstName;
+//        private String lastName;
+//        private String phoneNumber;
+//        private String email;
+//        private String roadAddress;
+//        private String address;
+//        private String city;
+//        private String province;
+//        private String country;
+//        private Integer zipCode;
         private String content;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;

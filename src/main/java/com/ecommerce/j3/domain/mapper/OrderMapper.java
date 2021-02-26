@@ -15,28 +15,26 @@ public abstract class OrderMapper implements DefaultMapper<Order, OrderDto.Order
     @Override
     public abstract Order toEntity(OrderDto.OrderApiRequest dto);
 
-
     @Override
     public abstract OrderDto.OrderApiResponse toApiResponse(Order order);
 
-    @Override
-    public Order updateFromDto(@MappingTarget Order entity, OrderDto.OrderApiRequest dto) {
-        if (dto == null) return entity;
+    public Order updateUserFromDto(@MappingTarget Order entity, OrderDto.OrderApiRequest dto){
+        if (dto.equals(null)) return entity;
         Order db = entity;
         Order req = toEntity(dto);
         entity = Order.builder()
                 .ordersId(db.getOrdersId())
                 .account(db.getAccount())
-                .orderItems(req.getOrderItems())
-                .sessionId(req.getSessionId() != "" ? req.getSessionId() : req.getSessionId())
-                .token(req.getToken() != "" ? req.getToken() : req.getToken())
-                .status(req.getStatus() != null ? req.getStatus() : req.getStatus())
-                .itemPriceTotal(req.getItemPriceTotal() != null ? req.getItemPriceTotal() : req.getItemPriceTotal())
-                .itemDiscount(req.getItemDiscount() != null ? req.getItemDiscount() : req.getItemDiscount())
-                .tax(req.getTax() != null ? req.getTax() : req.getTax())
-                .shipping(req.getShipping() != null ? req.getShipping() : req.getShipping())
-                .userDiscount(req.getUserDiscount() != null ? req.getUserDiscount() : req.getUserDiscount())
-                .grandTotal(req.getGrandTotal())
+                .orderItems(db.getOrderItems())
+                .sessionId(db.getSessionId())
+                .token(db.getToken())
+                .status(db.getStatus())
+                .itemPriceTotal(db.getItemPriceTotal())
+                .itemDiscount(db.getItemDiscount())
+                .tax(db.getTax())
+                .shipping(db.getShipping())
+                .userDiscount(db.getUserDiscount())
+                .grandTotal(db.getGrandTotal())
                 .firstName(req.getFirstName() != "" ? req.getFirstName() : req.getFirstName())
                 .lastName(req.getLastName() != "" ? req.getLastName() : req.getLastName())
                 .phoneNumber(req.getPhoneNumber() != "" ? req.getPhoneNumber() : req.getPhoneNumber())
@@ -47,14 +45,47 @@ public abstract class OrderMapper implements DefaultMapper<Order, OrderDto.Order
                 .province(req.getProvince() != "" ? req.getProvince() : req.getProvince())
                 .country(req.getCountry() != "" ? req.getCountry() : req.getCountry())
                 .zipCode(req.getZipCode() != null ? req.getZipCode() : req.getZipCode())
-                .content(req.getContent() != "" ? req.getContent() : req.getContent())
+                .content(db.getContent())
+                .build();
+        return entity;
+    }
+
+    public Order updatePayFromDto(@MappingTarget Order entity, OrderDto.OrderApiRequest dto){
+        if (dto.equals(null)) return entity;
+        Order db = entity;
+        Order req = toEntity(dto);
+        entity = Order.builder()
+                .ordersId(db.getOrdersId())
+                .account(db.getAccount())
+                .orderItems(db.getOrderItems())
+                .sessionId(db.getSessionId())
+                .token(db.getToken())
+                .status(db.getStatus())
+                .itemPriceTotal(req.getItemPriceTotal() != null ? req.getItemPriceTotal() : req.getItemPriceTotal())
+                .itemDiscount(req.getItemDiscount() != null ? req.getItemDiscount() : req.getItemDiscount())
+                .tax(req.getTax() != null ? req.getTax() : req.getTax())
+                .shipping(req.getShipping() != null ? req.getShipping() : req.getShipping())
+                .userDiscount(req.getUserDiscount() != null ? req.getUserDiscount() : req.getUserDiscount())
+                .grandTotal(req.getGrandTotal())
+                .firstName(db.getFirstName())
+                .lastName(db.getLastName())
+                .phoneNumber(db.getPhoneNumber())
+                .email(db.getEmail())
+                .roadAddress(db.getRoadAddress())
+                .address(db.getAddress())
+                .city(db.getCity())
+                .province(db.getProvince())
+                .country(db.getCountry())
+                .zipCode(db.getZipCode())
+                .content(db.getContent())
                 .build();
         return entity;
     }
 
 
-    public Order testUpdateFromDto(@MappingTarget Order entity, OrderDto.OrderApiRequest dto) {
-        if (dto == null) return null;
+    @Override
+    public Order updateFromDto(@MappingTarget Order entity, OrderDto.OrderApiRequest dto) {
+        if (dto == null) return entity;
         Order db = entity;
         Order req = toEntity(dto);
         entity = Order.builder()

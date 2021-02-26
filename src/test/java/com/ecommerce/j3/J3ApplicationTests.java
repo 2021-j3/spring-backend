@@ -5,9 +5,5 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-public
-class J3ApplicationTests {
-	@Test
-	public void contextLoads() {
-	}
+public class J3ApplicationTests {
 }

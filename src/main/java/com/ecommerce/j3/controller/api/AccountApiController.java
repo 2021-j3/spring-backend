@@ -58,7 +58,7 @@ public class AccountApiController {
         return ResponseEntity.ok(response);
     }
 
-    @ApiOperation(value = "회원 일기", notes = "회원을 가져온다")
+    @ApiOperation(value = "회원 읽기", notes = "회원을 가져온다")
     @GetMapping("{id}")
     public BodyData<AccountDto.AccountApiResponse> read(@PathVariable("id") Long id) {
         try {
