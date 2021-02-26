@@ -68,7 +68,7 @@ public class CartApiLogicService {
 
     public long addItem(long cartid,long productid,Integer quantity) {
         Cart cart = findById(cartid);
-        cart.getCartItems().add(CartItem.createCartItem(cart,quantity,productRepository.findById(productid).get()));
+        cart.getCartItems().add(CartItem.createCartItem(cart,quantity,productRepository.findById(productid).orElse(null)));
 
         return save(cart).getCartId();
 

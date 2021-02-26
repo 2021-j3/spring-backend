@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 @Api(tags = {"03. Cart"})
 @Slf4j
 @RestController
-@RequestMapping("/api/carts")
 @AllArgsConstructor
 public class CartApiController {
     private final CartApiLogicService cartService;

@@ -4,12 +4,14 @@ import com.ecommerce.j3.domain.entity.Account;
 import com.ecommerce.j3.controller.dto.AccountDto;
 import com.ecommerce.j3.domain.entity.Order;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.ReportingPolicy;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, uses = {CommonMapper.class})
 public abstract class AccountMapper implements DefaultMapper<Account, AccountDto.AccountApiRequest, AccountDto.AccountApiResponse>{
 
+    @Mapping(source="password", target="passwordHash")
     @Override
     public abstract Account toEntity(AccountDto.AccountApiRequest dto);
 
@@ -32,7 +34,7 @@ public abstract class AccountMapper implements DefaultMapper<Account, AccountDto
                 .defaultAddress(db.getDefaultAddress())
                 // 필수 값, 입력된 값이 null일 경우, 기존 값을 사용
                 .email(!dto.getEmail().equals("") ? dto.getEmail() : db.getEmail())
-                .passwordHash(!dto.getPasswordHash().equals("") ? dto.getPasswordHash() : db.getPasswordHash())
+                .passwordHash(!dto.getPassword().equals("") ? dto.getPassword() : db.getPasswordHash())
                 .firstName(!dto.getFirstName().isEmpty() ? dto.getFirstName() : db.getFirstName())
                 .lastName(!dto.getLastName().equals("") ? dto.getLastName() : db.getLastName())
                 .gender(dto.getGender() != null ? dto.getGender() : db.getGender())

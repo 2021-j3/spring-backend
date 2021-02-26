@@ -4,17 +4,17 @@ DROP TABLE IF EXISTS `shop`.`account`;
 
 CREATE TABLE `shop`.`account`
 (
-    `account_id`    BIGINT                           NOT NULL AUTO_INCREMENT,
-    `email`         VARCHAR(50)                      NOT NULL UNIQUE,
-    `password_hash` VARCHAR(120)                     NOT NULL,
-    `first_name`    VARCHAR(50)                      NOT NULL,
-    `last_name`     VARCHAR(50)                      NOT NULL,
-    `birthday`      DATE                   DEFAULT NULL,
+    `account_id`    BIGINT       NOT NULL AUTO_INCREMENT,
+    `email`         VARCHAR(50)  NOT NULL UNIQUE,
+    `password_hash` VARCHAR(120) NOT NULL,
+    `first_name`    VARCHAR(50)  NOT NULL,
+    `last_name`     VARCHAR(50)  NOT NULL,
+    `birthday`      DATE        DEFAULT NULL,
     `gender`        ENUM ('MALE','FEMALE') DEFAULT NULL,
-    `phone_number`  VARCHAR(15)            DEFAULT NULL,
+    `phone_number`  VARCHAR(15) DEFAULT NULL,
     `account_type`  ENUM ('USER', 'SELLER', 'ADMIN') NOT NULL,
-    `registered_at` DATETIME                         NOT NULL,
-    `last_login`    DATETIME               DEFAULT NULL,
+    `registered_at` DATETIME     NOT NULL,
+    `last_login`    DATETIME    DEFAULT NULL,
 
     PRIMARY KEY (`account_id`),
     UNIQUE INDEX `uq_phone` (`phone_number` ASC),
@@ -32,10 +32,10 @@ CREATE TABLE `shop`.`product`
     `seller_id`      BIGINT      NOT NULL,
     `title`          VARCHAR(50) NOT NULL,
     `meta_title`     VARCHAR(50) NOT NULL,
-    `slug`           VARCHAR(50) NOT NULL,
+    `slug`           VARCHAR(50)          DEFAULT NULL,
     `sku`            VARCHAR(50) NOT NULL,
     `price`          INT         NOT NULL DEFAULT 0,
-    `discount_rate`  INT         NOT NULL DEFAULT 0,
+    `discount_price`  INT         NOT NULL DEFAULT 0,
     `quantity`       INT         NOT NULL DEFAULT 0,
     `thumbnail_path` VARCHAR(200)         DEFAULT NULL,
     `image_path`     VARCHAR(200)         DEFAULT NULL,
@@ -46,8 +46,7 @@ CREATE TABLE `shop`.`product`
     `starts_at`      DATETIME             DEFAULT NULL,
     `ends_at`        DATETIME             DEFAULT NULL,
     PRIMARY KEY (`product_id`),
-    UNIQUE INDEX `uq_slug` (`slug` ASC),
-
+    UNIQUE INDEX `uq_product_slug` (`slug` ASC),
     CONSTRAINT `fk_product_account`
         FOREIGN KEY (`seller_id`) REFERENCES `shop`.`account` (`account_id`)
 
@@ -57,30 +56,30 @@ CREATE TABLE `shop`.`product`
 
 CREATE TABLE `shop`.`cart`
 (
-    `cart_id`          BIGINT                         NOT NULL AUTO_INCREMENT,
-    `account_id`       BIGINT                                  DEFAULT NULL,
-    `session_id`       VARCHAR(100)                   NOT NULL,
-    `token`            VARCHAR(100)                   NOT NULL,
+    `cart_id`          BIGINT       NOT NULL AUTO_INCREMENT,
+    `account_id`       BIGINT                DEFAULT NULL,
+    `session_id`       VARCHAR(100) NOT NULL,
+    `token`            VARCHAR(100) NOT NULL,
     `status`           ENUM ('READY','cart','CANCEL') NOT NULL,
-    `item_price_total` INT                            NOT NULL DEFAULT 0,
-    `item_discount`    INT                            NOT NULL DEFAULT 0,
-    `tax`              INT                            NOT NULL DEFAULT 0,
-    `shipping`         INT                            NOT NULL DEFAULT 0,
-    `user_discount`    INT                            NOT NULL DEFAULT 0,
-    `grand_total`      INT                            NOT NULL DEFAULT 0,
-    `first_name`       VARCHAR(45)                    NOT NULL,
-    `last_name`        VARCHAR(45)                    NOT NULL,
-    `email`            VARCHAR(50)                    NULL,
-    `phone_number`     VARCHAR(25)                    NOT NULL,
-    `road_address`     VARCHAR(50)                    NOT NULL,
-    `address`          VARCHAR(50)                    NOT NULL,
-    `city`             VARCHAR(50)                    NOT NULL,
-    `province`         VARCHAR(50)                    NOT NULL,
-    `country`          VARCHAR(50)                    NOT NULL,
-    `zip_code`         INT                            NOT NULL,
-    `content`          TEXT                                    DEFAULT NULL,
-    `created_at`       DATETIME                       NOT NULL,
-    `updated_at`       DATETIME                                DEFAULT NULL,
+    `item_price_total` INT          NOT NULL DEFAULT 0,
+    `item_discount`    INT          NOT NULL DEFAULT 0,
+    `tax`              INT          NOT NULL DEFAULT 0,
+    `shipping`         INT          NOT NULL DEFAULT 0,
+    `user_discount`    INT          NOT NULL DEFAULT 0,
+    `grand_total`      INT          NOT NULL DEFAULT 0,
+    `first_name`       VARCHAR(45)  NOT NULL,
+    `last_name`        VARCHAR(45)  NOT NULL,
+    `email`            VARCHAR(50) NULL,
+    `phone_number`     VARCHAR(25)  NOT NULL,
+    `road_address`     VARCHAR(50)  NOT NULL,
+    `address`          VARCHAR(50)  NOT NULL,
+    `city`             VARCHAR(50)  NOT NULL,
+    `province`         VARCHAR(50)  NOT NULL,
+    `country`          VARCHAR(50)  NOT NULL,
+    `zip_code`         INT          NOT NULL,
+    `content`          TEXT                  DEFAULT NULL,
+    `created_at`       DATETIME     NOT NULL,
+    `updated_at`       DATETIME              DEFAULT NULL,
 
     PRIMARY KEY (`cart_id`),
 
@@ -100,7 +99,7 @@ CREATE TABLE `shop`.`cart_item`
     `product_id`    BIGINT      NOT NULL,
     `sku`           VARCHAR(50) NOT NULL,
     `price`         INT         NOT NULL DEFAULT 0,
-    `discount_rate` INT         NOT NULL DEFAULT 0,
+    `discount_price` INT         NOT NULL DEFAULT 0,
     `quantity`      INT         NOT NULL DEFAULT 0,
     `active`        INT         NOT NULL DEFAULT 0,
     `content`       TEXT                 DEFAULT NULL,
@@ -121,30 +120,30 @@ CREATE TABLE `shop`.`cart_item`
   COLLATE = utf8mb4_unicode_ci;
 CREATE TABLE `shop`.`orders`
 (
-    `orders_id`         BIGINT                          NOT NULL AUTO_INCREMENT,
-    `account_id`       BIGINT                                   DEFAULT NULL,
-    `session_id`       VARCHAR(100)                    NOT NULL,
-    `token`            VARCHAR(100)                    NOT NULL,
+    `orders_id`        BIGINT       NOT NULL AUTO_INCREMENT,
+    `account_id`       BIGINT                DEFAULT NULL,
+    `session_id`       VARCHAR(100) NOT NULL,
+    `token`            VARCHAR(100) NOT NULL,
     `status`           ENUM ('READY','ORDER','CANCEL') NOT NULL,
-    `item_price_total` INT                             NOT NULL DEFAULT 0,
-    `item_discount`    INT                             NOT NULL DEFAULT 0,
-    `tax`              INT                             NOT NULL DEFAULT 0,
-    `shipping`         INT                             NOT NULL DEFAULT 0,
-    `user_discount`    INT                             NOT NULL DEFAULT 0,
-    `grand_total`      INT                             NOT NULL DEFAULT 0,
-    `first_name`       VARCHAR(45)                     NOT NULL,
-    `last_name`        VARCHAR(45)                     NOT NULL,
-    `email`            VARCHAR(50)                     NULL,
-    `phone_number`     VARCHAR(25)                     NOT NULL,
-    `road_address`     VARCHAR(50)                     NOT NULL,
-    `address`          VARCHAR(50)                     NOT NULL,
-    `city`             VARCHAR(50)                     NOT NULL,
-    `province`         VARCHAR(50)                     NOT NULL,
-    `country`          VARCHAR(50)                     NOT NULL,
-    `zip_code`         INT                             NOT NULL,
-    `content`          TEXT                                     DEFAULT NULL,
-    `created_at`       DATETIME                        NOT NULL,
-    `updated_at`       DATETIME                                 DEFAULT NULL,
+    `item_price_total` INT          NOT NULL DEFAULT 0,
+    `item_discount`    INT          NOT NULL DEFAULT 0,
+    `tax`              INT          NOT NULL DEFAULT 0,
+    `shipping`         INT          NOT NULL DEFAULT 0,
+    `user_discount`    INT          NOT NULL DEFAULT 0,
+    `grand_total`      INT          NOT NULL DEFAULT 0,
+    `first_name`       VARCHAR(45)  NOT NULL,
+    `last_name`        VARCHAR(45)  NOT NULL,
+    `email`            VARCHAR(50) NULL,
+    `phone_number`     VARCHAR(25)  NOT NULL,
+    `road_address`     VARCHAR(50)  NOT NULL,
+    `address`          VARCHAR(50)  NOT NULL,
+    `city`             VARCHAR(50)  NOT NULL,
+    `province`         VARCHAR(50)  NOT NULL,
+    `country`          VARCHAR(50)  NOT NULL,
+    `zip_code`         INT          NOT NULL,
+    `content`          TEXT                  DEFAULT NULL,
+    `created_at`       DATETIME     NOT NULL,
+    `updated_at`       DATETIME              DEFAULT NULL,
 
     PRIMARY KEY (`orders_id`),
 
@@ -161,10 +160,10 @@ CREATE TABLE `shop`.`order_item`
 (
     `order_item_id` BIGINT      NOT NULL AUTO_INCREMENT,
     `product_id`    BIGINT      NOT NULL,
-    `orders_id`      BIGINT      NOT NULL,
+    `orders_id`     BIGINT      NOT NULL,
     `sku`           VARCHAR(50) NOT NULL,
     `price`         INT         NOT NULL DEFAULT 0,
-    `discount_rate` INT         NOT NULL DEFAULT 0,
+    `discount_price` INT         NOT NULL DEFAULT 0,
     `quantity`      INT         NOT NULL DEFAULT 0,
     `content`       TEXT                 DEFAULT NULL,
     `created_at`    DATETIME    NOT NULL,
@@ -186,14 +185,14 @@ DROP TABLE IF EXISTS `shop`.`payment`;
 
 CREATE TABLE `shop`.`payment`
 (
-    `payment_id` BIGINT               NOT NULL AUTO_INCREMENT,
-    `account_id` BIGINT               NOT NULL,
-    `orders_id`   BIGINT               NOT NULL,
-    `code`       VARCHAR(100)         NOT NULL,
+    `payment_id` BIGINT       NOT NULL AUTO_INCREMENT,
+    `account_id` BIGINT       NOT NULL,
+    `orders_id`  BIGINT       NOT NULL,
+    `code`       VARCHAR(100) NOT NULL,
     `type`       ENUM ('CASH','CARD') NOT NULL,
-    `status`     ENUM ('OK','FAIL')   NOT NULL,
+    `status`     ENUM ('OK','FAIL') NOT NULL,
     `content`    TEXT     DEFAULT NULL,
-    `created_at` DATETIME             NOT NULL,
+    `created_at` DATETIME     NOT NULL,
     `updated_at` DATETIME DEFAULT NULL,
 
 
@@ -214,7 +213,7 @@ DROP TABLE IF EXISTS `shop`.`review`;
 CREATE TABLE `shop`.`review`
 (
     `review_id`     BIGINT       NOT NULL AUTO_INCREMENT,
-    `parent_id`     BIGINT       NULL REFERENCES review (review_id),
+    `parent_id`     BIGINT NULL REFERENCES review (review_id),
     `order_item_id` BIGINT       NOT NULL,
     `account_id`    BIGINT       NOT NULL,
     `rate`          INT          NOT NULL DEFAULT 1,
@@ -239,13 +238,16 @@ DROP TABLE IF EXISTS `shop`.`category`;
 CREATE TABLE `shop`.`category`
 (
     `category_id` BIGINT       NOT NULL AUTO_INCREMENT,
-    `parent_id`   BIGINT       NULL REFERENCES category (category_id),
+    `parent_id`   BIGINT NULL REFERENCES category (category_id),
+    `left_bound`  INTEGER      NOT NULL,
+    `right_bound` INTEGER      NOT NULL,
     `title`       VARCHAR(100) NOT NULL,
     `meta_title`  VARCHAR(100) NOT NULL,
-    `slug`        VARCHAR(100) NOT NULL,
-    `content`     TEXT DEFAULT NULL,
+    `slug`        VARCHAR(100) DEFAULT NULL,
+    `content`     TEXT         DEFAULT NULL,
 
-    PRIMARY KEY (`category_id`)
+    PRIMARY KEY (`category_id`),
+    UNIQUE INDEX `uq_category_slug` (`slug` ASC)
 
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
@@ -280,7 +282,8 @@ CREATE TABLE `shop`.`tag`
     `slug`       VARCHAR(100) NOT NULL,
     `content`    TEXT DEFAULT NULL,
 
-    PRIMARY KEY (`tag_id`)
+    PRIMARY KEY (`tag_id`),
+    UNIQUE INDEX `uq_tag_slug` (`slug` ASC)
 
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
@@ -328,7 +331,7 @@ CREATE TABLE `shop`.`watch`
 CREATE TABLE `shop`.`address`
 (
     `address_id`   BIGINT       NOT NULL AUTO_INCREMENT,
-    `account_id`   BIGINT       NULL REFERENCES `account` (`account_id`),
+    `account_id`   BIGINT NULL REFERENCES `account` (`account_id`),
     `address`      VARCHAR(100) DEFAULT NULL,
     `road_address` VARCHAR(100) NOT NULL,
     `city`         VARCHAR(50)  DEFAULT NULL,

@@ -64,14 +64,14 @@ dependencies {
 	// security
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	// security - session
-	compileOnly 'org.springframework.session:spring-session:1.3.2.RELEASE'
+	implementation 'org.springframework.session:spring-session:1.3.2.RELEASE'
 //	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
 	testImplementation 'org.springframework.security:spring-security-test'
 	// security - jwt
-	compileOnly 'io.jsonwebtoken:jjwt:0.9.1'
+	implementation 'io.jsonwebtoken:jjwt:0.9.1'
 
 	// jpa - metamodel
-	compileOnly 'org.hibernate:hibernate-jpamodelgen:5.3.7.Final'
+//	compileOnly 'org.hibernate:hibernate-jpamodelgen:5.3.7.Final'
 
 	// DTO
 	implementation 'javax.validation:validation-api'
@@ -85,7 +85,7 @@ dependencies {
 test {
 	useJUnitPlatform()
 }
-// 사용중입니다
+
 //tasks.withType(JavaCompile) {
 //	options.annotationProcessorGeneratedSourcesDirectory = file("src/generated/java")
 //}

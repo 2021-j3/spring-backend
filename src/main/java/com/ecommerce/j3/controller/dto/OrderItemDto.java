@@ -21,7 +21,7 @@ public class OrderItemDto {
         private Long orderId;
         private String sku;
         private Integer price;
-        private Integer discountRate;
+        private Integer discountPrice;
         private Integer quantity;
         private String content;
         private LocalDateTime createdAt;
@@ -37,7 +37,7 @@ public class OrderItemDto {
         private Order order;
         private String sku;
         private Integer price;
-        private Integer discountRate;
+        private Integer discountPrice;
         private Integer quantity;
         private String content;
         private LocalDateTime createdAt;

@@ -32,7 +32,7 @@ public abstract class ProductMapper implements DefaultMapper<Product, ProductApi
                 .slug(req.getSlug())
                 .sku(req.getSku())
                 .price(req.getPrice())
-                .discountRate(req.getDiscountRate())
+                .discountPrice(req.getDiscountPrice())
                 .quantity(req.getQuantity())
                 .thumbnailPath(req.getThumbnailPath())
                 .imagePath(req.getImagePath())

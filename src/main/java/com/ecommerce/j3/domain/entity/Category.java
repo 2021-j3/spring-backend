@@ -23,6 +23,10 @@ public class Category {
     @JoinColumn(name = "parent_id")
     private Category parent;
 
+    private Integer leftBound;
+
+    private Integer rightBound;
+
     private String title;
 
     private String metaTitle;

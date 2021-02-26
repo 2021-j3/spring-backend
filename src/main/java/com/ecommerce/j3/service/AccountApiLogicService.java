@@ -30,13 +30,16 @@ public class AccountApiLogicService implements UserDetailsService {
     public AccountApiResponse saveAccount(AccountApiRequest accountApiRequest) {
         // 검사
         validateDuplicateAccountEmail(accountApiRequest);
+        validateDuplicatePhoneNumber(accountApiRequest);
 
         // 비밀번호 해시적용 및 기본적으로 유저타입 지정
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        accountApiRequest.setPasswordHash(encoder.encode(accountApiRequest.getPasswordHash()));
-        accountApiRequest.setAccountType(AccountType.USER);
+        accountApiRequest.setPassword(encoder.encode(accountApiRequest.getPassword()));
+
         Account account = accountMapper.toEntity(accountApiRequest);
         save(account);
+
+        // 기본 카드 생성
         return accountMapper.toApiResponse(account);
     }
 
@@ -62,11 +65,10 @@ public class AccountApiLogicService implements UserDetailsService {
 
     public AccountLoginResponse Login(String email){
         J3UserDetails user = loadUserByUsername(email);
-        return AccountLoginResponse.builder()
-                .username(user.getUsername())
-                .authorities(user.getAuthorities())
-                .token(jwtTokenUtil.issue(user))
-                .build();
+        return new AccountLoginResponse(
+                user.getUsername(),
+                user.getAuthorities(),
+                jwtTokenUtil.issue(user));
     }
 
 
@@ -90,6 +92,10 @@ public class AccountApiLogicService implements UserDetailsService {
             throw new EntityExistsException("존재하는 이메일");
     }
 
+    private void validateDuplicatePhoneNumber(AccountApiRequest accountApiRequest){
+        if(findByPhoneNumber(accountApiRequest.getPhoneNumber()) != null)
+            throw new EntityExistsException("존재하는 휴대폰번호");
+    }
 
 
     // 패키지 한정자, service패키지 내에서만 접근 가능
@@ -106,5 +112,8 @@ public class AccountApiLogicService implements UserDetailsService {
         return accountRepository.findByEmail(email).orElse(null);
     }
 
+    Account findByPhoneNumber(String number){
+        return accountRepository.findByPhoneNumber(number).orElse(null);
+    }
 
 }

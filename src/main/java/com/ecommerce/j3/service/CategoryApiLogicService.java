@@ -20,10 +20,17 @@ public class CategoryApiLogicService {
     private final CategoryRepository categoryRepository;
     private final CategoryMapper categoryMapper;
 
+    /**
+     * slug는 repository에서 담당함
+     * @param request
+     * @return
+     */
     public CategoryApiResponse saveCategory(CategoryApiRequest request) {
         Category category = categoryMapper.toEntity(request);
-        categoryRepository.save(category);
-        return categoryMapper.toApiResponse(category);
+        Long id = categoryRepository.insert(category);
+        CategoryApiResponse response = categoryMapper.toApiResponse(category);
+        response.setCategoryId(id);
+        return response;
     }
 
     public CategoryApiResponse updateCategory(CategoryApiRequest request) {

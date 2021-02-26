@@ -2,14 +2,11 @@ package com.ecommerce.j3.controller.dto;
 
 
 import com.ecommerce.j3.domain.entity.Category;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 public class CategoryDto {
     @Getter
-    @Setter
+    @Setter @Builder
     @NoArgsConstructor
     @AllArgsConstructor
     public static class CategoryApiRequest {
