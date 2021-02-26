@@ -65,6 +65,7 @@ public class AccountApiLogicService implements UserDetailsService {
 
     public AccountLoginResponse Login(String email){
         J3UserDetails user = loadUserByUsername(email);
+        accountRepository.updateAccountSetLastLogin(email); // 2021-02-26 로그인 기록추가
         return new AccountLoginResponse(
                 user.getUsername(),
                 user.getAuthorities(),
@@ -80,7 +81,6 @@ public class AccountApiLogicService implements UserDetailsService {
      */
     @Override
     public J3UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        System.out.println("load user by username is called");
         Account account = findByEmail(email);
         if (account == null) throw new UsernameNotFoundException("일치하는 아이디를 찾을 수 없습니다");
         return new J3UserDetails(account);

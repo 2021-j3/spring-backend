@@ -46,7 +46,7 @@ public class ProductApiController {
             @RequestParam(value = "categories", required = false) List<Long> categories,
             @RequestParam(value = "tags", required = false) List<Long> tags,
             @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
-            @RequestParam(value = "size", required = false, defaultValue = "100") Integer size,
+            @RequestParam(value = "size", required = false, defaultValue = "100") Integer size, // 2021-02-20 벌크로드 처리
             @RequestParam(value = "order", required = false, defaultValue = "ASC") String order,
             @RequestParam(value = "by", required = false, defaultValue = "productId") String by) {
         SearchCondition searchCondition = SearchCondition.builder()

@@ -1,7 +1,6 @@
 package com.ecommerce.j3.controller.api;
 
 
-import com.ecommerce.j3.controller.ErrorMessage;
 import com.ecommerce.j3.controller.ErrorType;
 import com.ecommerce.j3.controller.dto.AccountDto;
 import com.ecommerce.j3.controller.dto.AccountDto.*;
@@ -92,6 +91,10 @@ public class AccountApiController {
 
     //////////////////// 서비스 로직 ////////////////////
 
+    /** 2021-02-26 penguin
+     * @param request
+     * @return
+     */
     @ApiOperation(value = "회원 등록", notes = "회원을 등록한다")
     @PostMapping("/register")
     public ResponseEntity<AccountApiResponse> register(@RequestBody AccountApiRequest request) {
@@ -140,18 +143,18 @@ public class AccountApiController {
     // 회원가입 문제
     @ResponseStatus(code = HttpStatus.CONFLICT)
     @ExceptionHandler(EntityExistsException.class)
-    public ErrorMessage entityExistException(Exception e){
+    public ErrorType entityExistException(Exception e){
         String message = e.getMessage();
         if (message.split("\\s")[1].equals("이메일"))
-            return new ErrorMessage(ErrorType.EmailExists);
+            return ErrorType.EmailExists;
         else
-            return new ErrorMessage(ErrorType.PhoneNumberExists);
+            return ErrorType.PhoneNumberExists;
     }
 
     // 로그인 문제
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     @ExceptionHandler(EntityNotFoundException.class)
-    public ErrorMessage entityNotFoundException(Exception e){
-        return new ErrorMessage(ErrorType.AccountNotFound);
+    public ErrorType entityNotFoundException(Exception e){
+        return ErrorType.AccountNotFound;
     }
 }
