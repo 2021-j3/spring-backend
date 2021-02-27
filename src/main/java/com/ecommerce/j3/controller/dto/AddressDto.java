@@ -32,7 +32,6 @@ public class AddressDto {
     @AllArgsConstructor
     public static class AddressApiResponse {
         private Long addressId;
-        private Account account;
         private String address;
         private String roadAddress;
         private String city;

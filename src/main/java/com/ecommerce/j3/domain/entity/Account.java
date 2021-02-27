@@ -68,7 +68,9 @@ public class Account {
     private Address defaultAddress;
 
     @OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
-
     List<Address> addresses;
 
+//    자신의 카트를 가져옴
+//    @OneToOne(mappedBy = "account")
+//    private Cart cart;
 }

@@ -95,20 +95,37 @@ public class AccountApiController {
      * @param request
      * @return
      */
-    @ApiOperation(value = "회원 등록", notes = "회원을 등록한다")
+    @ApiOperation(value = "회원 등록", notes = "등록한다")
     @PostMapping("/register")
     public ResponseEntity<AccountApiResponse> register(@RequestBody AccountApiRequest request) {
         AccountApiResponse response = accountApiLogicService.saveAccount(request);
         return ResponseEntity.ok(response);
     }
 
+    @ApiOperation(value = "회원 삭제", notes= "탈퇴한다")
+    @PostMapping("/withdrawal")
+    public ResponseEntity withdrawal(@RequestBody LoginRequest withdrawalRequest){
+        String email = withdrawalRequest.getEmail();
+        String password = withdrawalRequest.getPassword();
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(email, password);
+        try {
+            authenticationManager.authenticate(token);
+            J3UserDetails userDetails = (J3UserDetails)accountApiLogicService.loadUserByUsername(email);
+            accountApiLogicService.removeAccount(userDetails.getAccountId());
+            return ResponseEntity.ok(null);
+        }catch (BadCredentialsException e){
+            throw new BadCredentialsException("회원정보가 일치하지 않습니다");
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("에러");
+        }
+    }
     /** 2021-02-15 penguin418
      * 로그인
      * session 을 사용하므로,
      * @param loginRequest { dto } email 과 password 필드를 가진 request
      * @return { ResponseEntity }
      */
-    @ApiOperation(value = "회원 로그인", notes = "회원 로그인한다.")
+    @ApiOperation(value = "회원 로그인", notes = "로그인한다.")
     @PostMapping("/login")
     public ResponseEntity<AccountLoginResponse> login(@RequestBody LoginRequest loginRequest) {
         String email = loginRequest.getEmail();
@@ -117,11 +134,6 @@ public class AccountApiController {
         try {
             authenticationManager.authenticate(token);
             AccountLoginResponse loginResponse = accountApiLogicService.Login(email);
-
-            // 2021-02-15 penguin418 쿠키 삽입,
-            // TODO:  클라이언트에서 요청하는 헤더에 아래와 같은 토큰 추가해야 함
-            String tt = "Bearer " + loginResponse.getToken();
-
             return ResponseEntity.ok(loginResponse);
         }catch (BadCredentialsException e){
             throw new BadCredentialsException("회원정보가 일치하지 않습니다");
@@ -136,7 +148,7 @@ public class AccountApiController {
     @GetMapping("/my")
     public ResponseEntity<AccountApiResponse> getMyAccount(Authentication authentication){
         J3UserDetails userDetails = (J3UserDetails)authentication.getPrincipal();
-        AccountApiResponse account = accountApiLogicService.findAccountByEmail(userDetails.getUsername());
+        AccountApiResponse account = accountApiLogicService.findAccount(userDetails.getAccountId());
         return ResponseEntity.ok(account);
     }
 

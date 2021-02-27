@@ -24,6 +24,8 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cartId;
 
+    // FIXME: 이거 왜 n to 1
+    //  - 이거 ㅋㅋㅋ 왜 n:1인가요
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id")
     private Account account;
