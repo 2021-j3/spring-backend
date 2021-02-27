@@ -4,17 +4,21 @@ package com.ecommerce.j3.controller.api;
 import com.ecommerce.j3.controller.dto.BodyData;
 import com.ecommerce.j3.controller.dto.AddressDto.AddressApiRequest;
 import com.ecommerce.j3.controller.dto.AddressDto.AddressApiResponse;
+import com.ecommerce.j3.domain.J3UserDetails;
 import com.ecommerce.j3.service.AddressApiLogicService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
 
 @Api(tags = {"02. Address"})
 @RestController
-@RequestMapping("/api/Address")
+@RequestMapping("/api/address")
 @AllArgsConstructor
 public class AddressApiController{
     private final AddressApiLogicService addressService;
@@ -55,5 +59,14 @@ public class AddressApiController{
         }catch (EntityNotFoundException e){
             return BodyData.ERROR("데이터가 없습니다");
         }
+    }
+
+    @ApiOperation(value = "나의 주소", notes = "주소를 가져온다")
+    @GetMapping("/my")
+    public ResponseEntity<List<AddressApiResponse>> readMyAddresses(Authentication authentication){
+        // 로그인한 유저를 가져옴
+        J3UserDetails userDetails = (J3UserDetails)authentication.getPrincipal();
+        Long accountId = userDetails.getAccountId();
+        return ResponseEntity.ok(addressService.findAddressesByAccountId(accountId));
     }
 }

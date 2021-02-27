@@ -4,22 +4,47 @@ package com.ecommerce.j3.controller.api;
 import com.ecommerce.j3.controller.dto.BodyData;
 import com.ecommerce.j3.controller.dto.CartDto;
 import com.ecommerce.j3.controller.dto.CartItemDto;
-import com.ecommerce.j3.domain.entity.Account;
+import com.ecommerce.j3.domain.J3UserDetails;
+import com.ecommerce.j3.service.AccountApiLogicService;
 import com.ecommerce.j3.service.CartApiLogicService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+
+import javax.persistence.EntityNotFoundException;
 
 @Api(tags = {"03. Cart"})
 @Slf4j
 @RestController
 @AllArgsConstructor
 public class CartApiController {
+    private final AccountApiLogicService accountService;
     private final CartApiLogicService cartService;
 
     /****************************** Cart APIs *******************************/
+    // FIXME: 자신의 카트를 가져오는 api 가 필요합니다
+    //  - one to one으로 수정하여 클라이언트에 카트 아이디를 저장하는 방법
+    //  - 현재처럼 유저 아이디로 카트를 찾아오는 방법
+    //  - 다른 아이디어 ??
+    @ApiOperation(value="자신의 카트 읽기", notes="자신의 카트를 읽어온다")
+    @GetMapping("/api/myCart")
+    public BodyData<CartDto.CartApiResponse> readMyCart(Authentication authentication){
+        // 로그인한 유저를 가져옴
+        J3UserDetails userDetails = (J3UserDetails)authentication.getPrincipal();
+        Long accountId = userDetails.getAccountId();
+        try {
+             return BodyData.OK(cartService.findByAccountId(accountId));
+        }catch (EntityNotFoundException e){
+            cartService.makeCart(accountId);
+            BodyData.OK(cartService.findByAccountId(accountId));
+        }
+        // FIXME: 예외와 에러메시지를 정의해야 합니다
+        return BodyData.ERROR("카트가 없는데 생성도 안됩니다");
+    }
+
     /*      20/02/15 Megan
     * PUT method is none of use.
     * DELETE method works for child items recursively which belong to the specific cart.

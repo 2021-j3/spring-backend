@@ -12,7 +12,9 @@ import com.ecommerce.j3.repository.CartRepository;
 import com.ecommerce.j3.repository.ProductRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -66,6 +68,14 @@ public class CartApiLogicService {
 
     }
 
+    AccountApiLogicService accountApiLogicService;
+    @Transactional
+    public CartDto.CartApiResponse findByAccountId(Long accountId){
+        Cart cart = cartRepository.findByAccountId(accountId).orElseThrow(EntityNotFoundException::new);
+        return cartMapper.toApiResponse(cart);
+    }
+
+    // cart item
     public long addItem(long cartid,long productid,Integer quantity) {
         Cart cart = findById(cartid);
         cart.getCartItems().add(CartItem.createCartItem(cart,quantity,productRepository.findById(productid).orElse(null)));
