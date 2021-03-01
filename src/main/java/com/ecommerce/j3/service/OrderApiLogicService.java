@@ -44,7 +44,7 @@ public class OrderApiLogicService {
         this.orderItemRepository = orderItemRepository;
     }
 
-    /* Product에서 바로 저장 */
+    /* (상품페이지에서 주문하기 눌렀을 때) Product에서 바로 저장 */
     public OrderDto.OrderApiResponse directSaveService(OrderDto.OrderApiRequest request) {
         Order order = orderMapper.toEntity(request);
 
@@ -52,13 +52,10 @@ public class OrderApiLogicService {
         return orderMapper.toApiResponse(order);
     }
 
-    /* CartItem에서 가져와서 저장*/
+    /* (장바구니에서 주문하기 눌렀을 때) CartItem에서 가져와서 저장*/
     public OrderDto.OrderApiResponse indirectSaveService(OrderDto.OrderApiRequest request) {
         Order order = orderMapper.toEntity(request);
         List<CartItem> cartItems = cartItemRepository.findAll();
-
-        // TODO: 이후 로직은 뭘까???
-        // TODO: 일단 보류
 
         orderRepository.save(order);
         return orderMapper.toApiResponse(order);
