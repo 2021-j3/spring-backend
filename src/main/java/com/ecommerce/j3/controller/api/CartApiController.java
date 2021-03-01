@@ -30,7 +30,7 @@ public class CartApiController {
     //  - 현재처럼 유저 아이디로 카트를 찾아오는 방법
     //  - 다른 아이디어 ??
     @ApiOperation(value="자신의 카트 읽기", notes="자신의 카트를 읽어온다")
-    @GetMapping("/api/myCart")
+    @GetMapping("/api/cart/my")
     public BodyData<CartDto.CartApiResponse> readMyCart(Authentication authentication){
         // 로그인한 유저를 가져옴
         J3UserDetails userDetails = (J3UserDetails)authentication.getPrincipal();

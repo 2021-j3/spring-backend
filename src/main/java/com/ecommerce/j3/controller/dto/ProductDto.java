@@ -29,6 +29,7 @@ public class ProductDto {
         private Integer price;
         private Integer discountPrice;
         private Integer quantity;
+        private Integer soldCount;
         private String thumbnailPath;
         private String imagePath;
         private String content;
@@ -48,7 +49,7 @@ public class ProductDto {
     @Builder
     public static class ProductApiResponse {
         private Long productId;
-        private Account seller;
+        private Long sellerId;
         private String title;
         private String metaTitle;
         private String slug;
@@ -56,6 +57,7 @@ public class ProductDto {
         private Integer price;
         private Integer discountedPrice;
         private Integer quantity;
+        private Integer soldCount;
         private String thumbnailPath;
         private String imagePath;
         private String content;

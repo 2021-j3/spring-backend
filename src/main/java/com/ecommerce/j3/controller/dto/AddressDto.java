@@ -2,10 +2,7 @@ package com.ecommerce.j3.controller.dto;
 
 
 import com.ecommerce.j3.domain.entity.Account;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 public class AddressDto {
     /**
@@ -37,5 +34,13 @@ public class AddressDto {
         private String city;
         private String country;
         private Integer zipCode;
+        private boolean thisIsDefault;
+    }
+
+    // 기본 배송지를 갱신하기 위해 사용됨
+    @Data
+    public static class UpdateDefaultAddressRequest {
+        private Long addressId;
+        private Long accountId;
     }
 }

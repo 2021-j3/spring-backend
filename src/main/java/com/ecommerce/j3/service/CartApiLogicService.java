@@ -3,6 +3,7 @@ package com.ecommerce.j3.service;
 
 import com.ecommerce.j3.controller.dto.CartDto;
 import com.ecommerce.j3.domain.entity.Account;
+import com.ecommerce.j3.domain.entity.Address;
 import com.ecommerce.j3.domain.entity.Cart;
 import com.ecommerce.j3.domain.entity.CartItem;
 import com.ecommerce.j3.domain.mapper.CartMapper;
@@ -63,7 +64,7 @@ public class CartApiLogicService {
     }
 
     public long makeCart(long accountId) {
-
+        // FIXME:  카트 생성이 안됩니다
         return cartRepository.save(Cart.createCart(accountRepository.findById(accountId).get())).getCartId();
 
     }

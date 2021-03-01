@@ -40,7 +40,8 @@ public class JwtTokenUtil {
                 // 키 - alg, 키
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
                 // 만료시간 (exp)
-                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_MS)) // 만료시간
+                // 2020-02-27 penguin 만료시간 하루로 늘림
+                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_MS * 1000)) // 만료시간
                 .compact();
     }
 

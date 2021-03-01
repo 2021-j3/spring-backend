@@ -31,10 +31,17 @@ public class CartItem {
 
     private String sku;
 
+    /**
+     *  2021-03-01 quantity 는 카트 아이템이 가리키는 제품의 총 가격입니다
+     */
     private Integer price;
-
+    /**
+     *  2021-03-01 quantity 는 카트 아이템이 가리키는 제품의 총 할인가격입니다
+     */
     private Integer discountPrice;
-
+    /**
+     *  2021-03-01 quantity 는 카트에 담은 product 의 개수입니다
+     */
     private Integer quantity;
 
     private Integer active;

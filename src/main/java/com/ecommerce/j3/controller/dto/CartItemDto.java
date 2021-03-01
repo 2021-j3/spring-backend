@@ -17,7 +17,7 @@ public class CartItemDto {
         private Long productId;
         private Long cartId;
         private String sku;
-        private Integer price;
+        private Integer price; // unit price 단위 가격
         private Integer discountPrice;
         private Integer quantity;
         private Integer active;
@@ -34,6 +34,7 @@ public class CartItemDto {
         private Long cartItemId;
         private Product product;
         private Cart cart;
+        // TODO: title,
         private String sku;
         private Integer price;
         private Integer discountPrice;
