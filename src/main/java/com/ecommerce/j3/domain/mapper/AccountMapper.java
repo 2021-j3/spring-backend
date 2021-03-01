@@ -31,12 +31,12 @@ public abstract class AccountMapper implements DefaultMapper<Account, AccountDto
                 .accountId(db.getAccountId())
                 .registeredAt(db.getRegisteredAt())
                 .lastLogin(db.getLastLogin())
-                .defaultAddress(db.getDefaultAddress())
                 // 필수 값, 입력된 값이 null일 경우, 기존 값을 사용
-                .email(!dto.getEmail().equals("") ? dto.getEmail() : db.getEmail())
-                .passwordHash(!dto.getPassword().equals("") ? dto.getPassword() : db.getPasswordHash())
-                .firstName(!dto.getFirstName().isEmpty() ? dto.getFirstName() : db.getFirstName())
-                .lastName(!dto.getLastName().equals("") ? dto.getLastName() : db.getLastName())
+                .defaultAddress(dto.getDefaultAddress()!=null? dto.getDefaultAddress() : db.getDefaultAddress())
+                .email((dto.getEmail()!=null && !dto.getEmail().equals("")) ? dto.getEmail() : db.getEmail())
+                .passwordHash((dto.getPassword()!=null && !dto.getPassword().equals("")) ? dto.getPassword() : db.getPasswordHash())
+                .firstName((dto.getFirstName()!=null && !dto.getFirstName().equals("")) ? dto.getFirstName() : db.getFirstName())
+                .lastName((dto.getLastName()!=null && !dto.getLastName().equals("")) ? dto.getLastName() : db.getLastName())
                 .gender(dto.getGender() != null ? dto.getGender() : db.getGender())
                 .accountType(dto.getAccountType() != null ? dto.getAccountType() : db.getAccountType())
                 // 필수 아님, null 가능

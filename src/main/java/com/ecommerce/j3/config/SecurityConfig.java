@@ -28,6 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     /**
      * 공용 password encoder 등록
+     * TODO: Hash 함수 생성
      * @return
      */
     @Bean

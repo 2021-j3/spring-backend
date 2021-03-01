@@ -44,7 +44,9 @@ public class Cart {
     private Integer itemPriceTotal;
 
     private Integer itemDiscount;
-
+    /**
+     * 2021-03-01 결제 api 를 위해 남겨두었습니다
+     */
     private Integer tax;
 
     private Integer shipping;
@@ -53,13 +55,7 @@ public class Cart {
 
     private Integer grandTotal;
 
-    private String firstName;
-
-    private String lastName;
-
-    private String phoneNumber;
-
-    private String email;
+    // 2021-03-01 account 를 통해 획득할 수 있는 중복 필드를 제거했습니다
 
     private String roadAddress;;
 
@@ -85,11 +81,13 @@ public class Cart {
     public static Cart createCart(Account account){
         Cart cart = new Cart();
         cart.account = account;
-        cart.email = account.getEmail();
-        cart.firstName = account.getFirstName();
-        cart.lastName = account.getLastName();
-        cart.phoneNumber = account.getPhoneNumber();
-
+        Address address = account.getDefaultAddress();
+        cart.address = address.getAddress();
+        cart.roadAddress = address.getRoadAddress();
+        cart.city = address.getCity();
+        cart.province = address.getProvince();
+        cart.country = address.getCountry();
+        cart.zipCode = address.getZipCode();
         return cart;
     }
 }

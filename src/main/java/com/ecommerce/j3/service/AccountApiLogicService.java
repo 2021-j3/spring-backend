@@ -1,13 +1,18 @@
 package com.ecommerce.j3.service;
 
+import com.ecommerce.j3.controller.dto.AccountDto;
 import com.ecommerce.j3.controller.dto.AccountDto.AccountApiRequest;
 import com.ecommerce.j3.controller.dto.AccountDto.AccountApiResponse;
 import com.ecommerce.j3.controller.dto.AccountDto.AccountLoginResponse;
+import com.ecommerce.j3.controller.dto.AddressDto;
 import com.ecommerce.j3.domain.J3UserDetails;
 import com.ecommerce.j3.domain.entity.Account;
 import com.ecommerce.j3.domain.entity.AccountType;
+import com.ecommerce.j3.domain.entity.Address;
 import com.ecommerce.j3.domain.mapper.AccountMapper;
+import com.ecommerce.j3.domain.mapper.AddressMapper;
 import com.ecommerce.j3.repository.AccountRepository;
+import com.ecommerce.j3.repository.AddressRepository;
 import com.ecommerce.j3.util.JwtTokenUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -52,11 +57,12 @@ public class AccountApiLogicService implements UserDetailsService {
         return accountMapper.toApiResponse(account);
     }
 
-    public AccountApiResponse updateAccount(AccountApiRequest accountInfo) {
+    public AccountApiResponse updateAccount(AccountDto.UpdateAccountRequest accountInfo) {
+        AccountApiRequest request = accountMapper.toRequestDto(accountInfo);
         Account accountFromDB = findById(accountInfo.getAccountId());
-        accountMapper.updateFromDto(accountFromDB, accountInfo);
-        accountRepository.save(accountFromDB);
-        return accountMapper.toApiResponse(accountFromDB);
+        Account updatedAccount = accountMapper.updateFromDto(accountFromDB, request);
+        accountRepository.save(updatedAccount);
+        return accountMapper.toApiResponse(updatedAccount);
     }
 
     public void removeAccount(Long accountId) {
@@ -73,7 +79,7 @@ public class AccountApiLogicService implements UserDetailsService {
     }
 
 
-    /** 2021-02-15 penguin418
+    /**
      * 실제 인증을 담당하는 AuthenticationManager 를 생성해주는 AuthenticationManagerBuilder 클래스에서 사용하는 UserDetail 인터페이스
      * @param email { username } 사용자 식별에 사용되는 유저이름, 여기서는 이메일을 사용
      * @return { UserDetails } 이메일, accountId, 권한이 담겨있음

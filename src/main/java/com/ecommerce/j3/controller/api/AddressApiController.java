@@ -25,13 +25,17 @@ public class AddressApiController{
 
     @ApiOperation(value = "주소 추가", notes="주소를 추가한다")
     @PostMapping("")
-    public BodyData<AddressApiResponse> create(@RequestBody AddressApiRequest request) {
+    public BodyData<AddressApiResponse> create(@RequestBody AddressApiRequest request, Authentication authentication) {
+        J3UserDetails userDetails = (J3UserDetails)authentication.getPrincipal();
+        Long accountId = userDetails.getAccountId();
+        request.setAccountId(accountId);
         addressService.saveAddress(request);
+        addressService.updateDefaultAddress(request.getAccountId());
         return null;
     }
 
     @ApiOperation(value = "주소 일기", notes = "주소를 가져온다")
-    @GetMapping
+    @GetMapping("/{id}")
     public BodyData<AddressApiResponse> read(@PathVariable("id") Long id) {
         try {
             return BodyData.OK(addressService.findAddress(id));
@@ -41,8 +45,8 @@ public class AddressApiController{
     }
 
     @ApiOperation(value = "주소 갱신", notes = "주소를 갱신한다.")
-    @PutMapping
-    public BodyData<AddressApiResponse> update(@RequestBody AddressApiRequest request) {
+    @PutMapping("/{id}")
+    public BodyData<AddressApiResponse> update(@PathVariable Long id, @RequestBody AddressApiRequest request) {
         try{
             return BodyData.OK(addressService.updateAddress(request));
         }catch (EntityNotFoundException e){
@@ -51,7 +55,7 @@ public class AddressApiController{
     }
 
     @ApiOperation(value = "주소 삭제", notes = "주소를 삭제한다.")
-    @DeleteMapping
+    @DeleteMapping("{id}")
     public BodyData delete(@PathVariable("id") Long id) {
         try{
             addressService.removeAddress(id);
@@ -67,6 +71,6 @@ public class AddressApiController{
         // 로그인한 유저를 가져옴
         J3UserDetails userDetails = (J3UserDetails)authentication.getPrincipal();
         Long accountId = userDetails.getAccountId();
-        return ResponseEntity.ok(addressService.findAddressesByAccountId(accountId));
+        return ResponseEntity.ok(addressService.findMyAddresses(accountId));
     }
 }

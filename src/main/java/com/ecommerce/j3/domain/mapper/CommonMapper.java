@@ -86,4 +86,7 @@ public class CommonMapper {
         if(category == null) return null;
         else return category.getCategoryId();
     }
+    Long mapAccountToAccountId(Account account){
+        return account.getAccountId();
+    }
 }

@@ -69,8 +69,16 @@ public class AccountApiController {
     }
 
     @ApiOperation(value = "회원 갱신", notes = "회원을 갱신한다.")
-    @PutMapping("{id}")
-    public ResponseEntity<AccountDto.AccountApiResponse> update(@RequestBody AccountDto.AccountApiRequest request) {
+//    @PutMapping("{id}") // 로그인된 상태이므로 굳이 필요없음
+    @PutMapping("/my")
+    public ResponseEntity<AccountDto.AccountApiResponse> update(@RequestBody AccountDto.UpdateAccountRequest request, Authentication authentication) {
+        J3UserDetails userDetails = (J3UserDetails)authentication.getPrincipal();
+        String password = userDetails.getPassword();
+        // 권한이 없음
+        if (! password.equals(request.getPassword()))
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        // 권한 있는 경우 저장된 id 부여
+        request.setAccountId(userDetails.getAccountId());
         try {
             return new ResponseEntity<AccountDto.AccountApiResponse>(accountApiLogicService.updateAccount(request), HttpStatus.OK);
         } catch (EntityNotFoundException e) {

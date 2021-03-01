@@ -28,6 +28,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         String authorizationHeader = request.getHeader("Authorization");
 
         // jwt 토큰 타입이라면 검사
+
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
 
             String token = authorizationHeader.substring(7); // "Bearer " 7자리 빼고 검사

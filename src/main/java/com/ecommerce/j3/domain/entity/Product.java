@@ -45,10 +45,19 @@ public class Product {
 
     private Integer price;
 
-    // 할인된 가격( !! 할인된 결과가 아님 )
+    /**
+     * 할인되는 가격입니다 e.g. 1000원의 200원 할인 시 200원
+     */
     private Integer discountPrice;
 
+    /**
+     * 제품의 총 개수 입니다
+     */
     private Integer quantity;
+    /**
+     * 팔린 제품의 개수입니다
+     */
+    private Integer soldCount;
 
     private String thumbnailPath;
 

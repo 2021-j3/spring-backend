@@ -4,6 +4,7 @@ import com.ecommerce.j3.domain.J3UserDetails;
 import com.ecommerce.j3.domain.entity.AccountType;
 import com.ecommerce.j3.domain.entity.Address;
 import com.ecommerce.j3.domain.entity.GenderType;
+import com.ecommerce.j3.domain.mapper.PhoneNumber;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -41,6 +42,7 @@ public class AccountDto {
         @DateTimeFormat(pattern = "yyyy-MM-dd")
         private LocalDate birthday;
 
+        @PhoneNumber
         private String phoneNumber;
 
         @CreationTimestamp
@@ -95,7 +97,6 @@ public class AccountDto {
         private String email;
         private String password;
     }
-
     @Data
     @AllArgsConstructor
     public static class AccountLoginResponse {
@@ -104,10 +105,11 @@ public class AccountDto {
         private String token;
     }
 
-    @Data
-    public static class ReadAccountRequest {
-        private String email;
-    }
+//    TODO: 삭제 예정
+//    @Data
+//    public static class ReadAccountRequest {
+//        private String email;
+//    }
 
     @Data
     public static class CreateAccountRequest {
@@ -118,14 +120,6 @@ public class AccountDto {
         private GenderType gender;
         private AccountType accounttype;
     }
-
-    @Data
-    public static class UpdateAccountRequest {
-        private String email;
-        private String lastname;
-        private String firstname;
-    }
-
     @Data
     public static class CreateAccountResponse {
 
@@ -140,5 +134,22 @@ public class AccountDto {
             this.firstName = firstName;
             this.lastName = lastName;
         }
+    }
+
+    @Data @Builder
+    public static class UpdateAccountRequest {
+        private Long accountId;
+        private String email;
+        private String password;
+        private String new_password;
+        private String lastname;
+        private String firstname;
+        @Column(columnDefinition = "ENUM('MALE','FEMALE')")
+        @Enumerated(EnumType.STRING)
+        private GenderType gender;
+        @Column(columnDefinition = "VARCHAR")
+        @DateTimeFormat(pattern = "yyyy-MM-dd")
+        private LocalDate birthday;
+        private String phoneNumber;
     }
 }

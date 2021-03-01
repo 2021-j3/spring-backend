@@ -4,7 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-/** 2021-02-25 penguiㅜ
+/**
+ * 2021-02-25 penguin
  * 에러코드는 각 테이블 번호 * 1000번 + 임의의 숫자
  * 에러메시지는 서버에서만 확인 가능하므로 서버 기준으로 작성
  * GET 에서 발생시 클라이언트에서 받을 수 있으므로 @ResponseBody 사용 금지
