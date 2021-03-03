@@ -35,7 +35,7 @@ CREATE TABLE `shop`.`product`
     `slug`           VARCHAR(50)          DEFAULT NULL,
     `sku`            VARCHAR(50) NOT NULL,
     `price`          INT         NOT NULL DEFAULT 0,
-    `discount_price`  INT         NOT NULL DEFAULT 0,
+    `discount_price` INT         NOT NULL DEFAULT 0,
     `quantity`       INT         NOT NULL DEFAULT 0,
     `sold_count`     INT         NOT NULL DEFAULT 0,
     `thumbnail_path` VARCHAR(200)         DEFAULT NULL,
@@ -63,17 +63,17 @@ CREATE TABLE `shop`.`cart`
     `token`            VARCHAR(100) NOT NULL,
     `status`           ENUM ('READY','cart','CANCEL') NOT NULL,
     `item_price_total` INT          NOT NULL DEFAULT 0,
-    `item_discount`    INT          DEFAULT 0,
-    `tax`              INT          DEFAULT 0,
-    `shipping`         INT          DEFAULT 2500,
-    `user_discount`    INT          DEFAULT 0,
+    `item_discount`    INT                   DEFAULT 0,
+    `tax`              INT                   DEFAULT 0,
+    `shipping`         INT                   DEFAULT 2500,
+    `user_discount`    INT                   DEFAULT 0,
     `grand_total`      INT          NOT NULL DEFAULT 0,
-    `road_address`     VARCHAR(50)  ,
-    `address`          VARCHAR(50)  ,
-    `city`             VARCHAR(50)  ,
-    `province`         VARCHAR(50)  ,
-    `country`          VARCHAR(50)  ,
-    `zip_code`         INT          ,
+    `road_address`     VARCHAR(50),
+    `address`          VARCHAR(50),
+    `city`             VARCHAR(50),
+    `province`         VARCHAR(50),
+    `country`          VARCHAR(50),
+    `zip_code`         INT,
     `content`          TEXT                  DEFAULT NULL,
     `created_at`       DATETIME     NOT NULL,
     `updated_at`       DATETIME              DEFAULT NULL,
@@ -91,17 +91,17 @@ DROP TABLE IF EXISTS `shop`.`cart_item`;
 
 CREATE TABLE `shop`.`cart_item`
 (
-    `cart_item_id`  BIGINT      NOT NULL AUTO_INCREMENT,
-    `cart_id`       BIGINT      NOT NULL,
-    `product_id`    BIGINT      NOT NULL,
-    `sku`           VARCHAR(50) NOT NULL,
-    `price`         INT         NOT NULL DEFAULT 0,
+    `cart_item_id`   BIGINT      NOT NULL AUTO_INCREMENT,
+    `cart_id`        BIGINT      NOT NULL,
+    `product_id`     BIGINT      NOT NULL,
+    `sku`            VARCHAR(50) NOT NULL,
+    `price`          INT         NOT NULL DEFAULT 0,
     `discount_price` INT         NOT NULL DEFAULT 0,
-    `quantity`      INT         NOT NULL DEFAULT 0,
-    `active`        INT         NOT NULL DEFAULT 0,
-    `content`       TEXT                 DEFAULT NULL,
-    `created_at`    DATETIME    NOT NULL,
-    `updated_at`    DATETIME             DEFAULT NULL,
+    `quantity`       INT         NOT NULL DEFAULT 0,
+    `active`         INT         NOT NULL DEFAULT 0,
+    `content`        TEXT                 DEFAULT NULL,
+    `created_at`     DATETIME    NOT NULL,
+    `updated_at`     DATETIME             DEFAULT NULL,
 
 
     PRIMARY KEY (`cart_item_id`),
@@ -155,16 +155,16 @@ DROP TABLE IF EXISTS `shop`.`order_item`;
 
 CREATE TABLE `shop`.`order_item`
 (
-    `order_item_id` BIGINT      NOT NULL AUTO_INCREMENT,
-    `product_id`    BIGINT      NOT NULL,
-    `orders_id`     BIGINT      NOT NULL,
-    `sku`           VARCHAR(50) NOT NULL,
-    `price`         INT         NOT NULL DEFAULT 0,
+    `order_item_id`  BIGINT      NOT NULL AUTO_INCREMENT,
+    `product_id`     BIGINT      NOT NULL,
+    `orders_id`      BIGINT      NOT NULL,
+    `sku`            VARCHAR(50) NOT NULL,
+    `price`          INT         NOT NULL DEFAULT 0,
     `discount_price` INT         NOT NULL DEFAULT 0,
-    `quantity`      INT         NOT NULL DEFAULT 0,
-    `content`       TEXT                 DEFAULT NULL,
-    `created_at`    DATETIME    NOT NULL,
-    `updated_at`    DATETIME             DEFAULT NULL,
+    `quantity`       INT         NOT NULL DEFAULT 0,
+    `content`        TEXT                 DEFAULT NULL,
+    `created_at`     DATETIME    NOT NULL,
+    `updated_at`     DATETIME             DEFAULT NULL,
 
     PRIMARY KEY (`order_item_id`),
 
@@ -381,3 +381,4 @@ CREATE TABLE `shop`.`suggestion`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
+

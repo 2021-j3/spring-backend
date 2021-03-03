@@ -69,11 +69,29 @@ public class ProductDto {
         private Set<Tag> tags;
     }
 
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public static class SearchResultItem {
+        private Long productId;
+        private Long sellerId;
+        private String title;
+        private Integer price;
+        private Integer discountedPrice;
+        private Integer quantity;
+        private Integer soldCount;
+        private String thumbnailPath;
+        private String imagePath;
+        private LocalDateTime createdAt;
+    }
+
     @Data
     @AllArgsConstructor @Builder
-    public static class ProductApiResponsePage{
+    public static class SearchResult{
         Long total;
-        List<ProductApiResponse> contents;
+        List<SearchResultItem> contents;
     }
 
     @Data

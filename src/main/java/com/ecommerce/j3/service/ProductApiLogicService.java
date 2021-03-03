@@ -3,7 +3,8 @@ package com.ecommerce.j3.service;
 import com.ecommerce.j3.controller.dto.ProductDto.ProductApiRequest;
 import com.ecommerce.j3.controller.dto.ProductDto.ProductApiResponse;
 import com.ecommerce.j3.controller.dto.ProductDto.SearchCondition;
-import com.ecommerce.j3.controller.dto.ProductDto.ProductApiResponsePage;
+import com.ecommerce.j3.controller.dto.ProductDto.SearchResult;
+import com.ecommerce.j3.controller.dto.ProductDto.SearchResultItem;
 import com.ecommerce.j3.domain.entity.Product;
 import com.ecommerce.j3.domain.mapper.CommonMapper;
 import com.ecommerce.j3.domain.mapper.ProductMapper;
@@ -73,7 +74,7 @@ public class ProductApiLogicService {
      * @param searchCondition { SearchCondition } query, minPrice, maxPrice, cats, tags 모두 null 가능
      * @return List<ProductApiResponse>
      */
-    public ProductApiResponsePage searchProducts(SearchCondition searchCondition, Pageable pageable) {
+    public SearchResult searchProducts(SearchCondition searchCondition, Pageable pageable) {
         Specification<Product> productSpecs = Specification.where(null);
         productSpecs = productSpecs
                 .and(ProductSpecs.withKeywords(searchCondition.getQuery()))
@@ -82,8 +83,10 @@ public class ProductApiLogicService {
                 .and(ProductSpecs.fromCategories(categoryApiLogicService.findByIds(searchCondition.getCategoryIds())))
                 .and(ProductSpecs.fromTags(tagApiLogicService.findByIds(searchCondition.getTagIds())));
         Page<Product> pages = productRepository.findAll(productSpecs, pageable);
-        List<ProductApiResponse> contents = pages.getContent().stream().map(productMapper::toApiResponse).collect(Collectors.toList());
-        ProductApiResponsePage page = ProductApiResponsePage.builder()
+        List<SearchResultItem> contents = pages.getContent()
+                .stream().map(productMapper::toSearchResultItem)
+                .collect(Collectors.toList());
+        SearchResult page = SearchResult.builder()
                 .total(pages.getTotalElements())
                 .contents(contents)
                 .build();
