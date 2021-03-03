@@ -2,11 +2,10 @@ package com.ecommerce.j3.controller.api;
 
 
 import com.ecommerce.j3.controller.dto.BodyData;
-import com.ecommerce.j3.controller.dto.ProductDto;
 import com.ecommerce.j3.controller.dto.ProductDto.ProductApiRequest;
 import com.ecommerce.j3.controller.dto.ProductDto.ProductApiResponse;
 import com.ecommerce.j3.controller.dto.ProductDto.SearchCondition;
-import com.ecommerce.j3.controller.dto.ProductDto.ProductApiResponsePage;
+import com.ecommerce.j3.controller.dto.ProductDto.SearchResult;
 import com.ecommerce.j3.service.ProductApiLogicService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,7 +17,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import javax.persistence.EntityNotFoundException;
 import java.util.Arrays;
 import java.util.List;
@@ -39,7 +37,7 @@ public class ProductApiController {
 
     @ApiOperation(value = "제품 읽기1", notes = "조건에 맞는 제품을 가져온다")
     @GetMapping("/api/products")
-    public ResponseEntity<ProductApiResponsePage> searchProduct(
+    public ResponseEntity<SearchResult> searchProduct(
             @RequestParam(value = "query", required = false) String query,
             @RequestParam(value = "minPrice", required = false) Integer minPrice,
             @RequestParam(value = "maxPrice", required = false) Integer maxPrice,
@@ -57,7 +55,7 @@ public class ProductApiController {
                 .tagIds(tags).build();
         // 2021-02-18 페이지네이션 처리
         page = page < 0 ? 0 : page == 0 ? page : page-1;
-        final Stream<String> allowed_criteria = Arrays.stream(new String[]{"productId", "title", "price", "createdAt"});
+        final Stream<String> allowed_criteria = Arrays.stream(new String[]{"productId" ,"title", "price", "createdAt", "soldCount"});
         Pageable pageable = PageRequest.of(page, size, Sort.by(
                 order.equals("ASC") ? Sort.Direction.ASC : Sort.Direction.DESC,
                 allowed_criteria.anyMatch(by::equals) ? by : "productId")); // 2021-02-18 필드 이름 문제 해결
@@ -66,11 +64,11 @@ public class ProductApiController {
 
     @ApiOperation(value = "제품 읽기2", notes = "제품를 가져온다")
     @GetMapping("/api/products/{id}")
-    public BodyData<ProductApiResponse> read(@PathVariable("id") Long id) {
+    public ResponseEntity<ProductApiResponse> read(@PathVariable("id") Long id) {
         try {
-            return BodyData.OK(productApiLogicService.findProduct(id));
+            return ResponseEntity.ok(productApiLogicService.findProduct(id));
         } catch (EntityNotFoundException e) {
-            return BodyData.ERROR("데이터가 없습니다");
+            return ResponseEntity.notFound().build();
         }
     }
 

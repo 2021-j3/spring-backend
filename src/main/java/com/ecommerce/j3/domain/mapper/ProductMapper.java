@@ -4,6 +4,7 @@ import com.ecommerce.j3.domain.entity.Order;
 import com.ecommerce.j3.domain.entity.Product;
 import com.ecommerce.j3.controller.dto.ProductDto.ProductApiRequest;
 import com.ecommerce.j3.controller.dto.ProductDto.ProductApiResponse;
+import com.ecommerce.j3.controller.dto.ProductDto.SearchResultItem;
 import org.mapstruct.*;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, uses = {CommonMapper.class})
@@ -18,6 +19,9 @@ public abstract class ProductMapper implements DefaultMapper<Product, ProductApi
     @Mapping(source = "seller", target = "sellerId")
     @Override
     public abstract ProductApiResponse toApiResponse(Product entity);
+
+    @Mapping(source = "seller", target="sellerId")
+    public abstract SearchResultItem toSearchResultItem(Product entity);
 
     @Override
     public Product updateFromDto(@MappingTarget Product entity, ProductApiRequest dto){
