@@ -55,7 +55,7 @@ public class ProductDto {
         private String slug;
         private String sku;
         private Integer price;
-        private Integer discountedPrice;
+        private Integer discountPrice;
         private Integer quantity;
         private Integer soldCount;
         private String thumbnailPath;
@@ -78,8 +78,9 @@ public class ProductDto {
         private Long productId;
         private Long sellerId;
         private String title;
+        private String slug;
         private Integer price;
-        private Integer discountedPrice;
+        private Integer discountPrice;
         private Integer quantity;
         private Integer soldCount;
         private String thumbnailPath;

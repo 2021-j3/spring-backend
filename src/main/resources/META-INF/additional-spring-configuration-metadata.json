@@ -1,0 +1,33 @@
+{
+  "properties": [
+    {
+      "name": "jwt.token.secret",
+      "type": "java.lang.String",
+      "description": "jwt 토큰의 비밀키."
+    },
+    {
+      "name": "jwt.token.access.expire_at",
+      "type": "java.lang.Long",
+      "description": "access token 만료시간.",
+      "defaultValue": 12345678
+    },
+    {
+      "name": "jwt.token.refresh.expire_at",
+      "type": "java.lang.Long",
+      "description": "refresh token 만료시간.",
+      "defaultValue": 1234567890
+    },
+    {
+      "name": "jwt.token.access.name",
+      "type": "java.lang.String",
+      "description": "access token 이름.",
+      "defaultValue": "ACCESS_TOKEN"
+    },
+    {
+      "name": "jwt.token.refresh.name",
+      "type": "java.lang.String",
+      "description": "refresh token 이름.",
+      "defaultValue": "REFRESH_TOKEN"
+    }
+  ]
+}

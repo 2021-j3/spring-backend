@@ -63,6 +63,9 @@ dependencies {
 	/* security - jwt */
 	implementation 'io.jsonwebtoken:jjwt:0.9.1'
 
+	/* security - redis */
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
 	/* test */
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
@@ -74,6 +77,8 @@ dependencies {
 	testImplementation 'junit:junit:4.13.1'
 	annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}", "org.projectlombok:lombok:${lombokVersion}", "org.projectlombok:lombok-mapstruct-binding:${lombokMapstructBindingVersion}"
 
+	/* configuration */
+	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 }
 
 test {

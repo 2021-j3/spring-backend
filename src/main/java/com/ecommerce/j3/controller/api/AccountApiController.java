@@ -6,21 +6,20 @@ import com.ecommerce.j3.controller.dto.AccountDto;
 import com.ecommerce.j3.controller.dto.AccountDto.*;
 import com.ecommerce.j3.controller.dto.BodyData;
 import com.ecommerce.j3.domain.J3UserDetails;
-import com.ecommerce.j3.domain.entity.Account;
 import com.ecommerce.j3.domain.mapper.AccountMapper;
 import com.ecommerce.j3.repository.AccountRepository;
 import com.ecommerce.j3.service.AccountApiLogicService;
 import com.ecommerce.j3.service.CartApiLogicService;
+import com.ecommerce.j3.util.CookieUtil;
 import com.ecommerce.j3.util.JwtTokenUtil;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ecommerce.j3.util.RedisUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -30,12 +29,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
-import javax.validation.Valid;
-import java.sql.SQLIntegrityConstraintViolationException;
-import java.util.Set;
 
 
 @Api(tags = {"01. Account"})
@@ -50,6 +45,7 @@ public class AccountApiController {
     private final AccountMapper accountMapper;
     private final AuthenticationManager authenticationManager;
     private final JwtTokenUtil jwtTokenUtil;
+    private final RedisUtil redisUtil;
 
     @ApiOperation(value = "회원 추가", notes = "회원을 추가한다")
     @PostMapping("")
@@ -127,7 +123,7 @@ public class AccountApiController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("에러");
         }
     }
-    /** 2021-02-15 penguin418
+    /** 2021-03-07 penguin418
      * 로그인
      * session 을 사용하므로,
      * @param loginRequest { dto } email 과 password 필드를 가진 request
@@ -135,17 +131,42 @@ public class AccountApiController {
      */
     @ApiOperation(value = "회원 로그인", notes = "로그인한다.")
     @PostMapping("/login")
-    public ResponseEntity<AccountLoginResponse> login(@RequestBody LoginRequest loginRequest) {
-        String email = loginRequest.getEmail();
-        String password = loginRequest.getPassword();
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(email, password);
+    public ResponseEntity<AccountLoginResponse> login(@RequestBody LoginRequest loginRequest,
+                                                      HttpServletResponse res) {
+        final String email = loginRequest.getEmail();
+        final String password = loginRequest.getPassword();
+        final UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(email, password);
         try {
             authenticationManager.authenticate(token);
-            AccountLoginResponse loginResponse = accountApiLogicService.Login(email);
+//            AccountLoginResponse loginResponse = accountApiLogicService.Login(email);
+            J3UserDetails userDetails = accountApiLogicService.loadUserByUsername(email);
+            final String accessToken = jwtTokenUtil.issueAccessToken(userDetails);
+            final String refreshToken = jwtTokenUtil.issueRefreshToken(userDetails);
+            CookieUtil.addCookie(res, JwtTokenUtil.ACCESS_TOKEN_NAME, accessToken, JwtTokenUtil.ACCESS_EXPIRATION_MS);
+            CookieUtil.addCookie(res, JwtTokenUtil.REFRESH_TOKEN_NAME, refreshToken, JwtTokenUtil.REFRESH_EXPIRATION_MS);
+            redisUtil.setDataExpire(refreshToken, userDetails.getUsername(), JwtTokenUtil.REFRESH_EXPIRATION_MS);
+            AccountLoginResponse loginResponse = new AccountLoginResponse(
+                    userDetails.getUsername(),
+                    userDetails.getAuthorities(),
+                    refreshToken);
+            // user info 알려줌
+            res.addHeader("firstName", userDetails.getFirstName());
             return ResponseEntity.ok(loginResponse);
         }catch (BadCredentialsException e){
             throw new BadCredentialsException("회원정보가 일치하지 않습니다");
         }
+    }
+
+    @ApiOperation(value = "로그아웃 한다", notes = "로그아웃 한다.")
+    @PostMapping("/logout")
+    public ResponseEntity logout(HttpServletRequest req, HttpServletResponse res){
+        Cookie refreshToken = CookieUtil.getCookie(req, JwtTokenUtil.REFRESH_TOKEN_NAME);
+        if (refreshToken != null){
+            redisUtil.deleteData(refreshToken.getValue());
+        }
+        CookieUtil.deleteCookie(res, JwtTokenUtil.ACCESS_TOKEN_NAME);
+        CookieUtil.deleteCookie(res, JwtTokenUtil.REFRESH_TOKEN_NAME);
+        return ResponseEntity.noContent().build(); // 2021-03-07 penguin: refresh
     }
 
     /**
@@ -153,9 +174,11 @@ public class AccountApiController {
      * @param authentication
      * @return
      */
+    @PreAuthorize("hasRole('ROLE_USER')") // 2021-03-07 penguin418: 권한이 없는 사용자에게 403을 리턴합니다
     @GetMapping("/my")
     public ResponseEntity<AccountApiResponse> getMyAccount(Authentication authentication){
         J3UserDetails userDetails = (J3UserDetails)authentication.getPrincipal();
+
         AccountApiResponse account = accountApiLogicService.findAccount(userDetails.getAccountId());
         return ResponseEntity.ok(account);
     }

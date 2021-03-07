@@ -3,6 +3,7 @@ package com.ecommerce.j3.util;
 import com.ecommerce.j3.domain.J3UserDetails;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,22 +11,38 @@ import java.util.Date;
 
 
 @Component
+@PropertySource("classpath:application.properties")
 public class JwtTokenUtil {
-    @Value("jwt.token.secret")
-    private static final String SECRET_KEY = "secret";
-    @Value("jwt.token.expire_at")
-    private static final long EXPIRATION_MS = 86400;
+    @Value("${jwt.token.secret}")
+    private static String SECRET_KEY;
+    @Value("${jwt.token.access.name}")
+    public static String ACCESS_TOKEN_NAME;
+    @Value("${jwt.token.refresh.name}")
+    public static String REFRESH_TOKEN_NAME;
+    @Value("${jwt.token.access.expire_at}")
+    public static Long ACCESS_EXPIRATION_MS;
+    @Value("${jwt.token.refresh.expire_at}")
+    public static Long REFRESH_EXPIRATION_MS;
 
     public String parseTokenString(HttpServletRequest request) {
         String bearerToken = request.getHeader("Authorization");
         if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
             return bearerToken.substring(7);
         }
+
         return null;
     }
 
+    public String issueAccessToken(J3UserDetails userDetails){
+        return issue(userDetails, ACCESS_EXPIRATION_MS);
+    }
+
+    public String issueRefreshToken(J3UserDetails userDetails){
+        return issue(userDetails, REFRESH_EXPIRATION_MS);
+    }
+
     // 자세한 정보는 https://jwt.io
-    public String issue(J3UserDetails userDetails) {
+    public String issue(J3UserDetails userDetails, Long expiration) {
         return Jwts.builder() // => 헤더, 페이로드, 키 (https://velopert.com/2389) (https://tools.ietf.org/html/rfc7519#section-4)
                 // 헤더 - 타입과 알고리즘 정보
                 // 헤더 - 타입(typ)
@@ -41,7 +58,7 @@ public class JwtTokenUtil {
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
                 // 만료시간 (exp)
                 // 2020-02-27 penguin 만료시간 하루로 늘림
-                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_MS * 1000)) // 만료시간
+                .setExpiration(new Date(System.currentTimeMillis() + expiration)) // 만료시간
                 .compact();
     }
 
