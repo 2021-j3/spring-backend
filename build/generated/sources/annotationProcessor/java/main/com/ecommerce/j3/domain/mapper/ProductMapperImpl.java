@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2021-03-08T00:29:47+0900",
+    date = "2021-03-08T00:33:05+0900",
     comments = "version: 1.4.2.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-6.7.1.jar, environment: Java 11.0.2 (Oracle Corporation)"
 )
 @Component
@@ -72,6 +72,7 @@ public class ProductMapperImpl extends ProductMapper {
         productApiResponse.slug( entity.getSlug() );
         productApiResponse.sku( entity.getSku() );
         productApiResponse.price( entity.getPrice() );
+        productApiResponse.discountPrice( entity.getDiscountPrice() );
         productApiResponse.quantity( entity.getQuantity() );
         productApiResponse.soldCount( entity.getSoldCount() );
         productApiResponse.thumbnailPath( entity.getThumbnailPath() );
@@ -104,7 +105,9 @@ public class ProductMapperImpl extends ProductMapper {
         searchResultItem.sellerId( commonMapper.mapAccountToAccountId( entity.getSeller() ) );
         searchResultItem.productId( entity.getProductId() );
         searchResultItem.title( entity.getTitle() );
+        searchResultItem.slug( entity.getSlug() );
         searchResultItem.price( entity.getPrice() );
+        searchResultItem.discountPrice( entity.getDiscountPrice() );
         searchResultItem.quantity( entity.getQuantity() );
         searchResultItem.soldCount( entity.getSoldCount() );
         searchResultItem.thumbnailPath( entity.getThumbnailPath() );
