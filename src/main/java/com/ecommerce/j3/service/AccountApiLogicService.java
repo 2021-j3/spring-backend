@@ -75,7 +75,7 @@ public class AccountApiLogicService implements UserDetailsService {
         return new AccountLoginResponse(
                 user.getUsername(),
                 user.getAuthorities(),
-                jwtTokenUtil.issue(user));
+                jwtTokenUtil.issueAccessToken(user));
     }
 
 

@@ -17,12 +17,16 @@ import java.util.List;
 public class J3UserDetails extends User {
 
     private Long accountId;
+    private String firstName;
+    private String lastName;
 
     public J3UserDetails(Account account){
         super(account.getEmail(),
                 account.getPasswordHash(),
                 authorities(account.getAccountType()));
         this.accountId = account.getAccountId();
+        this.firstName = account.getFirstName();
+        this.lastName = account.getLastName();
     }
 
     /** 2021-02-15 penguin418
