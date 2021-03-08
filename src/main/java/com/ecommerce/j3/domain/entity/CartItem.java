@@ -22,10 +22,10 @@ public class CartItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cartItemId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     private Product product;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cart_id")
     private Cart cart;
 
@@ -55,13 +55,34 @@ public class CartItem {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    public static CartItem createCartItem(Cart cart,Integer quantity, Product product){
+    // 03-07-2021
+    public static CartItem createCartItem(Cart cart, Integer quantity, Product product) {
         CartItem cartItem = new CartItem();
         cartItem.cart = cart;
         cartItem.product = product;
-        cartItem.price = product.getPrice();
-        cartItem.quantity = quantity;
+        if (product.getQuantity() != 0) {
+            cartItem.price = product.getPrice();
+            cartItem.discountPrice = product.getDiscountPrice();
+            cartItem.sku = product.getSku();
+            cartItem.content = product.getContent();
+            cartItem.quantity = quantity;
+            cartItem.active = 1;
+            cart.updateItem(cartItem);
+        }
 
         return cartItem;
+    }
+    public Integer UpdateQuantity(Integer quantity) {
+        this.quantity = this.quantity + quantity;
+        return quantity;
+    }
+
+    public void setActive(Character s) {
+        if (s == 'D') {
+            this.active = 0;
+        } else if (s == 'U') {
+            this.active = 2;
+        }
+
     }
 }

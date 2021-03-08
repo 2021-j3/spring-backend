@@ -90,4 +90,20 @@ public class Cart {
         cart.zipCode = address.getZipCode();
         return cart;
     }
+
+    public void updateItem(CartItem cartItem) {
+        if (cartItem.getActive() == 1) {
+            this.itemPriceTotal = this.itemPriceTotal + cartItem.getPrice() * cartItem.getQuantity();
+            this.itemDiscount = this.itemDiscount + cartItem.getDiscountPrice() * cartItem.getQuantity();
+        } else if (cartItem.getActive() == 0) {
+            this.itemPriceTotal = this.itemPriceTotal - cartItem.getPrice() * cartItem.getQuantity();
+            this.itemDiscount = this.itemDiscount - cartItem.getDiscountPrice() * cartItem.getQuantity();
+        }
+
+    }
+
+    public void updateItem(Integer price, Integer quantity, Integer discountprice) {
+        this.itemPriceTotal = this.itemPriceTotal + price * quantity;
+        this.itemDiscount = this.itemDiscount + discountprice * quantity;
+    }
 }

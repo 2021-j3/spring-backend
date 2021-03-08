@@ -2,10 +2,7 @@ package com.ecommerce.j3.service;
 
 
 import com.ecommerce.j3.controller.dto.CartDto;
-import com.ecommerce.j3.domain.entity.Account;
-import com.ecommerce.j3.domain.entity.Address;
-import com.ecommerce.j3.domain.entity.Cart;
-import com.ecommerce.j3.domain.entity.CartItem;
+import com.ecommerce.j3.domain.entity.*;
 import com.ecommerce.j3.domain.mapper.CartMapper;
 import com.ecommerce.j3.repository.AccountRepository;
 import com.ecommerce.j3.repository.CartItemRepository;
@@ -16,6 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -76,18 +75,37 @@ public class CartApiLogicService {
         return cartMapper.toApiResponse(cart);
     }
 
-    // cart item
-    public long addItem(long cartid,long productid,Integer quantity) {
-        Cart cart = findById(cartid);
-        cart.getCartItems().add(CartItem.createCartItem(cart,quantity,productRepository.findById(productid).orElse(null)));
-
-        return save(cart).getCartId();
-
+    // add new item
+    public long addNewItem(long cartid, long productid, Integer quantity) {
+        Cart cart = this.findById(cartid);
+        cart.getCartItems().add(CartItem.createCartItem(cart, quantity,this.productRepository.findById(productid).orElse(null)));
+        return this.save(cart).getCartId();
     }
+    // update the quantity existing item
+    public long addItem(long cartId, long productId, Integer quantity) {
+        Cart cart = this.findById(cartId);
+        CartItem cartItem = new CartItem();
 
+        for(CartItem ci : cart.getCartItems()) {
+            if (ci.getProduct().getProductId() == productId) {
+                cartItem = ci;
+                break;
+            }
+        }
+
+        cart.updateItem(cartItem.getPrice(), quantity, cartItem.getDiscountPrice());
+        if (cartItem.UpdateQuantity(quantity) == 0) {
+            cart.getCartItems().remove(cartItem);
+        }
+
+        return this.save(cart).getCartId();
+    }
     public long deleteItem(long cartId, long cartitemId) {
-        Cart cart = findById(cartId);
-        cart.getCartItems().remove(cartItemRepository.findById(cartitemId).get());
-        return save(cart).getCartId();
+        Cart cart = this.findById(cartId);
+        CartItem cartItem = (CartItem)this.cartItemRepository.findById(cartitemId).get();
+        cartItem.setActive('D');
+        cart.updateItem(cartItem);
+        cart.getCartItems().remove(cartItem);
+        return this.save(cart).getCartId();
     }
 }
