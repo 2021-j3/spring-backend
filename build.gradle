@@ -77,8 +77,6 @@ dependencies {
 	testImplementation 'junit:junit:4.13.1'
 	annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}", "org.projectlombok:lombok:${lombokVersion}", "org.projectlombok:lombok-mapstruct-binding:${lombokMapstructBindingVersion}"
 
-	/* configuration */
-	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 }
 
 test {
