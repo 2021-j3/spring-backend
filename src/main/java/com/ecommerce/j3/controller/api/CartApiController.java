@@ -81,10 +81,15 @@ public class CartApiController {
     @ApiOperation(value = "카트아이템 추가", notes = "카트아이템을 추가한다.")
     @PostMapping("/api/carts/{cartIdx}/cartItem")
     public BodyData<CartItemDto.createCartItemApiResponse> cartItemCreate(@PathVariable("cartIdx") long cartidx, @RequestBody  CartItemDto.createCartItemApiRequest createCartItemApiRequest) {
-        CartItemDto.createCartItemApiResponse createCartItemApiResponse = new CartItemDto.createCartItemApiResponse(cartService.addItem(cartidx,createCartItemApiRequest.getProductid(),createCartItemApiRequest.getQuantity()));
+        CartItemDto.createCartItemApiResponse createCartItemApiResponse = new CartItemDto.createCartItemApiResponse(cartService.addNewItem(cartidx,createCartItemApiRequest.getProductid(),createCartItemApiRequest.getQuantity()));
         return BodyData.OK(createCartItemApiResponse);
     }
-
+    @ApiOperation(value = "카트아이템 수량 변경 ", notes = "카트아이템 수량 증가/감소시킨다.")
+    @PutMapping({"/api/carts/{cartIdx}/cartItem"})
+    public BodyData<CartItemDto.createCartItemApiResponse> cartItemUpdate(@PathVariable("cartIdx") long cartidx, @RequestBody CartItemDto.createCartItemApiRequest createCartItemApiRequest) {
+        CartItemDto.createCartItemApiResponse createCartItemApiResponse = new CartItemDto.createCartItemApiResponse(this.cartService.addItem(cartidx, createCartItemApiRequest.getProductid(), createCartItemApiRequest.getQuantity()));
+        return BodyData.OK(createCartItemApiResponse);
+    }
     @ApiOperation(value = "카트아이템 삭제", notes = "카트아이템을 삭제한다.")
     @DeleteMapping("/api/carts/{cartIdx}/cartItem/{cartitemIdx}")
     public BodyData<CartItemDto.deleteCartItemApiResponse> cartItemDelete(@PathVariable("cartIdx") long cartidx,@PathVariable("cartitemIdx") long cartitemidx) {

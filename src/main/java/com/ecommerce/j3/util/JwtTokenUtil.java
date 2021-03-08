@@ -13,16 +13,12 @@ import java.util.Date;
 @Component
 @PropertySource("classpath:application.properties")
 public class JwtTokenUtil {
-    @Value("${jwt.token.secret}")
-    private static String SECRET_KEY;
-    @Value("${jwt.token.access.name}")
-    public static String ACCESS_TOKEN_NAME;
-    @Value("${jwt.token.refresh.name}")
-    public static String REFRESH_TOKEN_NAME;
-    @Value("${jwt.token.access.expire_at}")
-    public static Long ACCESS_EXPIRATION_MS;
-    @Value("${jwt.token.refresh.expire_at}")
-    public static Long REFRESH_EXPIRATION_MS;
+    // 2021-03-08 penguin418: static 은 @value 를 사용하려면 setter 를 넣어야 하므로  immutability 를 고려하여 원상복구 했습니다
+    private final static String SECRET_KEY="secret";
+    public final static String ACCESS_TOKEN_NAME="ACCESS_TOKEN";
+    public final static String REFRESH_TOKEN_NAME="REFRESH_TOKEN";
+    public final static Long ACCESS_EXPIRATION_MS=864000L;
+    public final static Long REFRESH_EXPIRATION_MS=86400000L;
 
     public String parseTokenString(HttpServletRequest request) {
         String bearerToken = request.getHeader("Authorization");
