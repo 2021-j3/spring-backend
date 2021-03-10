@@ -1,18 +1,12 @@
 package com.ecommerce.j3.service;
 
 import com.ecommerce.j3.controller.dto.AccountDto;
-import com.ecommerce.j3.controller.dto.AccountDto.AccountApiRequest;
 import com.ecommerce.j3.controller.dto.AccountDto.AccountApiResponse;
 import com.ecommerce.j3.controller.dto.AccountDto.AccountLoginResponse;
-import com.ecommerce.j3.controller.dto.AddressDto;
 import com.ecommerce.j3.domain.J3UserDetails;
 import com.ecommerce.j3.domain.entity.Account;
-import com.ecommerce.j3.domain.entity.AccountType;
-import com.ecommerce.j3.domain.entity.Address;
 import com.ecommerce.j3.domain.mapper.AccountMapper;
-import com.ecommerce.j3.domain.mapper.AddressMapper;
 import com.ecommerce.j3.repository.AccountRepository;
-import com.ecommerce.j3.repository.AddressRepository;
 import com.ecommerce.j3.util.JwtTokenUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -32,7 +26,7 @@ public class AccountApiLogicService implements UserDetailsService {
     private final AccountMapper accountMapper;
     private final JwtTokenUtil jwtTokenUtil;
 
-    public AccountApiResponse saveAccount(AccountApiRequest accountApiRequest) {
+    public AccountApiResponse saveAccount(AccountDto.AccountApiRequest accountApiRequest) {
         // 검사
         validateDuplicateAccountEmail(accountApiRequest);
         validateDuplicatePhoneNumber(accountApiRequest);
@@ -58,7 +52,7 @@ public class AccountApiLogicService implements UserDetailsService {
     }
 
     public AccountApiResponse updateAccount(AccountDto.UpdateAccountRequest accountInfo) {
-        AccountApiRequest request = accountMapper.toRequestDto(accountInfo);
+        AccountDto.AccountApiRequest request = accountMapper.toRequestDto(accountInfo);
         Account accountFromDB = findById(accountInfo.getAccountId());
         Account updatedAccount = accountMapper.updateFromDto(accountFromDB, request);
         accountRepository.save(updatedAccount);
@@ -93,12 +87,12 @@ public class AccountApiLogicService implements UserDetailsService {
     }
 
     // 프라이빗 한정자, AccountService 내에서 접근가능
-    private void validateDuplicateAccountEmail(AccountApiRequest accountApiRequest) {
+    private void validateDuplicateAccountEmail(AccountDto.AccountApiRequest accountApiRequest) {
         if (findByEmail(accountApiRequest.getEmail()) != null)
             throw new EntityExistsException("존재하는 이메일");
     }
 
-    private void validateDuplicatePhoneNumber(AccountApiRequest accountApiRequest){
+    private void validateDuplicatePhoneNumber(AccountDto.AccountApiRequest accountApiRequest){
         if(findByPhoneNumber(accountApiRequest.getPhoneNumber()) != null)
             throw new EntityExistsException("존재하는 휴대폰번호");
     }

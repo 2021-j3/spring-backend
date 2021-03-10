@@ -2,6 +2,8 @@ package com.ecommerce.j3.controller.api;
 
 import com.ecommerce.j3.controller.dto.OrderDto;
 //import com.ecommerce.j3.service.AccountApiLogicService;
+import com.ecommerce.j3.controller.dto.OrderItemDto;
+import com.ecommerce.j3.domain.J3UserDetails;
 import com.ecommerce.j3.service.OrderApiLogicService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -9,6 +11,8 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
@@ -29,6 +33,22 @@ public class OrderApiController {
     */
 
     private final OrderApiLogicService orderService;
+
+    /**
+     * 상품 페이지에서 주문하기 눌렀을때
+     * @param authentication { Authentication } filter 에서 추가된 인증
+     * @return ResponseEntity
+     */
+    @ApiOperation(value = "(Order) 0. POST", notes = "(상품페이지에서) 주문하기를 눌렀을 때")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @PostMapping("/by/product")
+    public ResponseEntity<OrderDto.OrderApiResponse> createDirectOrder(
+            @RequestBody OrderItemDto.CreateRequestFromProduct request, Authentication authentication){
+        J3UserDetails userDetails = (J3UserDetails) authentication.getPrincipal();
+        OrderDto.OrderApiResponse response = orderService.makeOrderFromProduct(userDetails.getAccountId(), request);
+        return ResponseEntity.ok(response);
+    }
+
 //    private final ProductApiLogicService productApiLogicService;
 //    private final AccountService accountService;
 

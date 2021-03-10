@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2021-03-08T16:12:17+0900",
+    date = "2021-03-10T12:34:18+0900",
     comments = "version: 1.4.2.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-6.7.1.jar, environment: Java 11.0.2 (Oracle Corporation)"
 )
 @Component
@@ -37,6 +37,7 @@ public class OrderMapperImpl extends OrderMapper {
         order.sessionId( dto.getSessionId() );
         order.token( dto.getToken() );
         order.status( dto.getStatus() );
+        order.payInfo( commonMapper.mapPayInfoToPayInfo2( dto.getPayInfo() ) );
         order.content( dto.getContent() );
         order.createdAt( dto.getCreatedAt() );
         order.updatedAt( dto.getUpdatedAt() );
@@ -52,15 +53,16 @@ public class OrderMapperImpl extends OrderMapper {
 
         OrderApiResponseBuilder orderApiResponse = OrderApiResponse.builder();
 
-        orderApiResponse.ordersId( order.getOrdersId() );
-        orderApiResponse.account( order.getAccount() );
         List<OrderItem> list = order.getOrderItems();
         if ( list != null ) {
             orderApiResponse.orderItems( new ArrayList<OrderItem>( list ) );
         }
+        orderApiResponse.ordersId( order.getOrdersId() );
+        orderApiResponse.account( order.getAccount() );
         orderApiResponse.sessionId( order.getSessionId() );
         orderApiResponse.token( order.getToken() );
         orderApiResponse.status( order.getStatus() );
+        orderApiResponse.payInfo( commonMapper.mapPayInfoToPayInfo2( order.getPayInfo() ) );
         orderApiResponse.content( order.getContent() );
         orderApiResponse.createdAt( order.getCreatedAt() );
         orderApiResponse.updatedAt( order.getUpdatedAt() );

@@ -47,7 +47,7 @@ public class CartItemDto {
     @Data
     public static class createCartItemApiRequest{
         private Integer quantity;
-        private long productid;
+        private long productId;
     }
     @Data
     public static class createCartItemApiResponse {

@@ -1,19 +1,19 @@
-com/ecommerce/j3/domain/entity/OrderItem.java
- com.ecommerce.j3.domain.entity.OrderItem
- com.ecommerce.j3.domain.entity.OrderItem$OrderItemBuilder
-com/ecommerce/j3/service/OrderItemApiLogicService.java
- com.ecommerce.j3.service.OrderItemApiLogicService
+com/ecommerce/j3/J3Application.java
+ com.ecommerce.j3.J3Application
+com/ecommerce/j3/domain/entity/Tag.java
+ com.ecommerce.j3.domain.entity.Tag
+ com.ecommerce.j3.domain.entity.Tag$TagBuilder
 com/ecommerce/j3/controller/HelloController.java
  com.ecommerce.j3.controller.HelloController
 com/ecommerce/j3/domain/entity/CartItem.java
  com.ecommerce.j3.domain.entity.CartItem
  com.ecommerce.j3.domain.entity.CartItem$CartItemBuilder
-com/ecommerce/j3/domain/mapper/OrderItemMapper.java
- com.ecommerce.j3.domain.mapper.OrderItemMapper
+com/ecommerce/j3/LoginController.java
+ com.ecommerce.j3.LoginController
 com/ecommerce/j3/domain/entity/OrderStatus.java
  com.ecommerce.j3.domain.entity.OrderStatus
-com/ecommerce/j3/service/WatchApiLogicService.java
- com.ecommerce.j3.service.WatchApiLogicService
+com/ecommerce/j3/domain/entity/embedded/PayInfo2.java
+ com.ecommerce.j3.domain.entity.embedded.PayInfo2
 com/ecommerce/j3/controller/dto/CategoryDto.java
  com.ecommerce.j3.controller.dto.CategoryDto
  com.ecommerce.j3.controller.dto.CategoryDto$CategoryApiRequest
@@ -24,27 +24,31 @@ com/ecommerce/j3/domain/entity/Category.java
  com.ecommerce.j3.domain.entity.Category$CategoryBuilder
 com/ecommerce/j3/repository/WatchRepositoryInterface.java
  com.ecommerce.j3.repository.WatchRepositoryInterface
-com/ecommerce/j3/domain/entity/Payment.java
- com.ecommerce.j3.domain.entity.Payment
- com.ecommerce.j3.domain.entity.Payment$PaymentBuilder
+com/ecommerce/j3/domain/entity/GenderType.java
+ com.ecommerce.j3.domain.entity.GenderType
 com/ecommerce/j3/controller/ErrorType.java
  com.ecommerce.j3.controller.ErrorType
 com/ecommerce/j3/controller/api/SuggestionApiController.java
  com.ecommerce.j3.controller.api.SuggestionApiController
 com/ecommerce/j3/domain/mapper/DefaultMapper.java
  com.ecommerce.j3.domain.mapper.DefaultMapper
-com/ecommerce/j3/controller/api/OrderItemApiController.java
- com.ecommerce.j3.controller.api.OrderItemApiController
+com/ecommerce/j3/repository/ReviewRepositoryCustomImpl.java
+ com.ecommerce.j3.repository.ReviewRepositoryCustomImpl
 com/ecommerce/j3/controller/api/TagApiController.java
  com.ecommerce.j3.controller.api.TagApiController
-com/ecommerce/j3/service/SuggestionApiLogicService.java
- com.ecommerce.j3.service.SuggestionApiLogicService
-com/ecommerce/j3/service/CartItemLogicService.java
- com.ecommerce.j3.service.CartItemLogicService
+com/ecommerce/j3/controller/dto/SuggestionDto.java
+ com.ecommerce.j3.controller.dto.SuggestionDto
+ com.ecommerce.j3.controller.dto.SuggestionDto$SuggestionApiRequest
+ com.ecommerce.j3.controller.dto.SuggestionDto$SuggestionApiResponse
+com/ecommerce/j3/repository/CartRepository.java
+ com.ecommerce.j3.repository.CartRepository
 com/ecommerce/j3/repository/OrderRepository.java
  com.ecommerce.j3.repository.OrderRepository
-com/ecommerce/j3/service/DefaultAddressApiLogicService.java
- com.ecommerce.j3.service.DefaultAddressApiLogicService
+com/ecommerce/j3/controller/dto/AddressDto.java
+ com.ecommerce.j3.controller.dto.AddressDto
+ com.ecommerce.j3.controller.dto.AddressDto$AddressApiRequest
+ com.ecommerce.j3.controller.dto.AddressDto$AddressApiResponse
+ com.ecommerce.j3.controller.dto.AddressDto$UpdateDefaultAddressRequest
 com/ecommerce/j3/repository/CategoryRepository.java
  com.ecommerce.j3.repository.CategoryRepository
 com/ecommerce/j3/domain/entity/Cart.java
@@ -54,16 +58,17 @@ com/ecommerce/j3/repository/TagRepository.java
  com.ecommerce.j3.repository.TagRepository
 com/ecommerce/j3/controller/dto/DefaultMapper.java
  com.ecommerce.j3.controller.dto.DefaultMapper
-com/ecommerce/j3/config/SecurityConfig.java
- com.ecommerce.j3.config.SecurityConfig
-com/ecommerce/j3/service/AccountApiLogicService.java
- com.ecommerce.j3.service.AccountApiLogicService
+com/ecommerce/j3/repository/PaymentRepository.java
+ com.ecommerce.j3.repository.PaymentRepository
+com/ecommerce/j3/domain/entity/Product.java
+ com.ecommerce.j3.domain.entity.Product
+ com.ecommerce.j3.domain.entity.Product$ProductBuilder
 com/ecommerce/j3/repository/OrderItemRepository.java
  com.ecommerce.j3.repository.OrderItemRepository
-com/ecommerce/j3/domain/mapper/WatchMapper.java
- com.ecommerce.j3.domain.mapper.WatchMapper
-com/ecommerce/j3/service/TagApiLogicService.java
- com.ecommerce.j3.service.TagApiLogicService
+com/ecommerce/j3/util/JwtTokenUtil.java
+ com.ecommerce.j3.util.JwtTokenUtil
+com/ecommerce/j3/repository/ProductRepositoryCustomImpl.java
+ com.ecommerce.j3.repository.ProductRepositoryCustomImpl
 com/ecommerce/j3/controller/dto/ProductDto.java
  com.ecommerce.j3.controller.dto.ProductDto
  com.ecommerce.j3.controller.dto.ProductDto$ProductApiRequest
@@ -86,143 +91,6 @@ com/ecommerce/j3/config/SwaggerConfig.java
  com.ecommerce.j3.config.SwaggerConfig
 com/ecommerce/j3/domain/mapper/PhoneNumberValidator.java
  com.ecommerce.j3.domain.mapper.PhoneNumberValidator
-com/ecommerce/j3/controller/api/ProductApiController.java
- com.ecommerce.j3.controller.api.ProductApiController
-com/ecommerce/j3/util/RedisUtil.java
- com.ecommerce.j3.util.RedisUtil
-com/ecommerce/j3/controller/dto/OrderDto.java
- com.ecommerce.j3.controller.dto.OrderDto
- com.ecommerce.j3.controller.dto.OrderDto$OrderApiRequest
- com.ecommerce.j3.controller.dto.OrderDto$OrderApiRequest$OrderApiRequestBuilder
- com.ecommerce.j3.controller.dto.OrderDto$OrderApiResponse
- com.ecommerce.j3.controller.dto.OrderDto$OrderApiResponse$OrderApiResponseBuilder
- com.ecommerce.j3.controller.dto.OrderDto$PayInfo
- com.ecommerce.j3.controller.dto.OrderDto$PayInfo$PayInfoBuilder
- com.ecommerce.j3.controller.dto.OrderDto$UserInfo
- com.ecommerce.j3.controller.dto.OrderDto$UserInfo$UserInfoBuilder
-com/ecommerce/j3/controller/api/CategoryApiController.java
- com.ecommerce.j3.controller.api.CategoryApiController
-com/ecommerce/j3/service/AddressApiLogicService.java
- com.ecommerce.j3.service.AddressApiLogicService
-com/ecommerce/j3/controller/HomeController.java
- com.ecommerce.j3.controller.HomeController
-com/ecommerce/j3/repository/WatchRepositoryCustomImpl.java
- com.ecommerce.j3.repository.WatchRepositoryCustomImpl
-com/ecommerce/j3/repository/OrdersRepositoryInterface.java
- com.ecommerce.j3.repository.OrdersRepositoryInterface
-com/ecommerce/j3/repository/SuggestionRepository.java
- com.ecommerce.j3.repository.SuggestionRepository
-com/ecommerce/j3/controller/api/CartApiController.java
- com.ecommerce.j3.controller.api.CartApiController
-com/ecommerce/j3/service/PaymentApiLogicService.java
- com.ecommerce.j3.service.PaymentApiLogicService
-com/ecommerce/j3/controller/dto/WatchDto.java
- com.ecommerce.j3.controller.dto.WatchDto
- com.ecommerce.j3.controller.dto.WatchDto$WatchApiRequest
- com.ecommerce.j3.controller.dto.WatchDto$WatchApiResponse
-com/ecommerce/j3/repository/ProductSpecs.java
- com.ecommerce.j3.repository.ProductSpecs
-com/ecommerce/j3/repository/CategoryRepositoryCustom.java
- com.ecommerce.j3.repository.CategoryRepositoryCustom
-com/ecommerce/j3/domain/entity/PaymentType.java
- com.ecommerce.j3.domain.entity.PaymentType
-com/ecommerce/j3/controller/api/ReviewApiController.java
- com.ecommerce.j3.controller.api.ReviewApiController
-com/ecommerce/j3/service/ReviewApiLogicService.java
- com.ecommerce.j3.service.ReviewApiLogicService
-com/ecommerce/j3/controller/api/OrderApiController.java
- com.ecommerce.j3.controller.api.OrderApiController
-com/ecommerce/j3/domain/entity/AccountType.java
- com.ecommerce.j3.domain.entity.AccountType
-com/ecommerce/j3/repository/ProductRepository.java
- com.ecommerce.j3.repository.ProductRepository
-com/ecommerce/j3/controller/dto/CartItemDto.java
- com.ecommerce.j3.controller.dto.CartItemDto
- com.ecommerce.j3.controller.dto.CartItemDto$CartItemApiRequest
- com.ecommerce.j3.controller.dto.CartItemDto$CartItemApiResponse
- com.ecommerce.j3.controller.dto.CartItemDto$createCartItemApiRequest
- com.ecommerce.j3.controller.dto.CartItemDto$createCartItemApiResponse
- com.ecommerce.j3.controller.dto.CartItemDto$deleteCartItemApiResponse
-com/ecommerce/j3/service/CartApiLogicService.java
- com.ecommerce.j3.service.CartApiLogicService
-com/ecommerce/j3/domain/J3UserDetails.java
- com.ecommerce.j3.domain.J3UserDetails
-com/ecommerce/j3/domain/entity/Order.java
- com.ecommerce.j3.domain.entity.Order
- com.ecommerce.j3.domain.entity.Order$OrderBuilder
-com/ecommerce/j3/controller/api/AddressApiController.java
- com.ecommerce.j3.controller.api.AddressApiController
-com/ecommerce/j3/domain/entity/PaymentStatus.java
- com.ecommerce.j3.domain.entity.PaymentStatus
-com/ecommerce/j3/domain/mapper/ProductMapper.java
- com.ecommerce.j3.domain.mapper.ProductMapper
-com/ecommerce/j3/controller/dto/TagDto.java
- com.ecommerce.j3.controller.dto.TagDto
- com.ecommerce.j3.controller.dto.TagDto$TagApiRequest
- com.ecommerce.j3.controller.dto.TagDto$TagApiResponse
-com/ecommerce/j3/domain/mapper/PhoneNumber.java
- com.ecommerce.j3.domain.mapper.PhoneNumber
-com/ecommerce/j3/repository/CategoryRepositoryCustomImpl.java
- com.ecommerce.j3.repository.CategoryRepositoryCustomImpl
-com/ecommerce/j3/service/CategoryApiLogicService.java
- com.ecommerce.j3.service.CategoryApiLogicService
-com/ecommerce/j3/filters/JwtTokenFilter.java
- com.ecommerce.j3.filters.JwtTokenFilter
-com/ecommerce/j3/controller/ReviewController.java
- com.ecommerce.j3.controller.ReviewController
-com/ecommerce/j3/domain/entity/Address.java
- com.ecommerce.j3.domain.entity.Address
- com.ecommerce.j3.domain.entity.Address$AddressBuilder
-com/ecommerce/j3/controller/api/AccountApiController.java
- com.ecommerce.j3.controller.api.AccountApiController
-com/ecommerce/j3/domain/mapper/CartMapper.java
- com.ecommerce.j3.domain.mapper.CartMapper
-com/ecommerce/j3/repository/CartItemRepository.java
- com.ecommerce.j3.repository.CartItemRepository
-com/ecommerce/j3/service/OrderApiLogicService.java
- com.ecommerce.j3.service.OrderApiLogicService
-com/ecommerce/j3/domain/mapper/CommonMapper.java
- com.ecommerce.j3.domain.mapper.CommonMapper
-com/ecommerce/j3/domain/mapper/SuggestionMapper.java
- com.ecommerce.j3.domain.mapper.SuggestionMapper
-com/ecommerce/j3/domain/mapper/AddressMapper.java
- com.ecommerce.j3.domain.mapper.AddressMapper
-com/ecommerce/j3/domain/entity/Watch.java
- com.ecommerce.j3.domain.entity.Watch
- com.ecommerce.j3.domain.entity.Watch$WatchBuilder
-com/ecommerce/j3/domain/entity/Review.java
- com.ecommerce.j3.domain.entity.Review
- com.ecommerce.j3.domain.entity.Review$ReviewBuilder
-com/ecommerce/j3/domain/mapper/AccountMapper.java
- com.ecommerce.j3.domain.mapper.AccountMapper
-com/ecommerce/j3/repository/AccountRepository.java
- com.ecommerce.j3.repository.AccountRepository
-com/ecommerce/j3/domain/mapper/TagMapper.java
- com.ecommerce.j3.domain.mapper.TagMapper
-com/ecommerce/j3/controller/dto/PaymentDto.java
- com.ecommerce.j3.controller.dto.PaymentDto
- com.ecommerce.j3.controller.dto.PaymentDto$PaymentApiRequest
- com.ecommerce.j3.controller.dto.PaymentDto$PaymentApiResponse
-com/ecommerce/j3/controller/dto/SuggestionDto.java
- com.ecommerce.j3.controller.dto.SuggestionDto
- com.ecommerce.j3.controller.dto.SuggestionDto$SuggestionApiRequest
- com.ecommerce.j3.controller.dto.SuggestionDto$SuggestionApiResponse
-com/ecommerce/j3/repository/CartRepository.java
- com.ecommerce.j3.repository.CartRepository
-com/ecommerce/j3/controller/dto/CartDto.java
- com.ecommerce.j3.controller.dto.CartDto
- com.ecommerce.j3.controller.dto.CartDto$CartApiRequest
- com.ecommerce.j3.controller.dto.CartDto$CartApiResponse
- com.ecommerce.j3.controller.dto.CartDto$createCartApiResponse
- com.ecommerce.j3.controller.dto.CartDto$deleteCartApiResponse
- com.ecommerce.j3.controller.dto.CartDto$readCartApiResponse
-com/ecommerce/j3/domain/entity/Account.java
- com.ecommerce.j3.domain.entity.Account
- com.ecommerce.j3.domain.entity.Account$AccountBuilder
-com/ecommerce/j3/domain/mapper/CartItemMapper.java
- com.ecommerce.j3.domain.mapper.CartItemMapper
-com/ecommerce/j3/repository/ProductRepositoryCustomImpl.java
- com.ecommerce.j3.repository.ProductRepositoryCustomImpl
 com/ecommerce/j3/controller/dto/AccountDto.java
  com.ecommerce.j3.controller.dto.AccountDto
  com.ecommerce.j3.controller.dto.AccountDto$AccountApiRequest
@@ -235,69 +103,207 @@ com/ecommerce/j3/controller/dto/AccountDto.java
  com.ecommerce.j3.controller.dto.AccountDto$LoginRequest
  com.ecommerce.j3.controller.dto.AccountDto$UpdateAccountRequest
  com.ecommerce.j3.controller.dto.AccountDto$UpdateAccountRequest$UpdateAccountRequestBuilder
+com/ecommerce/j3/util/RedisUtil.java
+ com.ecommerce.j3.util.RedisUtil
+com/ecommerce/j3/controller/dto/OrderDto.java
+ com.ecommerce.j3.controller.dto.OrderDto
+ com.ecommerce.j3.controller.dto.OrderDto$OrderApiRequest
+ com.ecommerce.j3.controller.dto.OrderDto$OrderApiRequest$OrderApiRequestBuilder
+ com.ecommerce.j3.controller.dto.OrderDto$OrderApiResponse
+ com.ecommerce.j3.controller.dto.OrderDto$OrderApiResponse$OrderApiResponseBuilder
+ com.ecommerce.j3.controller.dto.OrderDto$PayInfo
+ com.ecommerce.j3.controller.dto.OrderDto$PayInfo$PayInfoBuilder
+ com.ecommerce.j3.controller.dto.OrderDto$UserInfo
+ com.ecommerce.j3.controller.dto.OrderDto$UserInfo$UserInfoBuilder
+com/ecommerce/j3/domain/entity/Account.java
+ com.ecommerce.j3.domain.entity.Account
+ com.ecommerce.j3.domain.entity.Account$AccountBuilder
 com/ecommerce/j3/domain/entity/Suggestion.java
  com.ecommerce.j3.domain.entity.Suggestion
  com.ecommerce.j3.domain.entity.Suggestion$SuggestionBuilder
+com/ecommerce/j3/controller/HomeController.java
+ com.ecommerce.j3.controller.HomeController
+com/ecommerce/j3/repository/WatchRepositoryCustomImpl.java
+ com.ecommerce.j3.repository.WatchRepositoryCustomImpl
+com/ecommerce/j3/repository/OrdersRepositoryInterface.java
+ com.ecommerce.j3.repository.OrdersRepositoryInterface
+com/ecommerce/j3/repository/SuggestionRepository.java
+ com.ecommerce.j3.repository.SuggestionRepository
+com/ecommerce/j3/exception/NotEnoughStockException.java
+ com.ecommerce.j3.exception.NotEnoughStockException
+com/ecommerce/j3/repository/AccountRepository.java
+ com.ecommerce.j3.repository.AccountRepository
+com/ecommerce/j3/controller/dto/WatchDto.java
+ com.ecommerce.j3.controller.dto.WatchDto
+ com.ecommerce.j3.controller.dto.WatchDto$WatchApiRequest
+ com.ecommerce.j3.controller.dto.WatchDto$WatchApiResponse
+com/ecommerce/j3/repository/ProductSpecs.java
+ com.ecommerce.j3.repository.ProductSpecs
+com/ecommerce/j3/repository/CategoryRepositoryCustom.java
+ com.ecommerce.j3.repository.CategoryRepositoryCustom
+com/ecommerce/j3/domain/entity/PaymentType.java
+ com.ecommerce.j3.domain.entity.PaymentType
+com/ecommerce/j3/controller/dto/CartDto.java
+ com.ecommerce.j3.controller.dto.CartDto
+ com.ecommerce.j3.controller.dto.CartDto$CartApiRequest
+ com.ecommerce.j3.controller.dto.CartDto$CartApiResponse
+ com.ecommerce.j3.controller.dto.CartDto$createCartApiResponse
+ com.ecommerce.j3.controller.dto.CartDto$deleteCartApiResponse
+ com.ecommerce.j3.controller.dto.CartDto$readCartApiResponse
+com/ecommerce/j3/repository/ProductRepositoryCustom.java
+ com.ecommerce.j3.repository.ProductRepositoryCustom
+com/ecommerce/j3/domain/entity/Address.java
+ com.ecommerce.j3.domain.entity.Address
+ com.ecommerce.j3.domain.entity.Address$AddressBuilder
+com/ecommerce/j3/domain/entity/AccountType.java
+ com.ecommerce.j3.domain.entity.AccountType
+com/ecommerce/j3/repository/ProductRepository.java
+ com.ecommerce.j3.repository.ProductRepository
+com/ecommerce/j3/controller/dto/CartItemDto.java
+ com.ecommerce.j3.controller.dto.CartItemDto
+ com.ecommerce.j3.controller.dto.CartItemDto$CartItemApiRequest
+ com.ecommerce.j3.controller.dto.CartItemDto$CartItemApiResponse
+ com.ecommerce.j3.controller.dto.CartItemDto$createCartItemApiRequest
+ com.ecommerce.j3.controller.dto.CartItemDto$createCartItemApiResponse
+ com.ecommerce.j3.controller.dto.CartItemDto$deleteCartItemApiResponse
+com/ecommerce/j3/domain/entity/Watch.java
+ com.ecommerce.j3.domain.entity.Watch
+ com.ecommerce.j3.domain.entity.Watch$WatchBuilder
+com/ecommerce/j3/domain/J3UserDetails.java
+ com.ecommerce.j3.domain.J3UserDetails
+com/ecommerce/j3/repository/ReviewRepositoryCustom.java
+ com.ecommerce.j3.repository.ReviewRepositoryCustom
+com/ecommerce/j3/controller/dto/BodyData.java
+ com.ecommerce.j3.controller.dto.BodyData
+ com.ecommerce.j3.controller.dto.BodyData$BodyDataBuilder
+com/ecommerce/j3/domain/entity/PaymentStatus.java
+ com.ecommerce.j3.domain.entity.PaymentStatus
+com/ecommerce/j3/repository/CartItemRepository.java
+ com.ecommerce.j3.repository.CartItemRepository
+com/ecommerce/j3/controller/dto/TagDto.java
+ com.ecommerce.j3.controller.dto.TagDto
+ com.ecommerce.j3.controller.dto.TagDto$TagApiRequest
+ com.ecommerce.j3.controller.dto.TagDto$TagApiResponse
+com/ecommerce/j3/domain/mapper/PhoneNumber.java
+ com.ecommerce.j3.domain.mapper.PhoneNumber
+com/ecommerce/j3/repository/CategoryRepositoryCustomImpl.java
+ com.ecommerce.j3.repository.CategoryRepositoryCustomImpl
+com/ecommerce/j3/repository/AddressRepository.java
+ com.ecommerce.j3.repository.AddressRepository
+com/ecommerce/j3/repository/WatchRepository.java
+ com.ecommerce.j3.repository.WatchRepository
+com/ecommerce/j3/controller/ReviewController.java
+ com.ecommerce.j3.controller.ReviewController
+com/ecommerce/j3/service/CategoryApiLogicService.java
+ com.ecommerce.j3.service.CategoryApiLogicService
+com/ecommerce/j3/domain/entity/OrderItem.java
+ com.ecommerce.j3.domain.entity.OrderItem
+ com.ecommerce.j3.domain.entity.OrderItem$OrderItemBuilder
+com/ecommerce/j3/filters/JwtTokenFilter.java
+ com.ecommerce.j3.filters.JwtTokenFilter
+com/ecommerce/j3/service/OrderItemApiLogicService.java
+ com.ecommerce.j3.service.OrderItemApiLogicService
+com/ecommerce/j3/domain/mapper/OrderItemMapper.java
+ com.ecommerce.j3.domain.mapper.OrderItemMapper
+com/ecommerce/j3/service/WatchApiLogicService.java
+ com.ecommerce.j3.service.WatchApiLogicService
+com/ecommerce/j3/controller/api/AccountApiController.java
+ com.ecommerce.j3.controller.api.AccountApiController
+com/ecommerce/j3/domain/mapper/CartMapper.java
+ com.ecommerce.j3.domain.mapper.CartMapper
+com/ecommerce/j3/service/OrderApiLogicService.java
+ com.ecommerce.j3.service.OrderApiLogicService
+com/ecommerce/j3/domain/mapper/CommonMapper.java
+ com.ecommerce.j3.domain.mapper.CommonMapper
+com/ecommerce/j3/domain/mapper/SuggestionMapper.java
+ com.ecommerce.j3.domain.mapper.SuggestionMapper
+com/ecommerce/j3/domain/entity/Payment.java
+ com.ecommerce.j3.domain.entity.Payment
+ com.ecommerce.j3.domain.entity.Payment$PaymentBuilder
+com/ecommerce/j3/domain/mapper/AddressMapper.java
+ com.ecommerce.j3.domain.mapper.AddressMapper
+com/ecommerce/j3/controller/api/OrderItemApiController.java
+ com.ecommerce.j3.controller.api.OrderItemApiController
+com/ecommerce/j3/domain/entity/Review.java
+ com.ecommerce.j3.domain.entity.Review
+ com.ecommerce.j3.domain.entity.Review$ReviewBuilder
+com/ecommerce/j3/domain/mapper/AccountMapper.java
+ com.ecommerce.j3.domain.mapper.AccountMapper
+com/ecommerce/j3/service/SuggestionApiLogicService.java
+ com.ecommerce.j3.service.SuggestionApiLogicService
+com/ecommerce/j3/domain/mapper/TagMapper.java
+ com.ecommerce.j3.domain.mapper.TagMapper
+com/ecommerce/j3/service/CartItemLogicService.java
+ com.ecommerce.j3.service.CartItemLogicService
+com/ecommerce/j3/service/DefaultAddressApiLogicService.java
+ com.ecommerce.j3.service.DefaultAddressApiLogicService
+com/ecommerce/j3/controller/dto/PaymentDto.java
+ com.ecommerce.j3.controller.dto.PaymentDto
+ com.ecommerce.j3.controller.dto.PaymentDto$PaymentApiRequest
+ com.ecommerce.j3.controller.dto.PaymentDto$PaymentApiResponse
+com/ecommerce/j3/config/SecurityConfig.java
+ com.ecommerce.j3.config.SecurityConfig
+com/ecommerce/j3/service/AccountApiLogicService.java
+ com.ecommerce.j3.service.AccountApiLogicService
+com/ecommerce/j3/domain/mapper/WatchMapper.java
+ com.ecommerce.j3.domain.mapper.WatchMapper
+com/ecommerce/j3/domain/entity/embedded/OrderDetails.java
+ com.ecommerce.j3.domain.entity.embedded.OrderDetails
+com/ecommerce/j3/service/TagApiLogicService.java
+ com.ecommerce.j3.service.TagApiLogicService
+com/ecommerce/j3/domain/mapper/CartItemMapper.java
+ com.ecommerce.j3.domain.mapper.CartItemMapper
+com/ecommerce/j3/controller/api/ProductApiController.java
+ com.ecommerce.j3.controller.api.ProductApiController
 com/ecommerce/j3/controller/dto/OrderItemDto.java
  com.ecommerce.j3.controller.dto.OrderItemDto
+ com.ecommerce.j3.controller.dto.OrderItemDto$CreateRequestFromCartItem
+ com.ecommerce.j3.controller.dto.OrderItemDto$CreateRequestFromProduct
  com.ecommerce.j3.controller.dto.OrderItemDto$OrderItemApiRequest
  com.ecommerce.j3.controller.dto.OrderItemDto$OrderItemApiResponse
 com/ecommerce/j3/domain/mapper/PaymentMapper.java
  com.ecommerce.j3.domain.mapper.PaymentMapper
-com/ecommerce/j3/util/JwtTokenUtil.java
- com.ecommerce.j3.util.JwtTokenUtil
-com/ecommerce/j3/domain/entity/Product.java
- com.ecommerce.j3.domain.entity.Product
- com.ecommerce.j3.domain.entity.Product$ProductBuilder
-com/ecommerce/j3/repository/PaymentRepository.java
- com.ecommerce.j3.repository.PaymentRepository
+com/ecommerce/j3/controller/api/CategoryApiController.java
+ com.ecommerce.j3.controller.api.CategoryApiController
+com/ecommerce/j3/service/AddressApiLogicService.java
+ com.ecommerce.j3.service.AddressApiLogicService
 com/ecommerce/j3/controller/dto/ReviewDto.java
  com.ecommerce.j3.controller.dto.ReviewDto
  com.ecommerce.j3.controller.dto.ReviewDto$ReviewApiRequest
  com.ecommerce.j3.controller.dto.ReviewDto$ReviewApiResponse
  com.ecommerce.j3.controller.dto.ReviewDto$ReviewDtoForSave
-com/ecommerce/j3/controller/dto/AddressDto.java
- com.ecommerce.j3.controller.dto.AddressDto
- com.ecommerce.j3.controller.dto.AddressDto$AddressApiRequest
- com.ecommerce.j3.controller.dto.AddressDto$AddressApiResponse
- com.ecommerce.j3.controller.dto.AddressDto$UpdateDefaultAddressRequest
 com/ecommerce/j3/domain/mapper/CategoryMapper.java
  com.ecommerce.j3.domain.mapper.CategoryMapper
-com/ecommerce/j3/exception/NotEnoughStockException.java
- com.ecommerce.j3.exception.NotEnoughStockException
 com/ecommerce/j3/controller/api/PaymentApiController.java
  com.ecommerce.j3.controller.api.PaymentApiController
 com/ecommerce/j3/service/ProductApiLogicService.java
  com.ecommerce.j3.service.ProductApiLogicService
-com/ecommerce/j3/repository/ProductRepositoryCustom.java
- com.ecommerce.j3.repository.ProductRepositoryCustom
-com/ecommerce/j3/repository/ReviewRepositoryCustomImpl.java
- com.ecommerce.j3.repository.ReviewRepositoryCustomImpl
-com/ecommerce/j3/repository/ReviewRepositoryCustom.java
- com.ecommerce.j3.repository.ReviewRepositoryCustom
-com/ecommerce/j3/domain/entity/GenderType.java
- com.ecommerce.j3.domain.entity.GenderType
+com/ecommerce/j3/controller/api/CartApiController.java
+ com.ecommerce.j3.controller.api.CartApiController
+com/ecommerce/j3/service/PaymentApiLogicService.java
+ com.ecommerce.j3.service.PaymentApiLogicService
+com/ecommerce/j3/controller/api/ReviewApiController.java
+ com.ecommerce.j3.controller.api.ReviewApiController
+com/ecommerce/j3/service/ReviewApiLogicService.java
+ com.ecommerce.j3.service.ReviewApiLogicService
+com/ecommerce/j3/controller/api/OrderApiController.java
+ com.ecommerce.j3.controller.api.OrderApiController
+com/ecommerce/j3/service/CartApiLogicService.java
+ com.ecommerce.j3.service.CartApiLogicService
 com/ecommerce/j3/domain/mapper/ReviewMapper.java
  com.ecommerce.j3.domain.mapper.ReviewMapper
-com/ecommerce/j3/controller/dto/BodyData.java
- com.ecommerce.j3.controller.dto.BodyData
- com.ecommerce.j3.controller.dto.BodyData$BodyDataBuilder
 com/ecommerce/j3/repository/ReviewRepository.java
  com.ecommerce.j3.repository.ReviewRepository
-com/ecommerce/j3/domain/entity/Tag.java
- com.ecommerce.j3.domain.entity.Tag
- com.ecommerce.j3.domain.entity.Tag$TagBuilder
-com/ecommerce/j3/J3Application.java
- com.ecommerce.j3.J3Application
+com/ecommerce/j3/domain/entity/Order.java
+ com.ecommerce.j3.domain.entity.Order
+ com.ecommerce.j3.domain.entity.Order$OrderBuilder
 com/ecommerce/j3/domain/mapper/OrderMapper.java
  com.ecommerce.j3.domain.mapper.OrderMapper
-com/ecommerce/j3/LoginController.java
- com.ecommerce.j3.LoginController
+com/ecommerce/j3/controller/api/AddressApiController.java
+ com.ecommerce.j3.controller.api.AddressApiController
+com/ecommerce/j3/domain/mapper/ProductMapper.java
+ com.ecommerce.j3.domain.mapper.ProductMapper
 com/ecommerce/j3/controller/api/WatchApiController.java
  com.ecommerce.j3.controller.api.WatchApiController
-com/ecommerce/j3/repository/WatchRepository.java
- com.ecommerce.j3.repository.WatchRepository
 com/ecommerce/j3/service/MemberInfoService.java
  com.ecommerce.j3.service.MemberInfoService
-com/ecommerce/j3/repository/AddressRepository.java
- com.ecommerce.j3.repository.AddressRepository

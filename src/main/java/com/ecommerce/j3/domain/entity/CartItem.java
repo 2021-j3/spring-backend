@@ -44,6 +44,8 @@ public class CartItem {
      */
     private Integer quantity;
 
+    // FIXME: actiove 가 뭔지 주석좀 부탁드립니다
+    // 카트에 담겼는지
     private Integer active;
 
     @Column(columnDefinition = "TEXT")

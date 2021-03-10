@@ -4,6 +4,7 @@ import com.ecommerce.j3.controller.dto.OrderItemDto.OrderItemApiRequest;
 import com.ecommerce.j3.controller.dto.OrderItemDto.OrderItemApiResponse;
 import com.ecommerce.j3.domain.entity.Order;
 import com.ecommerce.j3.domain.entity.OrderItem;
+import com.ecommerce.j3.domain.entity.Product;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;

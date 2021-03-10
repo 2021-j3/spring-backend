@@ -57,8 +57,29 @@ public class OrderItem {
             .content("d")
             .discountPrice(11).build();
         product.removeQuantity(quantity);
+        // FIXME: 여기서는 수정해도 반영안됨, service 에서 해당 product persist하는 과정 추가 바람
 
         return orderItem;
+    }
+
+    public static OrderItem FromCartItem(CartItem cartItem){
+        return OrderItem.builder()
+                .product(cartItem.getProduct())
+                .sku(cartItem.getSku())
+                .price(cartItem.getPrice())
+                .discountPrice(cartItem.getDiscountPrice())
+                .quantity(cartItem.getQuantity())
+                .content(cartItem.getContent()).build();
+    }
+
+    public static OrderItem FromProduct(Product product, Integer quantity){
+        return OrderItem.builder()
+                .product(product)
+                .sku(product.getSku())
+                .price(product.getPrice())
+                .discountPrice(product.getDiscountPrice())
+                .quantity(quantity)
+                .content(product.getContent()).build();
     }
 
     private void setQuantity(Integer quantity) {
@@ -69,7 +90,15 @@ public class OrderItem {
         this.price = price;
     }
 
-    //** 비즈니스 로직 **   삭제 예정임 !!!!!//
+    //** 비즈니스 로직 **
+    public void setOrder(Order order){
+        if (this.order != null){
+            this.order.getOrderItems().remove(this);
+        }
+        this.order = order;
+    }
+
+    // 삭제 예정임 !!!!!//
     public void cancel(){
         getProduct().addQuantity(quantity);
     }
@@ -79,11 +108,5 @@ public class OrderItem {
 
     public void setProduct(Product product) {
         this.product = product;
-    }
-
-
-
-    public void setOrder(Order order){
-        this.order = order;
     }
 }

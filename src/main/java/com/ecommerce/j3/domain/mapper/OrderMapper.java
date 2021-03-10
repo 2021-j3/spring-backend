@@ -2,6 +2,7 @@ package com.ecommerce.j3.domain.mapper;
 
 import com.ecommerce.j3.domain.entity.Order;
 import com.ecommerce.j3.controller.dto.OrderDto;
+import com.ecommerce.j3.domain.entity.embedded.PayInfo2;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
@@ -16,6 +17,7 @@ public abstract class OrderMapper implements DefaultMapper<Order, OrderDto.Order
     public abstract Order toEntity(OrderDto.OrderApiRequest dto);
 
     @Override
+    @Mapping(source = "orderItems", target = "orderItems")
     public abstract OrderDto.OrderApiResponse toApiResponse(Order order);
 
     public Order updateUserFromDto(@MappingTarget Order entity, OrderDto.OrderApiRequest dto){
@@ -29,12 +31,12 @@ public abstract class OrderMapper implements DefaultMapper<Order, OrderDto.Order
                 .sessionId(db.getSessionId())
                 .token(db.getToken())
                 .status(db.getStatus())
-                .itemPriceTotal(db.getItemPriceTotal())
-                .itemDiscount(db.getItemDiscount())
-                .tax(db.getTax())
-                .shipping(db.getShipping())
-                .userDiscount(db.getUserDiscount())
-                .grandTotal(db.getGrandTotal())
+//                .itemPriceTotal(db.getItemPriceTotal())
+//                .itemDiscount(db.getItemDiscount())
+//                .tax(db.getTax())
+//                .shipping(db.getShipping())
+//                .userDiscount(db.getUserDiscount())
+//                .grandTotal(db.getGrandTotal())
                 .firstName(req.getFirstName() != "" ? req.getFirstName() : req.getFirstName())
                 .lastName(req.getLastName() != "" ? req.getLastName() : req.getLastName())
                 .phoneNumber(req.getPhoneNumber() != "" ? req.getPhoneNumber() : req.getPhoneNumber())
@@ -47,6 +49,8 @@ public abstract class OrderMapper implements DefaultMapper<Order, OrderDto.Order
                 .zipCode(req.getZipCode() != null ? req.getZipCode() : req.getZipCode())
                 .content(db.getContent())
                 .build();
+        entity.setOrderItems(db.getOrderItems());
+
         return entity;
     }
 
@@ -61,12 +65,13 @@ public abstract class OrderMapper implements DefaultMapper<Order, OrderDto.Order
                 .sessionId(db.getSessionId())
                 .token(db.getToken())
                 .status(db.getStatus())
-                .itemPriceTotal(req.getItemPriceTotal() != null ? req.getItemPriceTotal() : req.getItemPriceTotal())
-                .itemDiscount(req.getItemDiscount() != null ? req.getItemDiscount() : req.getItemDiscount())
-                .tax(req.getTax() != null ? req.getTax() : req.getTax())
-                .shipping(req.getShipping() != null ? req.getShipping() : req.getShipping())
-                .userDiscount(req.getUserDiscount() != null ? req.getUserDiscount() : req.getUserDiscount())
-                .grandTotal(req.getGrandTotal())
+
+//                .itemPriceTotal(req.getItemPriceTotal() != null ? req.getItemPriceTotal() : req.getItemPriceTotal())
+//                .itemDiscount(req.getItemDiscount() != null ? req.getItemDiscount() : req.getItemDiscount())
+//                .tax(req.getTax() != null ? req.getTax() : req.getTax())
+//                .shipping(req.getShipping() != null ? req.getShipping() : req.getShipping())
+//                .userDiscount(req.getUserDiscount() != null ? req.getUserDiscount() : req.getUserDiscount())
+//                .grandTotal(req.getGrandTotal())
                 .firstName(db.getFirstName())
                 .lastName(db.getLastName())
                 .phoneNumber(db.getPhoneNumber())
@@ -79,6 +84,7 @@ public abstract class OrderMapper implements DefaultMapper<Order, OrderDto.Order
                 .zipCode(db.getZipCode())
                 .content(db.getContent())
                 .build();
+        entity.setOrderItems(db.getOrderItems());
         return entity;
     }
 
@@ -95,12 +101,13 @@ public abstract class OrderMapper implements DefaultMapper<Order, OrderDto.Order
                 .sessionId(req.getSessionId() != "" ? req.getSessionId() : req.getSessionId())
                 .token(req.getToken() != "" ? req.getToken() : req.getToken())
                 .status(req.getStatus() != null ? req.getStatus() : req.getStatus())
-                .itemPriceTotal(req.getItemPriceTotal() != null ? req.getItemPriceTotal() : req.getItemPriceTotal())
-                .itemDiscount(req.getItemDiscount() != null ? req.getItemDiscount() : req.getItemDiscount())
-                .tax(req.getTax() != null ? req.getTax() : req.getTax())
-                .shipping(req.getShipping() != null ? req.getShipping() : req.getShipping())
-                .userDiscount(req.getUserDiscount() != null ? req.getUserDiscount() : req.getUserDiscount())
-                .grandTotal(req.getGrandTotal())
+//                .itemPriceTotal(req.getItemPriceTotal() != null ? req.getItemPriceTotal() : req.getItemPriceTotal())
+//                .itemDiscount(req.getItemDiscount() != null ? req.getItemDiscount() : req.getItemDiscount())
+//                .tax(req.getTax() != null ? req.getTax() : req.getTax())
+//                .shipping(req.getShipping() != null ? req.getShipping() : req.getShipping())
+//                .userDiscount(req.getUserDiscount() != null ? req.getUserDiscount() : req.getUserDiscount())
+//                .grandTotal(req.getGrandTotal())
+                .payInfo(new PayInfo2(dto.getPayInfo().getItemPriceTotal(), dto.getPayInfo().getItemDiscount()))
                 .firstName(req.getFirstName() != "" ? req.getFirstName() : req.getFirstName())
                 .lastName(req.getLastName() != "" ? req.getLastName() : req.getLastName())
                 .phoneNumber(req.getPhoneNumber() != "" ? req.getPhoneNumber() : req.getPhoneNumber())

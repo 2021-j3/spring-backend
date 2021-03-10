@@ -1,14 +1,15 @@
 package com.ecommerce.j3.domain.mapper;
 
+import com.ecommerce.j3.controller.dto.OrderDto;
 import com.ecommerce.j3.domain.entity.*;
+import com.ecommerce.j3.domain.entity.embedded.OrderDetails;
+import com.ecommerce.j3.domain.entity.embedded.PayInfo2;
 import com.ecommerce.j3.repository.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -88,5 +89,28 @@ public class CommonMapper {
     }
     Long mapAccountToAccountId(Account account){
         return account.getAccountId();
+    }
+
+    PayInfo2 mapPayInfoToPayInfo2(OrderDto.PayInfo payInfo){
+        return new PayInfo2(payInfo.getItemPriceTotal(), payInfo.getItemDiscount(), payInfo.getTax(), payInfo.getShipping(), payInfo.getUserDiscount(), payInfo.getGrandTotal());
+    }
+
+    OrderDto.PayInfo mapPayInfoToPayInfo2(PayInfo2 payInfo){
+        return new OrderDto.PayInfo(payInfo.getItemPriceTotal(), payInfo.getItemDiscount(), payInfo.getTax(), payInfo.getShipping(), payInfo.getUserDiscount(), payInfo.getGrandTotal());
+    }
+
+    List<OrderItem> mapOrderITemsToOrderItemList(OrderDetails orderItems){
+        if (orderItems == null) return null;
+        return orderItems.getItems();
+    }
+
+    OrderDetails mapOrderITemListToOrderItems(List<OrderItem> orderItemList){
+        if(orderItemList == null) return null;
+        return new OrderDetails(orderItemList);
+    }
+
+    OrderDetails mapOrderItemIdsToOrderItems(List<Long> orderItemsIds){
+        if (orderItemsIds == null) return null;
+        return new OrderDetails(mapIdsToOrderItems(orderItemsIds));
     }
 }
