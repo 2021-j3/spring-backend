@@ -30,7 +30,7 @@ public class CartApiController {
     //  - 현재처럼 유저 아이디로 카트를 찾아오는 방법
     //  - 다른 아이디어 ??
     @ApiOperation(value="자신의 카트 읽기", notes="자신의 카트를 읽어온다")
-    @GetMapping("/api/cart/my")
+    @GetMapping("/api/carts/my")
     public BodyData<CartDto.CartApiResponse> readMyCart(Authentication authentication){
         // 로그인한 유저를 가져옴
         J3UserDetails userDetails = (J3UserDetails)authentication.getPrincipal();
@@ -81,13 +81,13 @@ public class CartApiController {
     @ApiOperation(value = "카트아이템 추가", notes = "카트아이템을 추가한다.")
     @PostMapping("/api/carts/{cartIdx}/cartItem")
     public BodyData<CartItemDto.createCartItemApiResponse> cartItemCreate(@PathVariable("cartIdx") long cartidx, @RequestBody  CartItemDto.createCartItemApiRequest createCartItemApiRequest) {
-        CartItemDto.createCartItemApiResponse createCartItemApiResponse = new CartItemDto.createCartItemApiResponse(cartService.addNewItem(cartidx,createCartItemApiRequest.getProductid(),createCartItemApiRequest.getQuantity()));
+        CartItemDto.createCartItemApiResponse createCartItemApiResponse = new CartItemDto.createCartItemApiResponse(cartService.addNewItem(cartidx,createCartItemApiRequest.getProductId(),createCartItemApiRequest.getQuantity()));
         return BodyData.OK(createCartItemApiResponse);
     }
     @ApiOperation(value = "카트아이템 수량 변경 ", notes = "카트아이템 수량 증가/감소시킨다.")
     @PutMapping({"/api/carts/{cartIdx}/cartItem"})
     public BodyData<CartItemDto.createCartItemApiResponse> cartItemUpdate(@PathVariable("cartIdx") long cartidx, @RequestBody CartItemDto.createCartItemApiRequest createCartItemApiRequest) {
-        CartItemDto.createCartItemApiResponse createCartItemApiResponse = new CartItemDto.createCartItemApiResponse(this.cartService.addItem(cartidx, createCartItemApiRequest.getProductid(), createCartItemApiRequest.getQuantity()));
+        CartItemDto.createCartItemApiResponse createCartItemApiResponse = new CartItemDto.createCartItemApiResponse(this.cartService.addItem(cartidx, createCartItemApiRequest.getProductId(), createCartItemApiRequest.getQuantity()));
         return BodyData.OK(createCartItemApiResponse);
     }
     @ApiOperation(value = "카트아이템 삭제", notes = "카트아이템을 삭제한다.")

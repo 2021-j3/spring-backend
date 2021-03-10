@@ -8,11 +8,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
+@DynamicInsert
 @Entity @Getter
 @Builder
 @NoArgsConstructor
@@ -80,6 +83,8 @@ public class Cart {
 
     public static Cart createCart(Account account){
         Cart cart = new Cart();
+        cart.sessionId = "";
+        cart.token = "";
         cart.account = account;
         Address address = account.getDefaultAddress();
         cart.address = address.getAddress();
