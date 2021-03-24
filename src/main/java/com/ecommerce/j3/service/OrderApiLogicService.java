@@ -50,8 +50,10 @@ public class OrderApiLogicService {
                 productRepository.findById(request.getProductId())
                         .orElseThrow(() -> new EntityNotFoundException("Not Found ProductId"))
         );
+        // FIXME: orElseThrow를 사용해서 이미 null이 아닌것이 활실한 타입에 null일 수 있는 의미를 담는 optional은 별로인것 같습니다
 
         Product product = optionalProduct.get();
+        // FIXME: .get()을 바로 쓰려면 optional을 사용할 이유가 없습니다
 
         /* 2. findAccountId */
         Optional<Account> optionalAccount = Optional.ofNullable(

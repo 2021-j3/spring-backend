@@ -89,6 +89,7 @@ public class Order {
         orderItem.setOrder(this);
     }
 
+    // FIXME: Order 를 만드는 함수가 인스턴스 메소드인 것은 아주 안 좋은 선택 같습니다
     public Order createOrder(Account account, Product product, OrderItem... orderItems) {
         Order order = Order.builder()
                 .account(account)
@@ -98,6 +99,10 @@ public class Order {
                 .lastName(account.getLastName())
                 .phoneNumber(account.getPhoneNumber())
                 .address(String.valueOf(account.getAddresses()))
+                // FIXME: 문제가 있습니다
+                //   - 1. account.getAddresses() 는 주소 리스트를 반환합니다
+                //   - 2. 인티티 설계에서 어드레스의 id가 아니라, 모든 필드를 넣도록 설계했기 때문에
+                //   - 모든 필드를 하나하나 대입하도록 해야 합니다.
                 .roadAddress("Test")
 //                .address(String.valueOf(account.getAddresses()))
 //                .city(account.getDefaultAddress().getCity())
